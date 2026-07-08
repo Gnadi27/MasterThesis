@@ -11,11 +11,11 @@
 
 \thesistitle
 {The title of my master's thesis}
-{Der Titel meiner Magisterarbeit}
-\thesisauthor{Author}{Author}
+{Der Titel meiner Masterarbeit}
+\thesisauthor{Michael Roman Gnadlinger}{Author}
 \thesisdate{2021}{8}{30}
-\supervisor{Prof. Dr. Supervisor}
-\examiner{Prof. Dr. Examiner}
+\supervisor{Prof. Dr.-Ing. Christian Stemmer}
+\advisor{Dr. Friedrich Ulrich}
 \date{\today} 
 
 \begin{document}
@@ -24,28 +24,21 @@
 \copyrightpage
 
 \abstractpage
-\input{abstract}
+\input{00_Abstract_Motivation/abstract.tex}
 
 \tableofcontents
 
 \mainmatter\setcounter{page}{1}
-\include{chap_0X_Introduction}
-\include{chap_0X_Motivation}
-\include{chap_0X_CompuChallenges}
-\include{chap3}
-
-%Include your contents like introduction, etc.
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{test.png}
-    \caption{Germany wind speeds}
-    \label{fig:wind speeds}
-\end{figure}
-
+\include{00_Abstract_Motivation/00_Motivation}
+\include{01_Introduction/00_Introduction}
+\include{02_Background/00_Background}
+\include{03_OpenFOAM_HiSA_Numerics/00_Numerical_Framework}
+\include{04_WF_Idea_Implementation/00_Wall_Functions}
+\include{05_Eval_Methodology/00_Evaluation_Methodology}
+\include{06_Comparative_Results/00_Comparative_Evaluation}
+\include{07_Conclusion_Outlook/00_Conclusions_Outlook}
 
 \appendix
-
-\include{app1}
 
 \addcontentsline{toc}{chapter}{\protect Bibliography}
 \bibliography{library}
@@ -57,7 +50,7 @@
 \listoftables
 
 \acknowledgments
-\input{acknowledgements}
+\input{00_Abstract_Motivation/acknowledgements}
 
 
 

@@ -92,13 +92,14 @@
 \newcommand{\MakeFrontCover}{
 	\begin{titlepage}
 	\begin{center}	
-		\begin{figure}[t]	
+		\begin{figure}[t]
+        \centering	
 		\includegraphics[width=0.34\linewidth]{figures/tum-logo.pdf}
-		\includegraphics[width=0.3\linewidth]{figures/mpg-logo.pdf}
-		\includegraphics[width=0.34\linewidth]{figures/lmu-logo.pdf}
+		% \includegraphics[width=0.3\linewidth]{figures/mpg-logo.pdf}
+		% \includegraphics[width=0.34\linewidth]{figures/lmu-logo.pdf}
 		\end{figure}
 		\Large{\qst@university}\\
-		\Large{\qst@universitysecond}\\
+		%\Large{\qst@universitysecond}\\
 		\Large{\qst@institute}\\
 		\bigskip
 		\noindent\rule{\textwidth}{1pt}
@@ -110,7 +111,7 @@
 		\Large{Thesis submitted\\ within the \qst@program}\\
 		\bigskip
 		{\Large Supervisor:  \qst@supervisor}\\
-		{\Large Second Examiner:  \qst@examiner}\\
+		{\Large Advisor:  \qst@advisor}\\
 		\vfill{\Large \today}
 	\end{center}
 	\end{titlepage}
@@ -127,7 +128,7 @@
 	\thispagestyle{empty}
 	\vspace*{\fill}
 	\begin{center}
-		{\scshape \noindent \small \copyright \small 2021\hspace{3pt}-- \qst@thesisauthor }\\
+		{\scshape \noindent \small \copyright \small 2026\hspace{3pt}-- \qst@thesisauthor }\\
 		\noindent All rights reserved.
 	\end{center}
 	\vspace*{\fill}
@@ -180,29 +181,29 @@
 	\def\qst@universityDE{#2}
 }
 
-\def\qst@universitysecond{Ludwig Maximilian University of Munich}
-\def\qst@universitysecondDE{Ludwig-Maximillians-Universt\"at M\"uchen}
-\newcommand{\universitysecond}[2]{%
-	\def\qst@universitysecond{#1}
-	\def\qst@universitysecondDE{#2}
-}
+% \def\qst@universitysecond{Ludwig Maximilian University of Munich}
+% \def\qst@universitysecondDE{Ludwig-Maximillians-Universt\"at M\"uchen}
+% \newcommand{\universitysecond}[2]{%
+% 	\def\qst@universitysecond{#1}
+% 	\def\qst@universitysecondDE{#2}
+% }
 
-\def\qst@institute{Max Planck Institute}
-\def\qst@instituteDE{Max-Planck-Institut}
+\def\qst@institute{Chair of Aerodynamics and Fluid Mechanics}
+\def\qst@instituteDE{Lehrstuhl für Aerodynamik und Strömungmechanik}
 \newcommand{\institute}[2]{%
 	\def\tum@institute{#1}
 	\def\tum@instituteDE{#2}
 }
 
-\def\qst@department{Department of Physics}
-\def\qst@departmentDe{Fakult\"at f\"ur Physik}
+\def\qst@department{Department of Aerospace and Geodesy}
+\def\qst@departmentDe{Department of Aerospace and Geodesy}
 \newcommand{\department}[2]{%
 	\def\qst@department{#1}
 	\def\qst@departmentDE{#2}
 }
 
-\def\qst@program{Master’s Program \\ Quantum Science \& Technology}
-\def\qst@programDe{Masterstudiengang \\ Quantum Science \& Technology}
+\def\qst@program{Master’s Program \\ Aerospace}
+\def\qst@programDe{Masterstudiengang \\ Aerospace}
 \newcommand{\program}[2]{%
 	\def\qst@program{#1}
 	\def\qst@programDE{#2}
@@ -215,8 +216,8 @@
 	\def\qst@thesistitleDE{#2}
 }
 
-\def\qst@thesisauthor{}
-\def\qst@thesisauthornative{}
+\def\qst@thesisauthor{Michael Roman Gnadlinger}
+\def\qst@thesisauthornative{Michael Roman Gnadlinger}
 \newcommand{\thesisauthor}[2]{%
 	\def\qst@thesisauthor{#1}
 	\def\qst@thesisauthornative{#2}
@@ -240,9 +241,9 @@
 	\def\qst@supervisor{#1}
 }
 
-\def\qst@examiner{}
-\newcommand{\examiner}[1]{%
-	\def\qst@examiner{#1}
+\def\qst@advisor{}
+\newcommand{\advisor}[1]{%
+	\def\qst@advisor{#1}
 }
 
 
