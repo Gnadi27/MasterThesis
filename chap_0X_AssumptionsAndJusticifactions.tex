@@ -1,0 +1,20 @@
+Gas Model Assumption: thermally perfect, calorically imperfect gas
+- needs to be thoroughly defined (e.g. back of Malik Anderson paper)
+- thermally perfect holds up to 2000 - 2500K (then O2 starts dissociating)
+    - is that applicable to hypersonic vehicles?
+    - thing is that stag. point temperature is potentially significantly higher at typical trajectories (see \url{https://ntrs.nasa.gov/api/citations/19980237039/downloads/19980237039.pdf} Fig. 7, but TM => \textbf{we don't care about stag. point anyways}
+    - Stort and other flight experiments only have wall temperature, but max T is in BL
+        - to my knowledge no in-flight temperature BL measurements of hypersonic vehicles.
+    - turbulent BL profiles, but those don't have wall-normal pressure gradient which can have positive or negative effects on the max. T in the BL.
+        - it would be possible to create a alt/vel - const. max. Temp plot for a turb. ZPG flat plate.
+    - very hard to justify a-prori in which trajectory fan this assumption holds for hypersonic vehicles and needs to be scrutinized on a case-by-case basis. As was done for the validation experiments in section XY.
+    - vibrational equilibirum
+        - "single-temperature, frozen-composition, thermally perfect / calorically imperfect air."
+        - Frozen vibration would mean the vibrational energy remains at its upstream/modal population level through the shock, or equivalently the vibrational mode does not immediately absorb energy. A constant-γ=1.4 diatomic gas is often used as a crude frozen-vibration model because only translational and rotational modes are active. Your cp(T) model does the opposite: as soon as the local temperature rises, the equilibrium vibrational heat capacity contributes immediately.
+
+
+Wall Model Assumption: isothermal, non-reacting wall
+    - vehicle can have extreme wall temperature gradients in downstream direction, where sections of different materials (different thermal mass and thermal conductivity) meet, which potentially even intended thermal isolation between sections. Also the contour of a vehicle is not necessarily continuous, with corners and steps exposing neighboring sections to potentially vastly different flow conditions.
+    - Validation of the wall functions is thus limited to sections of quasi-zero wall temperature downstream gradients.
+        - thought: two wall sections, one hot, one cold => BL collapses in some form at the connection => no guarantee that the wall function can capture that correctly, but how to argue that it then can capture it at the second wall? - because then BL follows quasi-isothermal wall again?
+    \textbf{ist das wirklich so?} Oder is in wandfunction die zelle vorher und nachher garnicht drinnen, sondern nur quasi 1D von wandTemp zu freestream?

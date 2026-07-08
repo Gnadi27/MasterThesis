@@ -1,0 +1,66 @@
+\documentclass[color]{tumphthesis}
+
+\usepackage{duckuments}
+\usepackage{epigraph}
+\usepackage{lipsum}
+\usepackage{scrhack}
+
+\usepackage{graphicx}
+\graphicspath{{./}}
+\newcommand{\EigenName}[1]{\textit{#1}}  
+
+\thesistitle
+{The title of my master's thesis}
+{Der Titel meiner Magisterarbeit}
+\thesisauthor{Author}{Author}
+\thesisdate{2021}{8}{30}
+\supervisor{Prof. Dr. Supervisor}
+\examiner{Prof. Dr. Examiner}
+\date{\today} 
+
+\begin{document}
+
+\maketitle
+\copyrightpage
+
+\abstractpage
+\input{abstract}
+
+\tableofcontents
+
+\mainmatter\setcounter{page}{1}
+\include{chap_0X_Introduction}
+\include{chap_0X_Motivation}
+\include{chap_0X_CompuChallenges}
+\include{chap3}
+
+%Include your contents like introduction, etc.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{test.png}
+    \caption{Germany wind speeds}
+    \label{fig:wind speeds}
+\end{figure}
+
+
+\appendix
+
+\include{app1}
+
+\addcontentsline{toc}{chapter}{\protect Bibliography}
+\bibliography{library}
+
+\addcontentsline{toc}{chapter}{\protect List of Figures}
+\listoffigures
+
+\addcontentsline{toc}{chapter}{\protect List of Tables}
+\listoftables
+
+\acknowledgments
+\input{acknowledgements}
+
+
+
+
+
+\end{document}

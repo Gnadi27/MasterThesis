@@ -1,0 +1,25 @@
+\subsubsection{computational challenge}
+\label{chap:chap_0X_CompuChallenges}
+
+table: DES, LES, RANS ~ Re (ref. to Chien and Moin with their 'new' LES super-linear relation) (Q: is that unit Re?)
+
+"turbulent boundary layer
+scales with the Reynolds number as Re2.7
+for WRLES and Re1.1
+for wall-modeled (WM)
+LES (Yang \& Griffin 2021)"
+
+example of HGV boundary layer cells -> yPlus<=1 (?) (with Ref. to discussion of yPlus<=1)
+	this obviously does not include adaptive mesh refinement schemes that can reduce the cell count, and the aspect ratio of 1000 is highly dependent on the robustness of the 	underlying numerics and in no means an upper limit, or suggestion of one. Also openFoam framework not necessarily memory optimized. All this should rather provide a realistic example and a feeling for the computational challenge.
+
+Cell count -> memory challenge (typically 512 GB per computational node)
+Cell count + aspect ratio -> comp. challenge -> no fast iterative process possible for small scaled business without access to huge servers)
+
+other approaches to this challenge:
+
+GPU based solvers (ANSYS example of airplane (but that was LES I think))
+Neural networks
+Quantum Computing (Stanford paper: \href{https://web.stanford.edu/group/ctr/ResBriefs/2019/27_Griffin.pdf})
+
+look for example of huge RANS simulations => cell count, comp. time, memory requirement
+

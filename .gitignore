@@ -284,6 +284,11 @@ pythontex-files-*/
 TSWLatexianTemp*
 
 ## Editors:
+# Local generated and backup artifacts:
+/main.pdf
+/Master Thesis.zip
+/.codex_probe
+
 # WinEdt
 *.bak
 *.sav
