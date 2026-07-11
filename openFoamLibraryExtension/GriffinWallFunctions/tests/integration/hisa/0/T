@@ -1,0 +1,44 @@
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    object      T;
+}
+
+dimensions      [0 0 0 1 0 0 0];
+internalField   uniform 100;
+
+boundaryField
+{
+    "(inlet|outlet|top)"
+    {
+        type            characteristicFarfieldTemperature;
+        value           uniform 100;
+        U               (600 0 0);
+        p               2000;
+        T               100;
+    }
+    wall
+    {
+        type            GriffinWallHeatFluxTemperature;
+        thermalMode     isothermal;
+        Tw              150;
+        viscosity
+        {
+            mode        sutherland;
+            As          1.458e-06;
+            Ts          110.4;
+        }
+        gradientRelaxation 0.3;
+        TFaceMin        20;
+        diagnostics     true;
+        diagnosticLog   true;
+        diagnosticWrite true;
+        diagnosticWriteInterval 100;
+        value           uniform 150;
+    }
+    frontAndBack
+    {
+        type            empty;
+    }
+}

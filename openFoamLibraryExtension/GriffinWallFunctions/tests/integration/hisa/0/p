@@ -1,0 +1,29 @@
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    object      p;
+}
+
+dimensions      [1 -1 -2 0 0 0 0];
+internalField   uniform 2000;
+
+boundaryField
+{
+    "(inlet|outlet|top)"
+    {
+        type            characteristicFarfieldPressure;
+        value           uniform 2000;
+        U               (600 0 0);
+        p               2000;
+        T               100;
+    }
+    wall
+    {
+        type            zeroGradient;
+    }
+    frontAndBack
+    {
+        type            empty;
+    }
+}

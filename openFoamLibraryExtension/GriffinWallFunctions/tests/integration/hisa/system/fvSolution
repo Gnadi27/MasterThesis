@@ -1,0 +1,70 @@
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+
+solvers
+{
+    "(nuTilda|rPseudoDeltaT)"
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-6;
+        relTol          0.1;
+        minIter         1;
+    }
+
+    "(nuTilda|rPseudoDeltaT)Final"
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-6;
+        relTol          0;
+        minIter         1;
+    }
+
+    yPsi
+    {
+        solver          GAMG;
+        smoother        GaussSeidel;
+        cacheAgglomeration true;
+        nCellsInCoarsestLevel 10;
+        agglomerator    faceAreaPair;
+        mergeLevels     1;
+        tolerance       1e-8;
+        relTol          0;
+    }
+}
+
+relaxationFactors
+{
+    equations
+    {
+        nuTilda   0.5;
+    }
+}
+
+flowSolver
+{
+    solver            GMRES;
+    GMRES
+    {
+        inviscidJacobian LaxFriedrichs;
+        viscousJacobian  laplacian;
+        preconditioner   LUSGS;
+
+        maxIter          20;
+        nKrylov          8;
+        solverTolRel     1e-2 (1e-2 1e-2 1e-2) 1e-2;
+    }
+}
+
+pseudoTime
+{
+    pseudoTol          1e-99 (1e-99 1e-99 1e-99) 1e-99;
+    pseudoCoNum        0.1;
+    pseudoCoNumMax     3;
+    localTimestepping  true;
+}

@@ -1,0 +1,138 @@
+#!/bin/bash
+
+. /opt/of-v2412/etc/bashrc
+set -eu
+
+testDir="$(cd "$(dirname "$0")" && pwd)"
+caseDir="$testDir/isothermal"
+hisaDir="$testDir/hisa"
+isoDir="/tmp/GriffinWallFunctionIntegration-isothermal-$$"
+adiabaticDir="/tmp/GriffinWallFunctionIntegration-adiabatic-$$"
+prescribedDir="/tmp/GriffinWallFunctionIntegration-prescribed-$$"
+parallelDir="/tmp/GriffinWallFunctionIntegration-parallel-$$"
+hisaRunDir="/tmp/GriffinWallFunctionIntegration-hisa-$$"
+
+# Diagnostics .dat columns (see GriffinWallHeatFluxTemperature...C):
+#  1 face  2 x  3 y  4 z  5 status  6 edgeStatus  7 valid  8 converged
+#  9 iterations  10 residual  11 uTau  12 tauw  13 yPlus  14 yStar
+# 15 uPlus  16 ReTauStar  17 kappa  18 APlus  19 delta  20 Ue  21 Te
+# 22 Tr  23 Tw  24 T1  25 U1  26 qw  27 mut1  28 nuTilda1  29 nut
+# 30 gradT  31 TFace  32 alphaEff  33 heGradient  34 qTargetOF
+# 35 qOpenFOAM  36 qError
+
+# --- isothermal, reconstructed boundary-layer edge (rhoSimpleFoam) ------
+
+mkdir -p "$isoDir"
+cp -R "$caseDir/0" "$caseDir/constant" "$caseDir/system" "$isoDir/"
+
+blockMesh -case "$isoDir" >/dev/null
+rhoSimpleFoam -case "$isoDir" >/dev/null
+
+isoDat="$isoDir/postProcessing/GriffinWallFunctionDiagnostics/wall/200.dat"
+test -f "$isoDat"
+# Every face evaluated the model (status 0) and extracts heat (qw < 0,
+# OpenFOAM boundary-flux sign; the wall is colder than recovery).
+awk '!/^#/ && ($5 != 0 || $26 >= 0) {bad=1} END {exit bad}' "$isoDat"
+# Delivered flux tracks the target within the relaxation lag.
+awk 'function abs(v){return v<0?-v:v}
+     !/^#/ && abs($36) > 0.1*abs($34) {bad=1} END {exit bad}' "$isoDat"
+# Extrapolated face temperature stayed physical (no TFaceMin clamping).
+awk '!/^#/ && ($31 < 150 || $31 > 700) {bad=1} END {exit bad}' "$isoDat"
+# Reconstructed boundary-layer thickness is sane and above the first cell.
+awk '!/^#/ && ($19 < 2e-4 || $19 > 9e-3) {bad=1} END {exit bad}' "$isoDat"
+
+# --- adiabatic (rhoSimpleFoam): must reduce to zeroGradient -------------
+
+mkdir -p "$adiabaticDir"
+cp -R "$caseDir/0" "$caseDir/constant" "$caseDir/system" "$adiabaticDir/"
+foamDictionary "$adiabaticDir/0/T" -entry boundaryField.wall -set \
+    '{type GriffinWallHeatFluxTemperature; thermalMode adiabatic;
+      diagnostics true; diagnosticLog true; diagnosticWrite true;
+      diagnosticWriteInterval 50; value uniform 500;}' >/dev/null
+foamDictionary "$adiabaticDir/0/nut" -entry boundaryField.wall -set \
+    '{type nutGriffinWallFunction; thermalMode adiabatic;
+      value uniform 0;}' >/dev/null
+foamDictionary "$adiabaticDir/0/nuTilda" -entry boundaryField.wall -set \
+    '{type nuTildaGriffinWallFunction; thermalMode adiabatic;
+      value uniform 0;}' >/dev/null
+# Smoke scope: the impulsive-start transient of this deliberately crude
+# case eventually destabilizes with an adiabatic (non-extracting) wall;
+# 50 iterations suffice to assert the zeroGradient reduction.
+foamDictionary "$adiabaticDir/system/controlDict" -entry endTime \
+    -set 50 >/dev/null
+
+blockMesh -case "$adiabaticDir" >/dev/null
+rhoSimpleFoam -case "$adiabaticDir" >/dev/null
+
+adiabaticDat="$adiabaticDir/postProcessing/GriffinWallFunctionDiagnostics/wall/50.dat"
+test -f "$adiabaticDat"
+# Adiabatic: zero temperature gradient and zero target flux, identically.
+awk '!/^#/ && ($30 != 0 || $34 != 0) {bad=1} END {exit bad}' "$adiabaticDat"
+
+# --- isothermal with prescribed edge quantities (rhoSimpleFoam) ---------
+
+mkdir -p "$prescribedDir"
+cp -R "$caseDir/0" "$caseDir/constant" "$caseDir/system" "$prescribedDir/"
+for f in T nut nuTilda
+do
+    foamDictionary "$prescribedDir/0/$f" \
+        -entry boundaryField.wall.edgeMode -set prescribed >/dev/null
+    foamDictionary "$prescribedDir/0/$f" \
+        -entry boundaryField.wall.Ue -set 200 >/dev/null
+    foamDictionary "$prescribedDir/0/$f" \
+        -entry boundaryField.wall.Te -set 500 >/dev/null
+    foamDictionary "$prescribedDir/0/$f" \
+        -entry boundaryField.wall.delta -set 0.003 >/dev/null
+done
+
+blockMesh -case "$prescribedDir" >/dev/null
+rhoSimpleFoam -case "$prescribedDir" >/dev/null
+
+prescribedDat="$prescribedDir/postProcessing/GriffinWallFunctionDiagnostics/wall/200.dat"
+test -f "$prescribedDat"
+# Prescribed mode: edgeStatus 2 and the dictionary delta on every face.
+awk '!/^#/ && ($6 != 2 || $19 != 0.003) {bad=1} END {exit bad}' "$prescribedDat"
+awk '!/^#/ && ($5 != 0 || $26 >= 0) {bad=1} END {exit bad}' "$prescribedDat"
+
+# --- parallel (rhoSimpleFoam, wall-tangential decomposition) ------------
+
+if command -v mpirun >/dev/null 2>&1
+then
+    mkdir -p "$parallelDir"
+    cp -R "$caseDir/0" "$caseDir/constant" "$caseDir/system" "$parallelDir/"
+    foamDictionary "$parallelDir/system/controlDict" -entry endTime \
+        -set 50 >/dev/null
+    blockMesh -case "$parallelDir" >/dev/null
+    decomposePar -case "$parallelDir" >/dev/null
+    mpirun --oversubscribe -np 2 \
+        rhoSimpleFoam -parallel -case "$parallelDir" >/dev/null
+fi
+
+# --- HiSA (hysa) Mach-3 flat plate --------------------------------------
+
+if command -v hysa >/dev/null 2>&1
+then
+    mkdir -p "$hisaRunDir"
+    cp -R "$hisaDir/0" "$hisaDir/constant" "$hisaDir/system" "$hisaRunDir/"
+    blockMesh -case "$hisaRunDir" >/dev/null
+    hysa -case "$hisaRunDir" >/dev/null
+
+    hisaDat="$hisaRunDir/postProcessing/GriffinWallFunctionDiagnostics/wall/400.dat"
+    test -f "$hisaDat"
+    awk '!/^#/ && ($5 != 0 || $26 >= 0) {bad=1} END {exit bad}' "$hisaDat"
+    # Exact flux delivery through HiSA's compact energy laplacian.
+    awk 'function abs(v){return v<0?-v:v}
+         !/^#/ && abs($36) > 0.02*abs($34) {bad=1} END {exit bad}' "$hisaDat"
+    awk '!/^#/ && ($31 < 50 || $31 > 400) {bad=1} END {exit bad}' "$hisaDat"
+
+    # wallHeatFlux function object sees the imposed flux (he-gradient
+    # mirroring): min/max on the wall must be negative (heat extraction).
+    foDat="$hisaRunDir/postProcessing/wallHeatFlux1/0/wallHeatFlux.dat"
+    test -f "$foDat"
+    awk '!/^#/ && $2 == "wall" && ($3 >= 0 || $4 >= 0) {bad=1} END {exit bad}' \
+        "$foDat"
+else
+    echo "hysa solver not found; HiSA smoke test skipped"
+fi
+
+echo "Griffin wall-function isothermal, adiabatic, prescribed-edge, parallel, and HiSA smoke tests passed"
