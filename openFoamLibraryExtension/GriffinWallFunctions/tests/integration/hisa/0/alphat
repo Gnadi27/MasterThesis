@@ -1,0 +1,33 @@
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    object      alphat;
+}
+
+dimensions      [1 -1 -1 0 0 0 0];
+internalField   uniform 0;
+
+boundaryField
+{
+    "(inlet|outlet|top)"
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    wall
+    {
+        // Neumann energy coupling: the Griffin heat flux enters through
+        // the GriffinWallHeatFluxTemperature boundary condition on T.
+        // The value is pure conditioning: alphaEff cancels from the
+        // delivered flux, and a laminar-only alphaEff would demand an
+        // unphysically cold extrapolated face temperature (see
+        // LiWallFunctions/FINDINGS_LiNeumann_TFace_limit, addendum).
+        type            fixedValue;
+        value           uniform 0.05;
+    }
+    frontAndBack
+    {
+        type            empty;
+    }
+}
