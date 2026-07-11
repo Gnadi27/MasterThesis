@@ -1,7 +1,0 @@
-#!/bin/bash
-
-. /opt/of-v2412/etc/bashrc
-set -eu
-cd "$(dirname "$0")"
-wmake
-TestGriffinWallFunction

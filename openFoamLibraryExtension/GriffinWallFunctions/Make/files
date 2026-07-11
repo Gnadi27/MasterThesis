@@ -1,7 +1,0 @@
-GriffinWallFunction/GriffinWallFunction.C
-GriffinBoundaryLayerEdge/GriffinBoundaryLayerEdge.C
-nutGriffinWallFunction/nutGriffinWallFunctionFvPatchScalarField.C
-nuTildaGriffinWallFunction/nuTildaGriffinWallFunctionFvPatchScalarField.C
-GriffinWallHeatFluxTemperature/GriffinWallHeatFluxTemperatureFvPatchScalarField.C
-
-LIB = $(FOAM_USER_LIBBIN)/libGriffinWallFunctions

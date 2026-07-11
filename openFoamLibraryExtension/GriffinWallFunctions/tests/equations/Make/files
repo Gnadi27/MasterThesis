@@ -1,3 +1,0 @@
-TestGriffinWallFunction.C
-
-EXE = $(FOAM_USER_APPBIN)/TestGriffinWallFunction

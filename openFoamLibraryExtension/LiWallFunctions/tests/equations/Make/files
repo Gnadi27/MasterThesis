@@ -1,3 +1,0 @@
-TestLiWallFunction.C
-
-EXE = $(FOAM_USER_APPBIN)/TestLiWallFunction
