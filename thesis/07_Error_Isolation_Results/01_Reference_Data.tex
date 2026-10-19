@@ -1,0 +1,39 @@
+\section{Evaluation logic and reference hierarchy}
+\label{sec:comparative:zpg:reference-data}
+
+The wall-resolved assessment uses the twelve ZPG flat-plate cases listed in Table~\ref{tab:evaluation:selected-cases}. Their gas and transport models, wall conditions, and reference-data limitations are specified in Section~\ref{sec:evaluation:benchmark-cases}. The detailed wall-function comparisons focus on M6Tw025 and LowH\_M3. The reason for this selection follows from the profile assessment in Section~\ref{subsec:comparative:zpg:case-selection}. These two cases provide complementary evidence, rather than a controlled variation of a single physical parameter outlined in detail in Section~\ref{subsec:comparative:zpg:case-selection}.
+\par\medskip
+
+Three comparisons are distinguished throughout the chapter, as summarized in Table~\ref{tab:erriso:reference-hierarchy}. The first assesses the wall-resolved RANS calculation against the published DNS reference. The second supplies a fixed boundary layer profile to a standalone wall-function solver and compares the recovered wall quantities with those associated with that profile. The third evaluates the coupled wall-function CFD result against both DNS and the corresponding wall-resolved SA solution.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Reference hierarchy used to distinguish RANS discrepancies, conditional wall-function closure errors, and the additional discrepancies of the coupled calculation.}
+    \label{tab:erriso:reference-hierarchy}
+    \small
+    \begin{tabular}{@{}p{0.22\linewidth}p{0.29\linewidth}p{0.40\linewidth}@{}}
+        \toprule
+        Calculation & Comparison reference & Purpose \\
+        \midrule
+        Wall-resolved RANS & Published DNS wall quantities and profiles & Establish the resolved baseline and assess turbulence and thermal modelling. \\
+        \addlinespace
+        Standalone wall function & Wall quantities belonging to the prescribed profile; common DNS reference for the paired M6Tw025 test & Assess closure accuracy and sensitivity to the supplied profile without coupled-flow feedback. \\
+        \addlinespace
+        Coupled wall-function CFD & DNS and wall-resolved SA at the comparison station & Assess overall accuracy and departures from the resolved baseline as mesh and closure treatment change. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The comparison stations follow the matching procedure in Section~\ref{subsec:evaluation:matching-station}. Wall-resolved RANS is matched to the DNS through the reported momentum-thickness Reynolds number, with definitions retained consistently for each dataset. Wall-function CFD is then evaluated at the same physical downstream station as its wall-resolved SA baseline. Matching the coarse wall-function solution independently through a boundary layer integral would introduce an additional dependence on how that integral is reconstructed on the coarse mesh. Holding the downstream station fixed instead exposes changes in boundary layer development caused by the coupled wall treatment.
+\par\medskip
+
+For a quantity \(Q\), the signed relative error is the difference between the calculated value \(Q_A\) and the reference value \(Q_B\), divided by the reference value:
+\begin{equation}
+    e_{A/B}(Q)=\frac{Q_A-Q_B}{Q_B},
+    \qquad Q_B\ne0,
+    \label{eq:erriso:signed-relative-error}
+\end{equation}
+Both values must use the same definition and sign convention. The plots express this error as a percentage, \(100e_{A/B}\). A dimensional wall quantity and its corresponding coefficient have the same relative error only if the calculated and reference values use the same normalization. The published coefficient definitions and reconstructed DNS values are given in Table~\ref{tab:evaluation:dns-reference-values}. Relative heat-flux errors are undefined for an exactly adiabatic reference, and the M6Tw076 heat-flux comparison is excluded from quantitative assessment because of the reference limitations discussed in Section~\ref{sec:evaluation:benchmark-cases}.
+\par\medskip
+
+The wall-resolved mesh studies in Section~\ref{sec:evaluation:mesh-families-yplus} and Appendix~\ref{app:zpg:mesh-convergence} provide the resolution evidence for the wall-resolved baselines. Their interpretation also relies on the numerical methods and convergence criteria in Sections~\ref{sec:numerical-framework:discretization} and~\ref{sec:numerical-framework:convergence}.

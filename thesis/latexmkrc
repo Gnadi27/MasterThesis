@@ -1,0 +1,8 @@
+# The supplied template's TUM bundle is kept local to the thesis.
+# TeX Live uses semicolons on Windows and colons on Unix/Overleaf.
+my $tex_path_separator = ($^O eq 'MSWin32') ? ';' : ':';
+# Search the project first so its personalised tumuser.sty wins over the
+# unmodified example shipped inside the template bundle.
+$ENV{'TEXINPUTS'} = './' . $tex_path_separator . './tum//' . $tex_path_separator
+    . ($ENV{'TEXINPUTS'} // '');
+$pdf_mode = 1;

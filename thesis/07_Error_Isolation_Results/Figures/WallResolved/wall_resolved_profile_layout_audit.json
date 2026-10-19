@@ -1,0 +1,407 @@
+{
+  "font_family": "TeX Gyre Heros",
+  "figures": {
+    "M6Tw025_BL_profiles": {
+      "width_mm": 170.0,
+      "height_mm": 144.0,
+      "base_font_pt": 10.5,
+      "panels": [
+        {
+          "original_title": "Dimensional temperature-velocity relation",
+          "curves": 3,
+          "points": 435,
+          "exact_cache_coordinates": true,
+          "original_axis_limits_retained": true
+        },
+        {
+          "original_title": "Van Driest transformed velocity",
+          "curves": 3,
+          "points": 432,
+          "exact_cache_coordinates": true,
+          "original_axis_limits_retained": true
+        },
+        {
+          "original_title": "Temperature profile",
+          "curves": 3,
+          "points": 432,
+          "exact_cache_coordinates": true,
+          "original_axis_limits_retained": true
+        },
+        {
+          "original_title": "Velocity profile",
+          "curves": 3,
+          "points": 432,
+          "exact_cache_coordinates": true,
+          "original_axis_limits_retained": true
+        }
+      ],
+      "verified_exact_points": 1731,
+      "all_visible_text_inside_canvas": true,
+      "legend_and_note_clear_of_panels": true,
+      "text": [
+        {
+          "text": "Zhang DNS (Tecplot)",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "SA, $Pr_t=0.9$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "kwSST, $Pr_t=0.9$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "Temperature\u2013velocity relation",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$U$ [m/s]",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "0",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "200",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "400",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "600",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "800",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$T$ [K]",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "60",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "80",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "100",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "120",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "140",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "160",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "Van Driest transformed velocity",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$z^+$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{-1}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{0}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{1}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{2}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$U_{VD}^+$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "0",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "5",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "10",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "15",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "20",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "Temperature profile",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$z^+$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{-1}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{0}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{1}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{2}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$T/T_{\\infty,\\mathrm{DNS}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "1.5",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "2.0",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "2.5",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "Velocity profile",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$z^+$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{-1}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{0}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{1}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{2}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$U/U_{\\infty,\\mathrm{DNS}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "0.0",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "0.2",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "0.4",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "0.6",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "0.8",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "1.0",
+          "base_font_pt": 10.5
+        }
+      ]
+    },
+    "Part4_LowH_M3_BL_profiles": {
+      "width_mm": 170.0,
+      "height_mm": 90.0,
+      "base_font_pt": 10.5,
+      "panels": [
+        {
+          "original_title": "Dimensional temperature-velocity relation",
+          "curves": 3,
+          "points": 425,
+          "exact_cache_coordinates": true,
+          "original_axis_limits_retained": true
+        },
+        {
+          "original_title": "Van Driest inner velocity",
+          "curves": 3,
+          "points": 436,
+          "exact_cache_coordinates": true,
+          "original_axis_limits_retained": true
+        }
+      ],
+      "verified_exact_points": 861,
+      "all_visible_text_inside_canvas": true,
+      "legend_and_note_clear_of_panels": true,
+      "text": [
+        {
+          "text": "DNS reconstruction assumed $\\delta_{99}$ endpoint closure\n(provisional; 3.31% mismatch).",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "DNS (digitized)",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "SA, $Pr_t=0.9$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "kwSST, $Pr_t=0.9$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "Temperature\u2013velocity relation",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$U$ [m/s]",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "0",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "200",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "400",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "600",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "800",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "1000",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$T$ [K]",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "150",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "200",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "250",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "300",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "Van Driest inner velocity",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$y^+$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{-1}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{0}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{1}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{2}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{3}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$\\mathdefault{10^{4}}$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "$u_{VD}^+$",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "0",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "5",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "10",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "15",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "20",
+          "base_font_pt": 10.5
+        },
+        {
+          "text": "25",
+          "base_font_pt": 10.5
+        }
+      ]
+    }
+  }
+}

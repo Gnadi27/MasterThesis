@@ -1,0 +1,322 @@
+\section{Adiabatic turbulent boundary layer profiles}
+\label{sec:numerical-vv:adiabatic-turbulent-boundary-layer-profiles}
+
+The Mach-4.5 flat-plate case investigated in this section assesses the predictions of the
+\(k\)--\(\omega\) shear-stress-transport (SST) and Spalart--Allmaras (SA)
+models in an attached, compressible turbulent boundary layer. The reference
+solutions are the Wind-US calculations distributed through the NASA Glenn
+NPARC Alliance Validation Archive~\citep{DippoldLenahan2012Mach45FlatPlate}.
+The experimental basis is the flat-plate investigation of
+Coles~\citep{Coles1953SupersonicFlatPlate}, with the experimental data used here
+are taken from the NASA archive\footnote{\url{https://www.grc.nasa.gov/WWW/wind/valid/fpmach45/fpmach45.html} [accessed June 11th 2026]}. The principal objective is to compare
+OpenFOAM/HiSA with NASA's implementation of the corresponding turbulence
+models. This comparison checks whether the predicted velocity profiles and
+wall shear reproduce the reference behaviour qualitatively. The measurements provide an
+additional assessment against physical observations.
+\par\medskip
+
+The selected NASA solutions use Wind-US~3.162 on a structured mesh with its
+unstructured solver, denoted \emph{Str-Uns} in the archive and figure legends.
+Both reference calculations assume a fully turbulent boundary
+layer. The comparison therefore concerns the development of an attached
+turbulent layer, while the different transition and tripping histories in
+the experiment remain relevant when interpreting agreement with Coles' experimental results.
+The present section considers the OpenFOAM native implementation of \(k\)--\(\omega\) SST and the density-corrected SA implementation (see Section \ref{subsec:ext:spalart-allmaras-of-correction}).
+
+\paragraph{General case setup.}
+
+The flow is parallel to a flat-plate at \(M_\infty=4.512\), with no imposed
+geometrical turning or external streamwise pressure gradient. The lower
+boundary upstream of \(x=0\) is a slip wall, where the subsequent no-slip, adiabatic plate
+begins at \(x=0\). No transition model or explicit trip is included, the no-slip wall is solved as fully turbulent. Both OpenFOAM/HiSA cases use one spanwise cell with \texttt{empty} side
+boundaries. The inlet state is fixed to the prescribed freestream,
+corresponding to the frozen inlet of the NASA case. The upper and rear boundaries use characteristic farfield conditions
+(Section~\ref{subsec:numerical-framework:hisa}). At the viscous wall, velocity is zero and
+pressure and temperature have zero normal gradient, so the adiabatic wall
+temperature is obtained as part of the solution. The upstream slip surface
+is excluded from the viscous-wall distance calculation.
+\par\medskip
+
+Air is represented by a calorically perfect ideal gas with
+\(c_p=1004.5002\,\mathrm{J\,kg^{-1}\,K^{-1}}\),
+\(R=287.00005\,\mathrm{J\,kg^{-1}\,K^{-1}}\), and \(\gamma=1.4\).
+The molecular viscosity matches the Wind-US Sutherland law after conversion
+to SI units,
+\begin{equation}
+    \mu(T)=A_s\frac{T^{3/2}}{T+T_s},
+    \qquad A_s=1.49610554\times10^{-6}\,\mathrm{Pa\,s\,K^{-1/2}},
+    \qquad T_s=120\,\mathrm{K}.
+    \label{eq:coles-sutherland-law}
+\end{equation}
+A constant molecular Prandtl number is imposed through
+\(\lambda=c_p\mu/Pr\), with \(Pr=0.72\). Both turbulence models use a constant \(Pr_t=0.9\), as documented in the NASA Wind-US user guide, thus a reasonable assumption to also have been used for the NASA reported results. Table~\ref{tab:coles-flow-conditions} summarizes the matched physical
+conditions. The freestream viscosity is \(\mu_\infty=3.89802\times10^{-6}\,\mathrm{Pa\,s}\), giving
+\(Re_x/x=6.98354\times10^6\,\mathrm{m^{-1}}\).
+
+% Sources: WSL /home/mgnadlinger/Coles_TurbZPGFP/{kwSST,SA}/0/include/setup,
+% constant/{thermophysicalProperties,turbulenceProperties}, and 20000 fields.
+% NASA Downloads/Cases/Str-Uns_{SST,SA}/FP4p5.{dat,lis}.
+
+\begin{table}[H]
+    \centering
+    \caption{Freestream and thermal-model quantities prescribed for the
+        OpenFOAM/HiSA Coles flat-plate cases.}
+    \label{tab:coles-flow-conditions}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.12}
+    \begin{tabular}{@{}p{0.62\linewidth}>{\centering\arraybackslash}p{0.31\linewidth}@{}}
+        \toprule
+        Quantity & {OpenFOAM/HiSA} \\
+        \midrule
+        Mach number \(M_\infty\) & \num{4.512} \\
+        Static pressure \(p_\infty\) [\(\mathrm{Pa}\)]
+            & \num{671.719} \\
+        Static temperature \(T_\infty\) [\(\mathrm{K}\)]
+            & \num{60.4672} \\
+        Freestream velocity \(U_\infty\) [\(\mathrm{m\,s^{-1}}\)]
+            & \num{703.289} \\
+        Heat-capacity ratio \(\gamma\) & \num{1.4} \\
+        \raggedright Unit Reynolds number \(Re_x/x\) [\(\mathrm{m^{-1}}\)]
+            & \num{6.984e6} \\
+        Molecular Prandtl number \(Pr\)
+            & \num{0.72} \\
+        Turbulent Prandtl number \(Pr_t\) & \num{0.9} \\
+        Wall thermal condition & {Adiabatic} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\paragraph{Mesh and turbulence-model settings.}
+
+Both cases use the structured mesh taken from the NASA Str-Uns
+flat-plate validation archive~\citep{DippoldLenahan2012Mach45FlatPlate}
+and converted to OpenFOAM, with coordinates converted from feet to metres.
+Figure~\ref{fig:coles-nasa-mesh} shows the mesh and boundary-condition
+layout shown in the archive.
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; supplied NASA illustration):
+    %   Included figure: 06_mesh_NASA_archive_Figure_5.png in this Figures directory.
+    %   Retained NASA source image:
+    %     /home/mgnadlinger/Coles_TurbZPGFP/NASA Downloads/Grids/Str-Str/FP4p5_BCs.png
+    %   Windows copy:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/NASA Downloads/Grids/Str-Str/FP4p5_BCs.png
+    %   The included and WSL source images are pixel-identical RGB 488 x 379.
+    %     File hashes differ because the manuscript copy omits PNG metadata.
+    %     Source SHA-256: 4cb241bda0aa47ca6a5063887f359de35687f1c7c584b889ed38bcdf6f2b0765.
+    %   This is the NASA boundary-condition schematic stored under Str-Str,
+    %     not the separate oblique Str-Uns grid overview FP4p5_StrUns.png.
+    %   Actual simulation grid provenance: NASA Downloads/Grids/Str-Uns/
+    %     FP4p5_StrUns.{cgd,gg}, with OpenFOAM conversion retained in
+    %     openfoam_FP4p5_StrUns/{convert.py,conversion_metadata.json}; these
+    %     files are present under the WSL Coles_TurbZPGFP root.
+    %   NASA Tecplot source: Grids/Str-Str/FP4p5_BCs.lay in the same NASA
+    %     Downloads root; it loads FP4p5_StrStr.cgd and contains the displayed
+    %     boundary-condition annotations. Both files are retained locally.
+    %     This supplied illustration has no thesis Python plotting script.
+    % End figure provenance.
+    \includegraphics[width=0.8\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/06_mesh_NASA_archive_Figure_5.png}
+    \caption{Structured mesh and boundary-condition layout for the
+        Mach-4.5 flat-plate case. Taken from the NASA NPARC Alliance
+        Validation Archive~\citep{DippoldLenahan2012Mach45FlatPlate}.}
+    \label{fig:coles-nasa-mesh}
+\end{figure}
+
+The two models use the inlet quantities and near-wall conditions listed in
+Table~\ref{tab:coles-turbulence-setup}. These values
+match the NASA inlet settings.
+
+% Inlet quantities: 0/include/setup; wall resolution: 20000/yPlus and
+% postProcessing/yPlus/4000/yPlus.dat at iteration 20000.
+
+\begin{table}[H]
+    \centering
+    \caption{Turbulence inputs and recorded wall resolution of the two
+        OpenFOAM/HiSA cases. Inlet viscosity ratios refer to the molecular
+        kinematic viscosity used in the inlet setup. Wall \(y^+\) statistics
+        are from the saved iteration 20\,000.}
+    \label{tab:coles-turbulence-setup}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.12}
+    \begin{tabular}{@{}p{0.42\linewidth}S[table-format=1.5e-1,table-column-width=0.25\linewidth] S[table-format=1.5e-1,table-column-width=0.26\linewidth]@{}}
+        \toprule
+        Quantity & {SST} & {SA} \\
+        \midrule
+        \(k_\infty\) [\(\mathrm{m^2\,s^{-2}}\)]
+            & 2.32369e-3 & {---} \\
+        \(\omega_\infty\) [\(\mathrm{s^{-1}}\)]
+            & 2.30738e4 & {---} \\
+        \(\widetilde{\nu}_\infty\) [\(\mathrm{m^2\,s^{-1}}\)]
+            & {---} & 5.03533e-4 \\
+        Inlet viscosity ratio
+            & {\(\nu_{t,\infty}/\nu_\infty=0.001\)}
+            & {\(\widetilde{\nu}_\infty/\nu_\infty=5\)} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Iterative convergence is assessed from the stability of the physical wall shear
+stress. Across the six saved solutions from iterations 18\,000 to
+20\,000, the maximum peak-to-peak downstream skin-friction variation
+for \(x\geq0.1\,\mathrm{m}\) is \(0.0875\%\) for SA and
+\(0.00352\%\) for SST. At the profile station, the corresponding
+variations are below \(0.0002\%\), while changes in the streamwise
+velocity profiles are below \(0.00005\%\) of \(U_\infty\).
+The remaining flow-residual jitter is treated as numerical; it does not
+produce material changes in these comparison quantities. The figures
+therefore use the accepted iteration-20\,000 solutions as fully converged.
+
+\paragraph{Extraction and normalization.}
+
+The streamwise and wall-normal velocities are denoted by \(u\) and \(v\) respectively.
+Both are normalized with \(U_\infty=703.289\,\mathrm{m\,s^{-1}}\). The streamwise skin-friction
+coefficient is evaluated as
+\begin{equation}
+    C_{f,x}(x)=\frac{|\tau_{w,x}(x)|}
+        {\tfrac12\rho_\infty U_\infty^2},
+    \qquad \rho_\infty=0.0387067\,\mathrm{kg\,m^{-3}}.
+    \label{eq:coles-skin-friction}
+\end{equation}
+NASA lengths and velocities are converted from feet and feet per
+second to SI units.
+
+\subsection{Velocity profiles and skin-friction}
+\label{subsec:coles-results}
+
+Figure~\ref{fig:coles-velocity-profiles} compares both velocity components
+at \(x=0.5461\,\mathrm{m}\). The streamwise profiles closely follow
+the NASA solutions through the boundary layer and approach the same outer
+velocity. the logarithmically plotted velocity profile in Figure~\ref{fig:coles-velocity-experiment} gives an even better view of the close matching between the numerical results by the NASA Wind-US Code and the herin used OpenFOAM/HiSA framework.
+
+% Both Coles velocity plots are regenerated by Figures/plot_coles_profile_fonts.py.
+% Inputs: Files/ValData/Tunel/03 TurbZPGFP/01 Coles/validation/
+% outputs_nasa_matched_20000/data/{kwSST,SA}/profile_x0p5461.csv
+% and the NASA Downloads reference tables; original simulations:
+% /home/mgnadlinger/Coles_TurbZPGFP/{kwSST,SA}.
+% Caption-sized typography update: curve data and axis limits preserved;
+% source hashes are recorded in Figures/coles_profile_font_provenance.json.
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; WSL simulations, Windows plotting inputs):
+    %   Included figure: 06_Coles_velocity_profiles.pdf in this Figures directory.
+    %   Current typography script:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_coles_profile_fonts.py
+    %   Original simulation root (WSL): /home/mgnadlinger/Coles_TurbZPGFP
+    %     Cases: {kwSST,SA}/20000/U and constant/polyMesh; the extraction in
+    %     validation/replot_nasa_matched.py interpolates cell-centre values in x
+    %     to x = 0.5461 m and adds the no-slip wall point.
+    %   Windows analysis / retained-data root:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles
+    %   Inputs relative to that root:
+    %     validation/outputs_nasa_matched_20000/data/{kwSST,SA}/profile_x0p5461.csv
+    %     NASA Downloads/Cases/Str-Uns_{SST,SA}/FP4p5.BL.dat
+    %     validation/outputs_nasa_matched_20000/validation_summary.json.
+    %   Scientific plotting functions: validation/compare_nasa_figures.py;
+    %     matching/extraction and preceding exports: validation/replot_nasa_matched.py.
+    %   The current export changes typography/layout; curve coordinates and axis
+    %     limits are checked against the original plotting functions by the script.
+    %   Audit: coles_profile_font_provenance.json in this Figures directory.
+    %     All 11 source hashes were independently rechecked and match. The raw
+    %     WSL iteration-20000 U and wallShearStress hashes for both cases also
+    %     match the accepted validation_summary.json. Normalization uses its
+    %     U_inf = 703.2894492195271 m/s; NASA feet/ft/s are converted to SI.
+    %   Plotting entry point: compare_nasa_figures.plot_fig6() (u and v).
+    %   Preceding export: validation/outputs_nasa_matched_20000/fig6_velocity_profiles.pdf
+    %     under either the Windows or WSL Coles root. The current manuscript file
+    %     was subsequently re-exported by plot_coles_profile_fonts.py.
+    % End figure provenance.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/06_Coles_velocity_profiles.pdf}
+    \caption[Coles case: velocity profiles compared with NASA Wind-US]{%
+        Streamwise and wall-normal velocity profiles at
+        \(x=21.5\,\mathrm{in}=0.5461\,\mathrm{m}\).
+        Dark curves with symbols show present OpenFOAM/HiSA results; pale curves show the
+        corresponding NASA Str-Uns SST and SA solutions.}
+    \label{fig:coles-velocity-profiles}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; WSL simulations, Windows plotting inputs):
+    %   Included figure: 06_Coles_velocity_experiment.pdf in this Figures directory.
+    %   Current typography script:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_coles_profile_fonts.py
+    %   Original simulation root (WSL): /home/mgnadlinger/Coles_TurbZPGFP
+    %     Cases: {kwSST,SA}/20000/U and constant/polyMesh; the extraction in
+    %     validation/replot_nasa_matched.py interpolates cell-centre values in x
+    %     to x = 0.5461 m and adds the no-slip wall point.
+    %   Windows analysis / retained-data root:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles
+    %   Inputs relative to that root:
+    %     validation/outputs_nasa_matched_20000/data/{kwSST,SA}/profile_x0p5461.csv
+    %     NASA Downloads/Cases/Str-Uns_{SST,SA}/FP4p5.BL.dat
+    %     validation/outputs_nasa_matched_20000/validation_summary.json.
+    %   Scientific plotting functions: validation/compare_nasa_figures.py;
+    %     matching/extraction and preceding exports: validation/replot_nasa_matched.py.
+    %   The current export changes typography/layout; curve coordinates and axis
+    %     limits are checked against the original plotting functions by the script.
+    %   Audit: coles_profile_font_provenance.json in this Figures directory.
+    %     All 11 source hashes were independently rechecked and match. The raw
+    %     WSL iteration-20000 U and wallShearStress hashes for both cases also
+    %     match the accepted validation_summary.json. Normalization uses its
+    %     U_inf = 703.2894492195271 m/s; NASA feet/ft/s are converted to SI.
+    %   Experimental input: NASA Downloads/Results/FP4p5-BL.dat, Experiment zone,
+    %     relative to the Windows analysis root above; supplied Coles profile.
+    %   Plotting entry point: compare_nasa_figures.plot_fig7() (u vs log wall distance).
+    %   Preceding export: validation/outputs_nasa_matched_20000/fig7_u_vs_experiment.pdf
+    %     under either the Windows or WSL Coles root. The current manuscript file
+    %     was subsequently re-exported by plot_coles_profile_fonts.py.
+    % End figure provenance.
+    \includegraphics[width=0.85\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/06_Coles_velocity_experiment.pdf}
+    \caption[Coles case: streamwise velocity and experimental reference]{%
+        Streamwise velocity at \(x=0.5461\,\mathrm{m}\), plotted against
+        logarithmic wall distance. The experimental reference is the
+        \emph{Experiment} profile supplied with the NASA archive; the
+        numerical curves are the same SST and SA cases as in
+        Figure~\ref{fig:coles-velocity-profiles}.}
+    \label{fig:coles-velocity-experiment}
+\end{figure}
+
+Figure~\ref{fig:coles-skin-friction} presents the skin-friction coefficient,
+including separate leading-edge and downstream views. Similarly to the velocity boundary layer profiles, the OpenFOAM/HiSA results match the NASA results, showing that shear-stress calculations are consistent between both codes. The three Coles fence-trip series provide experimental context for the downstream trend. 
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; WSL original, retained Windows copy):
+    %   Included figure: 06_Coles_skin_friction.pdf in this Figures directory.
+    %   Exact original export (SHA-256 matched):
+    %     /home/mgnadlinger/Coles_TurbZPGFP/validation/outputs_nasa_matched_20000/fig8_cfx.pdf
+    %     fcbb0236d08c1ea329bcde05cf49880c32cce933a705ea6be865cce79b0498a1.
+    %   Export / extraction script:
+    %     /home/mgnadlinger/Coles_TurbZPGFP/validation/replot_nasa_matched.py
+    %     (iteration 20000, accepted convergence; plot_fig8 from compare_nasa_figures.py).
+    %   Windows copy of scripts, exported data and NASA reference tables:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles
+    %   Data relative to that Windows root:
+    %     validation/outputs_nasa_matched_20000/data/{kwSST,SA}/skin_friction.csv
+    %     NASA Downloads/Cases/Str-Uns_{SST,SA}/FP4p5.Cf.dat
+    %     NASA Downloads/Results/FP4p5-Cf.dat (three Coles fence-trip zones).
+    %   Raw WSL cases: /home/mgnadlinger/Coles_TurbZPGFP/{kwSST,SA}/
+    %     20000/wallShearStress and constant/polyMesh, wallViscous patch.
+    %     Cfx = abs(tau_x)/q_inf; q_inf = 9572.46608287679 Pa.
+    %     Experimental Rex is converted to x with Re/m = 6983542.88149546.
+    %   Raw iteration-20000 U and wallShearStress hashes were rechecked against
+    %     validation/outputs_nasa_matched_20000/validation_summary.json for both
+    %     cases and match. The manuscript PDF is an exact copy of the original
+    %     export; the two velocity plots underwent a later typography update.
+    % End figure provenance.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/06_Coles_skin_friction.pdf}
+    \caption[Coles case: skin-friction compared with NASA and experiment]{%
+        Streamwise skin-friction coefficient: full plate
+        (top left), leading-edge detail (top right) and downstream detail
+        (bottom). Black symbols denote the three archived Coles fence-trip series \cite{Coles1953SupersonicFlatPlate}.}
+    \label{fig:coles-skin-friction}
+\end{figure}
+
+\paragraph{Assessment.}
+
+With matched physical mesh dimensions, freestream Reynolds number and
+molecular and turbulent Prandtl numbers, OpenFOAM/HiSA reproduces the NASA
+velocity profiles and downstream wall shear closely.  The result supports the consistency of the turbulence-model implementations for an attached, adiabatic compressible boundary layer.

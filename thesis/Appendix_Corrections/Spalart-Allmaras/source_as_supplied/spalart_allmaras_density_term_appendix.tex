@@ -1,0 +1,1052 @@
+% Thesis integration: compile this report separately and include the resulting
+% PDF with the thesis' pdfpages setup.  The report intentionally owns its
+% preamble and bibliography so that its audited layout remains reproducible.
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+
+\hypersetup{
+  pdftitle={Consistency of the density treatment in the compressible Spalart--Allmaras model of OpenFOAM v2412},
+  pdfauthor={Michael Gnadlinger},
+  pdfsubject={Thesis appendix report: paper-to-code derivation and source audit},
+  pdfkeywords={Spalart--Allmaras, OpenFOAM, compressible flow, density gradient, turbulence model}
+}
+\urlstyle{same}
+
+\definecolor{SAHypBlue}{HTML}{17324D}
+\definecolor{SAHypSteel}{HTML}{456C86}
+\definecolor{SAHypLightBlue}{HTML}{EAF2F7}
+\definecolor{SAHypLightGreen}{HTML}{EAF6EF}
+\definecolor{SAHypLightRed}{HTML}{FBEDEC}
+\definecolor{SAHypLightGold}{HTML}{FFF6E5}
+\definecolor{SAHypGray}{HTML}{F5F7F9}
+\definecolor{SAHypRule}{HTML}{D8E0E6}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\renewcommand{\arraystretch}{1.22}
+\setlist[itemize]{leftmargin=*,topsep=0.35em,itemsep=0.2em}
+\setlist[enumerate]{leftmargin=*,topsep=0.35em,itemsep=0.3em}
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+
+\newcommand{\SADt}{\frac{\mathrm D}{\mathrm Dt}}
+\newcommand{\SAgrad}{\boldsymbol{\nabla}}
+\newcommand{\SAdiv}{\boldsymbol{\nabla}\!\cdot}
+\newcommand{\SAcode}[1]{\texttt{#1}}
+\newcommand{\SAOF}{OpenFOAM}
+
+\newcommand{\SAnote}[2]{%
+  \vspace{0.3em}%
+  \noindent\colorbox{#1}{%
+    \begin{minipage}{0.965\linewidth}
+      #2
+    \end{minipage}}%
+  \vspace{0.3em}%
+}
+
+\newcommand{\SAeqbox}[2]{%
+  \vspace{0.1em}%
+  \noindent\fcolorbox{SAHypRule}{#1}{%
+    \begin{minipage}{0.955\linewidth}
+      #2
+    \end{minipage}}%
+  \vspace{0.1em}%
+}
+
+\lstdefinestyle{SAFoam}{
+  backgroundcolor=\color{SAHypGray},
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{SAHypBlue}\bfseries,
+  commentstyle=\color{SAHypSteel},
+  numbers=left,
+  numberstyle=\scriptsize\color{gray},
+  numbersep=7pt,
+  frame=single,
+  rulecolor=\color{SAHypRule},
+  breaklines=true,
+  keepspaces=true,
+  columns=fullflexible,
+  showstringspaces=false,
+  aboveskip=7pt,
+  belowskip=7pt
+}
+
+\title{\vspace{-3em}\textcolor{SAHypBlue}{Consistency of the density treatment in the compressible Spalart--Allmaras model of OpenFOAM v2412}\\[1.2em]
+\large\textit{Paper-to-code comparison and identification of the missing density-gradient term}\vspace{-1em}}
+\author{Michael Gnadlinger}
+\date{August 11, 2026}
+
+\begin{document}
+\maketitle
+\vspace{-1em}
+\hrule
+\vspace{-1em}
+
+\section{Summary and principal finding}
+\label{sec:sa-summary}
+
+This report audits the single-phase compressible Spalart--Allmaras (SA)
+transport equation assembled by \SAOF{} v2412 (which is unchanged to the, as of writing, latest v2606).  It compares the native
+finite-volume equation with the material-form equation cited by \SAOF{} from
+Spalart and Allmaras (1994) and with its equivalent density-conservative form
+given by Allmaras, Johnson, and Spalart (2012)
+\cite{SpalartAllmaras1994,AJS2012}.
+
+The issue is confined to the diffusion term.  Define
+\[
+  D_{\widetilde{\nu}}=\frac{\nu+\widetilde{\nu}}{\sigma}.
+\]
+Native \SAOF{} uses the density-weighted diffusive flux
+\[
+  \SAdiv\!\left(
+    \rho D_{\widetilde{\nu}}\SAgrad\widetilde{\nu}
+  \right),
+\]
+whereas multiplying the cited material equation by density requires
+\[
+  \rho\SAdiv\!\left(
+    D_{\widetilde{\nu}}\SAgrad\widetilde{\nu}
+  \right).
+\]
+These expressions are not equal for variable density.  The product rule gives
+\[
+  \SAdiv\!\left(
+    \rho D_{\widetilde{\nu}}\SAgrad\widetilde{\nu}
+  \right)
+  =
+  \rho\SAdiv\!\left(
+    D_{\widetilde{\nu}}\SAgrad\widetilde{\nu}
+  \right)
+  +D_{\widetilde{\nu}}
+   \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}.
+\]
+The 2012 conservative equation cancels the final cross-gradient contribution
+explicitly; native \SAOF{} does not.  Consequently, expanding the native
+equation back into material form produces the additional term
+\begin{equation}
+  \boxed{
+  \frac{\nu+\widetilde{\nu}}{\sigma}
+  \SAgrad\ln\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}}
+  \label{eq:sa-summary-extra-term}
+\end{equation}
+relative to the cited 1994 equation.  Equivalently, relative to the 2012
+conservative equation, the native physical right-hand side lacks
+\begin{equation}
+  \boxed{
+  -\frac{\nu+\widetilde{\nu}}{\sigma}
+  \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}}.
+  \label{eq:sa-summary-missing-term}
+\end{equation}
+
+\SAnote{SAHypLightBlue}{%
+\begin{itemize}
+  \item \textbf{Single identified mismatch.}  Native \SAOF{} places
+    \(\rho\) inside the SA diffusive flux without the cross-gradient
+    cancellation required to recover the cited material equation.
+  \item \textbf{Two equivalent checks.}  The native material equation has
+    the additional positive term in
+    Eq.~\eqref{eq:sa-summary-extra-term}; equivalently, its conservative
+    physical right-hand side lacks the negative term in
+    Eq.~\eqref{eq:sa-summary-missing-term}.  These are two descriptions of
+    the same continuum mismatch, not two independent inconsistencies.
+  \item \textbf{Corrected implementation.}  The custom
+    \SAcode{SpalartAllmarasDensityCorrected} model adds the required term with
+    the coefficient and matrix sign needed to cancel the native
+    density-product term.  It matches the 2012 diffusion coefficient when
+    \SAcode{sigmaNut} is identified with the paper's \(\sigma\).
+  \item \textbf{Scope.}  The mismatch vanishes for constant density or when
+    \(\SAgrad\rho\cdot\SAgrad\widetilde{\nu}=0\).  The derivation concerns
+    the continuum transport/diffusion sector; it does not establish complete
+    closure identity, exact discrete equivalence, or improved predictions.
+  \item \textbf{Independent NASA implementation warning.}  Note~4 of the
+    NASA Turbulence Modeling Resource warns that some SA implementations
+    ``incorrectly introduce the density inside the derivatives of the SA
+    equation'' and states that this changes predictions for supersonic flows;
+    it explicitly distinguishes the separately formulated Catris--Aupoix
+    proposal as having a valid basis~\cite{NASATMRSA}.  The NASA note does not
+    identify \SAOF{} by name.  Its relevance here follows from the independent
+    reconstruction of Eq.~\eqref{eq:sa-native-conservative}, which establishes
+    that the native implementation has precisely the warned-about derivative
+    structure.
+\end{itemize}
+}
+
+\subsection*{Outline}
+
+\begin{itemize}
+  \item Section~\ref{sec:sa-reference} identifies the literature equations,
+    citation basis, and audit scope.
+  \item Section~\ref{sec:sa-native-reconstruction} follows the actual
+    \SAOF{} operators from code to the native \SAOF implemented conservative continuum equation.
+  \item Section~\ref{sec:sa-comparison} directly compares the Allmaras 2012
+    and native \SAOF{} conservative equations and identifies the missing term.
+  \item Section~\ref{sec:sa-conclusion} summarizes the established algebraic
+    result and interprets the native equation as a modified SA model.
+  \item Appendix~\ref{sec:sa-correction} audits the custom correction,
+    including the \SAcode{fvm::Su} sign and a dimensional check.
+  \item Appendix~\ref{sec:sa-paper-derivation} retains the complete
+    line-by-line derivation from the material equation to its
+    density-conservative form.
+\end{itemize}
+
+\section{Reference equations and audit scope}
+\label{sec:sa-reference}
+
+The SA working variable is denoted by \(\widetilde{\nu}\), the molecular
+kinematic viscosity by \(\nu\), density by \(\rho\), velocity by
+\(\boldsymbol u\), and the model diffusion constant by \(\sigma\).  The
+production, destruction, and trip contributions are grouped as \(P\), \(D\),
+and \(T\), respectively.  The diffusion coefficient is left explicitly as
+\((\nu+\widetilde{\nu})/\sigma\) so that every factor remains visible.
+
+\subsection{The cited 1994 material formulation}
+
+The audited \SAOF{} v2412 header cites the 1994 journal article by Spalart and
+Allmaras as the standard-model reference.  That article explicitly defines
+\(\mathrm D/\mathrm Dt\) as the Lagrangian or material derivative and gives the
+full Version-Ia working-variable equation in Appendix Eq.~(A2), printed on
+p.~20 (PDF page 16):
+\begin{align}
+  \SADt\widetilde{\nu}
+  ={}&c_{b1}(1-f_{t2})\widetilde S\widetilde{\nu} \notag\\
+  &+\frac{1}{\sigma}
+   \left\{
+     \SAdiv\!\left[(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}\right]
+     +c_{b2}\left|\SAgrad\widetilde{\nu}\right|^2
+   \right\} \notag\\
+  &-\left(c_{w1}f_w-\frac{c_{b1}}{\kappa^2}f_{t2}\right)
+    \left(\frac{\widetilde{\nu}}{d}\right)^2
+  +f_{t1}(\Delta U)^2.
+  \label{eq:sa-1994-material}
+\end{align}
+Production, destruction, and tripping differ in detail from the implementation
+audited below, but the material transport and diffusion structure is the one
+relevant to the density comparison.
+
+The final paragraph of the 1994 appendix states that Eqs.~(A1)--(A6) had been
+applied directly in compressible flow and reports only a weak influence of
+density variations in the slightly supersonic boundary layers then examined.
+Thus the cited journal article supports a density-free material equation for
+compressible use.  It does not give a density-conservative finite-volume
+recasting or prescribe where \(\rho\) should be placed within such a recasting.
+The Turbulence Modeling Resource identifies this journal article as the
+official publication arising from the 1992 conference paper and states that
+the journal version takes precedence~\cite{SpalartAllmaras1994,NASATMRSA}.
+
+\subsection{The Allmaras 2012 standard compressible form}
+This resource explicitly states a conservative form of the SA model, which can be directly compared to the \SAOF{} implementation.
+For this Allmaras et al. (2012) first write their transport equation Eq.~(2), printed on p.~2, as
+\begin{equation}
+  \SADt\widetilde{\nu}
+  =P-D+T
+  +\frac{1}{\sigma}
+   \left\{
+     \SAdiv\!\left[(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}\right]
+     +c_{b2}\left|\SAgrad\widetilde{\nu}\right|^2
+   \right\}.
+  \label{eq:sa-paper-material}
+\end{equation}
+where production, wall destruction and trip terms are
+\begin{equation*}
+  P=c_{b1}(1-f_{t2})\widetilde{S}\widetilde{\nu},
+  \qquad
+  D=\left(c_{w1}f_w-\frac{c_{b1}}{\kappa^2}f_{t2}\right)
+    \left[\frac{\widetilde{\nu}}{d}\right]^2,
+  \qquad
+  T=f_{t1}(\Delta u)^2.
+\end{equation*}
+
+This formulation is equivalent to the original 1994 model equation (see \ref{eq:sa-1994-material})
+
+Their Section~2.2 explicitly states that this equation applies to both
+incompressible and compressible flow and should be treated as the standard
+compressible form.  They then give the equivalent conservation form as their
+Eq.~(9), printed on p.~3:
+
+\SAeqbox{SAHypLightBlue}{%
+\textbf{density conservative SA model equation}
+\begin{align}
+  0={}&
+  \frac{\partial(\rho\widetilde{\nu})}{\partial t}
+  +\SAdiv(\rho\boldsymbol u\widetilde{\nu})
+  -\rho(P-D+T) \notag\\
+  &-\frac{1}{\sigma}
+   \SAdiv\!\left[\rho(\nu+\widetilde{\nu})
+   \SAgrad\widetilde{\nu}\right]
+  -\frac{c_{b2}}{\sigma}\rho
+   \left|\SAgrad\widetilde{\nu}\right|^2 \notag\\
+  &+\frac{\nu+\widetilde{\nu}}{\sigma}
+   \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}.
+  \label{eq:sa-paper-conservative}
+\end{align}
+}\par
+The final term is positive because Eq.~\eqref{eq:sa-paper-conservative} is an
+all-terms-left residual.  It is negative when moved to the physical
+right-hand side.  Allmaras 2012 Eq.~(10), their shock-layer integral, independently
+repeats the negative right-hand-side sign~\cite{AJS2012}.
+
+Appendix \ref{sec:sa-paper-derivation} contains the full mathematical derivation from the material equation Eq. (\ref{eq:sa-1994-material}) to the density conservative form Eq. (\ref{eq:sa-paper-conservative}) and proofs that no density external correction or similar is being applied, but that it is a clean mathematical derivation. Thus Eq. (\ref{eq:sa-paper-conservative}) should be understood as the faithful density conservative model equation of the original SA model.
+
+\subsection{The 1992 Outlook on possible compressibility additions}
+
+The earlier conference paper is retained here only for its historical Outlook.
+That discussion mentions possible compressibility additions involving
+\(\SAgrad\rho\cdot\SAgrad\widetilde{\nu}\), considers writing the transport
+equation for \(\widetilde{\mu}\) instead of \(\widetilde{\nu}\), and notes
+freedom to place density inside or outside derivatives.  It does not prescribe
+a final coefficient, sign, or unique conservative equation, and therefore does
+not define the density-weighted flux used by native \SAOF{} or establish its
+equivalence to the standard material equation~\cite{SpalartAllmaras1992}.
+
+\section{Reconstruction of the native OpenFOAM equation}
+\label{sec:sa-native-reconstruction}
+
+The governing equation is assembled in the shared SA base class.  The relevant
+\SAOF{} v2412 code is shown first and subsequently the continuum equation is translated from it term-by-term to the underlying mathematical equation. Which can then be compared to the Allmaras 2012 published density conservative SA model equation. 
+\Needspace{18\baselineskip}
+\begin{lstlisting}[style=SAFoam,language=C++,firstnumber=468,
+  caption={Native SA equation assembly in SpalartAllmarasBase.C.},
+  label={lst:sa-native-assembly}]
+fvm::ddt(alpha, rho, nuTilda_)
++ fvm::div(alphaRhoPhi, nuTilda_)
+- fvm::laplacian(alpha*rho*DnuTildaEff(), nuTilda_)
+- Cb2_/sigmaNut_*alpha()*rho()*magSqr(fvc::grad(nuTilda_)()())
+==
+  Cb1_*alpha()*rho()*Stilda()*nuTilda_()*(1 - ft2())
+- fvm::Sp
+  (
+    (Cw1_*fw(Stilda, dTilda) - Cb1_/sqr(kappa_)*ft2())
+   *alpha()*rho()*nuTilda_()/sqr(dTilda()),
+    nuTilda_
+  )
++ fvOptions(alpha, rho, nuTilda_)
+\end{lstlisting}
+This code is at
+\SAcode{SpalartAllmarasBase.C:466--481}.  The coefficient used by the
+Laplacian is defined at lines 383--389 as\par
+\begin{equation}
+  \SAcode{DnuTildaEff()}
+  =\frac{\nu+\widetilde{\nu}}{\sigma}.
+  \label{eq:sa-effective-diffusivity}
+\end{equation}
+Here and below, the code coefficient \SAcode{sigmaNut} is denoted by
+\(\sigma\).  Its v2412 default is the configurable decimal
+\SAcode{0.66666}; exact numerical agreement with the paper value
+\(\sigma=2/3\) requires configuring the same value.  The custom correction
+reuses \SAcode{DnuTildaEff} and therefore cancels the native density-product
+term for either setting.
+
+The thin RAS wrapper does not replace this equation; it supplies wall distance
+and viscosity-related updates and inherits the base-class transport equation.
+
+The reconstruction below is restricted to the bulk/interior transport
+equation assembled in Listing~\ref{lst:sa-native-assembly}.  It precedes and
+does not include the subsequent \SAcode{relax()},
+\SAcode{fvOptions.constrain()}, \SAcode{boundaryManipulate()} (including any
+boundary-row edits made by constrained patch fields), \SAcode{solve()}, the
+post-solve \SAcode{bound()}, or
+\SAcode{nuTilda\_.correctBoundaryConditions()} calls.  Those operations may
+modify matrix coefficients, sources, boundary-adjacent rows, or the accepted
+field, but in an audit it was not found that these operations correct the identified model deviation.
+
+\subsection{Translate each code term into continuum notation}
+
+For the registered single-phase compressible model, \(\alpha=1\), \(\rho\) is
+the density field, and \SAcode{alphaRhoPhi} is the face mass flux corresponding
+to \(\rho\boldsymbol u\cdot\boldsymbol S_f\).  The mappings below are for this
+single-phase registration and interpret the displayed matrix as an
+all-terms-left residual before reporting a physical right-hand-side sign.
+
+\subsubsection{Transient and convection operators}
+
+With \SAcode{fvm::ddt} and \SAcode{fvm::div} read as their canonical unbounded
+continuum operators, the first two code terms,
+\[
+\begin{split}
+  &\SAcode{fvm::ddt(alpha, rho, nuTilda\_)}
+  \\
+  &\quad+\SAcode{fvm::div(alphaRhoPhi, nuTilda\_)},
+\end{split}
+\]
+represent
+\begin{equation}
+  \frac{\partial(\rho\widetilde{\nu})}{\partial t}
+  +\SAdiv(\rho\boldsymbol u\widetilde{\nu}),
+  \label{eq:sa-native-transport-operators}
+\end{equation}
+This is initially a conservative transport operator, not directly the
+material derivative.  For differentiable fields, applying the product rule
+gives
+\begin{align}
+  &\frac{\partial(\rho\widetilde{\nu})}{\partial t}
+  +\SAdiv(\rho\boldsymbol u\widetilde{\nu}) \notag\\
+  &\quad={}
+  \rho\SADt\widetilde{\nu}
+  +\widetilde{\nu}
+  \left[
+    \frac{\partial\rho}{\partial t}
+    +\SAdiv(\rho\boldsymbol u)
+  \right].
+  \label{eq:sa-native-transport-product-rule}
+\end{align}
+Mass continuity,
+\(\partial_t\rho+\SAdiv(\rho\boldsymbol u)=0\), removes the bracket.
+Consequently,
+\[
+  \SAcode{ddt + div}
+  \quad\longrightarrow\quad
+  \rho\SADt\widetilde{\nu},
+\]
+and it becomes the unweighted material derivative only after the complete
+equation is divided by \(\rho>0\).
+
+This is a continuum/operator mapping, not a scheme-independent statement about
+the assembled matrix.  The selected \SAcode{fvSchemes} may wrap the transient
+or convection operator in a bounded form.  In particular, the bounded
+three-field time scheme subtracts
+\begin{center}
+  \path{fvm::Sp(fvc::ddt(alpha,rho),vf)},
+\end{center}
+whereas the bounded convection scheme subtracts
+\begin{center}
+  \path{fvm::Sp(fvc::surfaceIntegrate(faceFlux),vf)}.
+\end{center}
+These terms change how a discrete mass-continuity residual is apportioned
+between transport and source; they do not contain the diffusion cross-gradient
+\((\nu+\widetilde{\nu})\SAgrad\rho\cdot\SAgrad\widetilde{\nu}/\sigma\).
+
+\subsubsection{Laplacian operator}
+
+Using Eq.~\eqref{eq:sa-effective-diffusivity}, the matrix-left term
+\begin{equation*}
+  -\SAcode{fvm::laplacian}
+  \left(
+    \rho\frac{\nu+\widetilde{\nu}}{\sigma},
+    \widetilde{\nu}
+  \right)
+\end{equation*}
+represents
+\begin{equation}
+  -\frac{1}{\sigma}
+  \SAdiv\!\left[
+    \rho(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right].
+  \label{eq:sa-native-laplacian}
+\end{equation}
+Density is inside the coefficient passed to the Laplacian.  The code therefore
+discretizes a density-weighted conservative diffusive flux; it does not
+discretize \(\rho\) multiplied by a density-free Laplacian.
+
+\subsubsection{Explicit \texorpdfstring{\(c_{b2}\)}{cb2} term}
+
+The code term
+\[
+  -\SAcode{Cb2\_/sigmaNut\_*rho()*magSqr(fvc::grad(nuTilda\_)()())}
+\]
+maps to
+\begin{equation}
+  -\frac{c_{b2}}{\sigma}\rho
+  \left|\SAgrad\widetilde{\nu}\right|^2.
+  \label{eq:sa-native-cb2}
+\end{equation}
+The \(c_{b2}\) term is part of the modeled nonlinear diffusion in both
+papers.  It is distinct from the density product-rule term and must not be
+interpreted as the missing cancellation.
+
+\subsubsection{Production and destruction terms}
+
+The first term on the code right-hand side represents the paper's production
+term:
+\[
+  \SAcode{Cb1\_*rho()*Stilda()*nuTilda\_()*(1-ft2())}
+  \quad\longrightarrow\quad
+  \rho P,
+\]
+where
+\begin{equation}
+  P=c_{b1}(1-f_{t2})\widetilde S\widetilde{\nu}.
+  \label{eq:sa-native-production}
+\end{equation}
+The implicit \SAcode{fvm::Sp} term represents destruction.  Because it is
+preceded by a minus sign on the code right-hand side, its continuum meaning is
+\(-\rho D\), where
+\begin{equation}
+  D=
+  \left(
+    c_{w1}f_w-\frac{c_{b1}}{\kappa^2}f_{t2}
+  \right)
+  \left(\frac{\widetilde{\nu}}{d}\right)^2.
+  \label{eq:sa-native-destruction}
+\end{equation}
+Thus the modeled right-hand side in the native equation is \(\rho(P-D)\).
+Native \SAOF{} has no trip term \(T\); comparison with the full paper equation
+therefore uses \(T=0\).  The final
+\SAcode{fvOptions(alpha, rho, nuTilda\_)} entry permits additional case-defined
+sources.  It is not part of the SA paper equation and is omitted from the
+reconstructed native equation.
+
+For the density audit, \(P\) and \(D\) are held symbolically fixed so that the
+transport and diffusion sectors can be compared directly.  This does not
+assert complete closure identity: native \SAOF{} uses the
+\(\widetilde S\) limiter
+\(\max[\Omega+f_{v2}\widetilde{\nu}/(\kappa d)^2,C_s\Omega]\), which is not
+identical to the Allmaras 2012 baseline and proposed negative-\(\widetilde S\)
+continuation.
+
+\subsection{Assemble the mathematical equation}
+
+Combining the preceding mappings gives the all-terms-left continuum meaning of
+the native finite-volume assembly:
+\begin{align}
+  0={}&
+  \frac{\partial(\rho\widetilde{\nu})}{\partial t}
+  +\SAdiv(\rho\boldsymbol u\widetilde{\nu})
+  -\rho(P-D) \notag\\
+  &-\frac{1}{\sigma}
+    \SAdiv\!\left[
+      \rho(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+    \right]
+  -\frac{c_{b2}}{\sigma}\rho
+    \left|\SAgrad\widetilde{\nu}\right|^2.
+  \label{eq:sa-native-residual}
+\end{align}
+Equivalently, moving the modeled and diffusion terms to the physical
+right-hand side gives:
+
+\SAeqbox{SAHypLightBlue}{%
+\textbf{Native OpenFOAM continuum equation}
+\begin{align}
+  \frac{\partial(\rho\widetilde{\nu})}{\partial t}
+  +\SAdiv(\rho\boldsymbol u\widetilde{\nu})
+  ={}&\rho(P-D) \notag\\
+  &+\frac{1}{\sigma}
+    \SAdiv\!\left[
+      \rho(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+    \right]
+  +\frac{c_{b2}}{\sigma}\rho
+    \left|\SAgrad\widetilde{\nu}\right|^2.
+  \label{eq:sa-native-conservative}
+\end{align}
+}\par
+Equation~\eqref{eq:sa-native-conservative} is not copied from either paper; it
+is the continuum equation represented by the audited native finite-volume
+assembly, expressed in the papers' notation with \(\alpha=1\),
+\SAcode{fvOptions} suppressed, and \(T=0\).  For the incompressible
+registration, both \(\alpha\) and \(\rho\) are compile-time one fields, so the
+density issue vanishes exactly.
+
+\Needspace{0.47\textheight}
+\section{Direct comparison and identified error}
+\label{sec:sa-comparison}
+
+Equation~\eqref{eq:sa-paper-conservative} is the Allmaras 2012 conservative
+equation, and Eq.~\eqref{eq:sa-native-conservative} is the equation
+reconstructed term by term from native \SAOF{}.  Set \(T=0\), as required by
+the native implementation, and hold \(P\), \(D\), and \(\sigma\) fixed.
+After moving the modeled and diffusion terms of
+Eq.~\eqref{eq:sa-paper-conservative} to the physical right-hand side, the
+complete comparison is
+\begin{equation}
+  \left.\mathrm{RHS}\right|_{\text{Allmaras Eq.~\eqref{eq:sa-paper-conservative}},\,T=0}
+  =
+  \left.\mathrm{RHS}\right|_{\text{OpenFOAM Eq.~\eqref{eq:sa-native-conservative}}}
+  -\frac{\nu+\widetilde{\nu}}{\sigma}
+   \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}.
+  \label{eq:sa-direct-comparison}
+\end{equation}
+Every other displayed transport, production, destruction, and diffusion term
+is identical under this comparison.  Equation~\eqref{eq:sa-native-conservative}
+therefore lacks the final negative density-gradient term.
+
+That term is the cancellation required by the product rule
+\[
+  \SAdiv\!\left[
+    \rho(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right]
+  =
+  \rho\SAdiv\!\left[
+    (\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right]
+  +(\nu+\widetilde{\nu})
+   \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}.
+\]
+Without the cancellation, rewriting the native equation in material form
+produces the corresponding positive cross-gradient term.
+
+\SAeqbox{SAHypLightRed}{%
+\textbf{Identified error in the \SAOF implemented equation.}
+
+Relative to Eq.~\eqref{eq:sa-paper-conservative}, the physical right-hand side
+of Eq.~\eqref{eq:sa-native-conservative} lacks
+\[
+  -\frac{\nu+\widetilde{\nu}}{\sigma}
+    \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}.
+\]
+Equivalently, the native material equation contains the additional term
+\[
+  +\frac{\nu+\widetilde{\nu}}{\sigma}
+    \SAgrad\ln\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}.
+\]
+}
+
+The equations agree when density is constant,
+\(\SAgrad\widetilde{\nu}=0\), or the density and working-variable gradients
+are orthogonal.  A nonzero density gradient by itself is not sufficient; the
+cross-gradient alignment determines the contribution.
+
+\section{Conclusion}
+\label{sec:sa-conclusion}
+
+\SAnote{SAHypLightGreen}{%
+Native single-phase compressible \SAOF{} v2412 uses the density-weighted
+diffusive flux
+\[
+  \frac{1}{\sigma}\SAdiv\!\left[
+    \rho(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right]
+\]
+without the explicit conservative cancellation needed to recover
+\[
+  \frac{\rho}{\sigma}\SAdiv\!\left[
+    (\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right].
+\]
+Its material form therefore contains the additional positive term in
+Eq.~\eqref{eq:sa-summary-extra-term}.  The custom
+\SAcode{SpalartAllmarasDensityCorrected} source adds the corresponding positive
+term to the matrix residual, which is negative on the physical right-hand side
+and cancels the native product-rule contribution.  With the same \(\sigma\),
+the resulting diffusion structure agrees with Allmaras 2012 Eq.~(9).  This
+    cancellation is exact at the continuum level under the assumptions stated
+    during the reconstruction in Section~\ref{sec:sa-native-reconstruction};
+    it is not a claim that all nondiffusive closure choices are identical.
+}
+
+Equation~\eqref{eq:sa-native-conservative} nevertheless defines a
+mathematically consistent conservative scalar-transport model if the diffusive
+flux
+\begin{equation}
+  \boldsymbol J_{\widetilde{\nu}}
+  =-\rho D_{\widetilde{\nu}}\SAgrad\widetilde{\nu},
+  \qquad
+  D_{\widetilde{\nu}}\equiv\frac{\nu+\widetilde{\nu}}{\sigma},
+  \label{eq:sa-native-fickian-flux}
+\end{equation}
+is chosen intentionally.  That choice, however, generates the additional
+density-gradient term in the corresponding material equation.  Without the
+cancellation prescribed by Allmaras et al. (2012), the native equation is
+therefore a modified SA model rather than the intended compressible SA
+formulation.
+
+The defensible conclusion is thus a \emph{confirmed
+transport/diffusion-sector deviation from both the 1994 material formulation
+cited by \SAOF{} and the Allmaras 2012 conservative standard}.  This audit
+cannot determine whether the deviation was intentional or arose from an
+unintended derivation error.  The 1992 Outlook shows that alternative
+compressibility additions and density placements were contemplated, but it
+does not define the native density-weighted flux or establish that flux as the
+intended SA model~\cite{SpalartAllmaras1994,SpalartAllmaras1992,AJS2012}.  The
+native \SAOF{} equation and the cited standard therefore represent different
+models in compressible flow.
+
+\clearpage
+\appendix
+\section{Implementation of the corrected model}
+\label{sec:sa-correction}
+
+The custom model first assembles the native equation and then adds the source
+shown below.  The relevant code is in
+\SAcode{SpalartAllmarasDensityCorrected.C:54--66,136--175}.
+\begin{lstlisting}[style=SAFoam,language=C++,firstnumber=54,
+  caption={Density-gradient source in SpalartAllmarasDensityCorrected.},
+  label={lst:sa-custom-correction}]
+const tmp<volVectorField> tgradRho = fvc::grad(rho);
+
+// The stock conservative diffusion contributes
+//     div(rho*DnuTildaEff*grad(nuTilda))
+// on the physical RHS.  Adding this explicit source to the matrix LHS
+// subtracts DnuTildaEff*grad(rho).grad(nuTilda) from that RHS, giving
+// exactly rho*div(DnuTildaEff*grad(nuTilda)).
+nuTildaEqn += fvm::Su
+(
+    DnuTildaEff()
+   *(tgradRho()() & gradNuTilda()),
+    this->nuTilda_
+);
+\end{lstlisting}
+
+The \SAcode{fvm::Su} convention resolves the apparent sign ambiguity.  The
+explicit calls to the field-internal accessors make the expression in
+Listing~\ref{lst:sa-custom-correction} a temporary
+\SAcode{DimensionedField}.  The overload in \SAcode{fvmSup.C:92--103}
+forwards that temporary to the field implementation at lines 72--89, where the
+supplied field is stored as \SAcode{matrix.source() -= V*source}.  Adding the
+source therefore adds
+\begin{equation}
+  +\frac{\nu+\widetilde{\nu}}{\sigma}
+  \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}
+  \label{eq:sa-custom-residual-source}
+\end{equation}
+to the all-terms-left matrix residual, or the negative of this expression to
+the physical right-hand side.  It has the form and sign of the final term in
+Eq.~\eqref{eq:sa-paper-conservative}, is exactly the product-rule cancellation
+identified in Section~\ref{sec:sa-comparison} for the native
+\SAcode{DnuTildaEff}, and has the Allmaras 2012 numerical coefficient when
+\SAcode{sigmaNut} is set to \(2/3\).
+
+The dimensions are consistent:
+\begin{equation}
+  \left[\frac{\nu+\widetilde{\nu}}{\sigma}\right]=L^2T^{-1},
+  \qquad
+  [\SAgrad\rho]=ML^{-4},
+  \qquad
+  [\SAgrad\widetilde{\nu}]=LT^{-1},
+  \label{eq:sa-custom-source-factors-dimensions}
+\end{equation}
+and hence
+\begin{equation}
+  \left[
+    \frac{\nu+\widetilde{\nu}}{\sigma}
+    \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}
+  \right]
+  =ML^{-1}T^{-2}
+  =\left[\frac{\partial(\rho\widetilde{\nu})}{\partial t}\right].
+  \label{eq:sa-custom-source-dimensions}
+\end{equation}
+
+The custom header provides a no-op overload for
+\SAcode{geometricOneField} density, so the incompressible registration remains
+the native SA equation.  The library is registered only in the single-phase
+compressible and incompressible turbulence tables.  Its omission of a
+phase-fraction-gradient term is consistent with that scope; applying the same
+source to a variable-\(\alpha\) multiphase equation would require a new
+derivation.
+
+Finally, the modeled term
+\begin{equation}
+  \frac{c_{b2}}{\sigma}
+  \left|\SAgrad\widetilde{\nu}\right|^2
+\end{equation}
+is not the density correction.  Expanding
+\(\SAdiv[(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}]\) already retains the
+derivatives of \(\nu+\widetilde{\nu}\), while \(c_{b2}\) is a separate model
+coefficient.  The custom cancellation neither removes nor duplicates it.
+
+\clearpage
+\section{Allmaras 2012 material form to conservative form}
+\label{sec:sa-paper-derivation}
+
+This section retains the complete conversion from Allmaras 2012 Eq.~(2) to
+Eq.~(9).  It makes explicit which terms are supplied by mass conservation and
+which term is created by rewriting the diffusion operator.
+
+The Allmaras 2012 material equation is Eq.~\eqref{eq:sa-paper-material}:
+\begin{equation}
+  \SADt\widetilde{\nu}
+  =P-D+T
+  +\frac{1}{\sigma}
+   \left[
+     \SAdiv\!\left((\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}\right)
+     +c_{b2}\left|\SAgrad\widetilde{\nu}\right|^2
+   \right].
+  \label{eq:sa-deriv-paper-start}
+\end{equation}
+
+\subsection{Put the material equation in zero-residual form}
+
+Move every right-hand-side term to the left and expand the material derivative:
+\begin{equation}
+\begin{aligned}
+  \{\mathrm{S\!A}\}={}&
+  \frac{\partial\widetilde{\nu}}{\partial t}
+  +\boldsymbol u\mathbin{\cdot}\SAgrad\widetilde{\nu}
+  -(P-D+T) \\
+  &-\frac{1}{\sigma}
+   \SAdiv\!\left[(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}\right]
+  -\frac{c_{b2}}{\sigma}
+   \left|\SAgrad\widetilde{\nu}\right|^2
+  =0.
+\end{aligned}
+\label{eq:sa-deriv-sa-residual}
+\end{equation}
+The braces label the complete residual; they introduce no new model quantity.
+
+\subsection{Add the zero mass residual}
+
+Mass conservation in zero-residual form is
+\begin{equation}
+  \{\mathrm{mass}\}
+  =\frac{\partial\rho}{\partial t}
+  +\SAdiv(\rho\boldsymbol u)
+  =0.
+  \label{eq:sa-deriv-mass-residual}
+\end{equation}
+Allmaras et al. (2012) combine the two residuals as
+\begin{equation}
+  0=\rho\{\mathrm{S\!A}\}
+  +\widetilde{\nu}\{\mathrm{mass}\}.
+  \label{eq:sa-deriv-combined-residuals}
+\end{equation}
+Because both residuals are zero, multiplying and adding them does not change
+the solution.
+
+\Needspace{0.38\textheight}
+\subsection{Multiply out the residuals}
+
+Multiplying Eq.~\eqref{eq:sa-deriv-sa-residual} by \(\rho\) gives
+\begin{align}
+  \rho\{\mathrm{S\!A}\}={}&
+  \rho\frac{\partial\widetilde{\nu}}{\partial t}
+  +\rho\boldsymbol u\mathbin{\cdot}\SAgrad\widetilde{\nu}
+  -\rho(P-D+T) \notag\\
+  &-\frac{\rho}{\sigma}
+   \SAdiv\!\left[(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}\right]
+  -\frac{c_{b2}}{\sigma}\rho
+   \left|\SAgrad\widetilde{\nu}\right|^2.
+  \label{eq:sa-deriv-rho-sa}
+\end{align}
+Multiplying Eq.~\eqref{eq:sa-deriv-mass-residual} by
+\(\widetilde{\nu}\) gives
+\begin{equation}
+  \widetilde{\nu}\{\mathrm{mass}\}
+  =\widetilde{\nu}\frac{\partial\rho}{\partial t}
+  +\widetilde{\nu}\SAdiv(\rho\boldsymbol u).
+  \label{eq:sa-deriv-nutilda-mass}
+\end{equation}
+Adding Eqs.~\eqref{eq:sa-deriv-rho-sa} and
+\eqref{eq:sa-deriv-nutilda-mass} yields
+\begin{align}
+  0={}&
+  \rho\frac{\partial\widetilde{\nu}}{\partial t}
+  +\widetilde{\nu}\frac{\partial\rho}{\partial t} \notag\\
+  &+\rho\boldsymbol u\mathbin{\cdot}\SAgrad\widetilde{\nu}
+  +\widetilde{\nu}\SAdiv(\rho\boldsymbol u)
+  -\rho(P-D+T) \notag\\
+  &-\frac{\rho}{\sigma}
+   \SAdiv\!\left[(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}\right]
+  -\frac{c_{b2}}{\sigma}\rho
+   \left|\SAgrad\widetilde{\nu}\right|^2.
+  \label{eq:sa-deriv-expanded-sum}
+\end{align}
+
+\subsection{Combine transient and convection products}
+
+For the transient terms,
+\begin{equation}
+  \frac{\partial(\rho\widetilde{\nu})}{\partial t}
+  =\rho\frac{\partial\widetilde{\nu}}{\partial t}
+  +\widetilde{\nu}\frac{\partial\rho}{\partial t}.
+  \label{eq:sa-deriv-transient-product}
+\end{equation}
+For a scalar \(\widetilde{\nu}\) and vector \(\rho\boldsymbol u\),
+\begin{equation}
+  \SAdiv(\rho\boldsymbol u\widetilde{\nu})
+  =\rho\boldsymbol u\mathbin{\cdot}\SAgrad\widetilde{\nu}
+  +\widetilde{\nu}\SAdiv(\rho\boldsymbol u).
+  \label{eq:sa-deriv-convection-product}
+\end{equation}
+Substitution into Eq.~\eqref{eq:sa-deriv-expanded-sum} gives
+\begin{align}
+  0={}&
+  \frac{\partial(\rho\widetilde{\nu})}{\partial t}
+  +\SAdiv(\rho\boldsymbol u\widetilde{\nu})
+  -\rho(P-D+T) \notag\\
+  &-\frac{\rho}{\sigma}
+   \SAdiv\!\left[(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}\right]
+  -\frac{c_{b2}}{\sigma}\rho
+   \left|\SAgrad\widetilde{\nu}\right|^2.
+  \label{eq:sa-deriv-before-diffusion-rewrite}
+\end{align}
+Only the diffusion term remains to be rewritten.
+
+\subsection{Rewrite the diffusion term}
+
+Apply the vector product rule:
+\begin{align}
+  &\SAdiv\!\left[
+    \rho(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right] \notag\\
+  &\quad={}
+  \rho\SAdiv\!\left[
+    (\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right]
+  +(\nu+\widetilde{\nu})
+   \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}.
+  \label{eq:sa-deriv-diffusion-product}
+\end{align}
+Solve for the density-multiplied diffusion that appears in
+Eq.~\eqref{eq:sa-deriv-before-diffusion-rewrite}:
+\begin{align}
+  &\rho\SAdiv\!\left[
+    (\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right] \notag\\
+  &\quad={}
+  \SAdiv\!\left[
+    \rho(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right]
+  -(\nu+\widetilde{\nu})
+   \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}.
+  \label{eq:sa-deriv-diffusion-rearranged}
+\end{align}
+The term in Eq.~\eqref{eq:sa-deriv-before-diffusion-rewrite} is negative, so
+\begin{align}
+  &-\frac{\rho}{\sigma}\SAdiv\!\left[
+    (\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right] \notag\\
+  &\quad={}
+  -\frac{1}{\sigma}\SAdiv\!\left[
+    \rho(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right]
+  +\frac{\nu+\widetilde{\nu}}{\sigma}
+   \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}.
+  \label{eq:sa-deriv-diffusion-residual-sign}
+\end{align}
+The positive final sign follows from two negative signs: the one already in
+front of the residual diffusion and the one introduced by rearranging the
+product rule.
+
+\subsection{Recover Allmaras 2012 Eq.~(9)}
+
+Substituting Eq.~\eqref{eq:sa-deriv-diffusion-residual-sign} into
+Eq.~\eqref{eq:sa-deriv-before-diffusion-rewrite} gives
+\begin{align}
+  0={}&
+  \frac{\partial(\rho\widetilde{\nu})}{\partial t}
+  +\SAdiv(\rho\boldsymbol u\widetilde{\nu})
+  -\rho(P-D+T) \notag\\
+  &-\frac{1}{\sigma}\SAdiv\!\left[
+    \rho(\nu+\widetilde{\nu})\SAgrad\widetilde{\nu}
+  \right]
+  -\frac{c_{b2}}{\sigma}\rho
+   \left|\SAgrad\widetilde{\nu}\right|^2 \notag\\
+  &+\frac{\nu+\widetilde{\nu}}{\sigma}
+   \SAgrad\rho\mathbin{\cdot}\SAgrad\widetilde{\nu}.
+  \label{eq:sa-deriv-paper-final}
+\end{align}
+This is Allmaras 2012 Eq.~(9).  The mass residual creates conservative storage and
+convection.  The diffusion product rule, not continuity, creates the final
+density-gradient term.
+
+\clearpage
+
+\section*{Audited source map and implementation notes}
+\phantomsection
+\addcontentsline{toc}{section}{Audited source map and implementation notes}
+
+\begingroup
+\small
+The line numbers below refer to the source snapshot used for this appendix and
+should be rechecked if the upstream or custom source is changed.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.30\textwidth}
+  >{\raggedright\arraybackslash}p{0.61\textwidth}@{}}
+\toprule
+Purpose & Source path and audited lines \\
+\midrule
+\endhead
+Native effective diffusivity &
+  \path{/opt/of-v2412/src/TurbulenceModels/turbulenceModels/Base/SpalartAllmaras/SpalartAllmarasBase.C},
+  lines 381--390. \\
+Native transport equation &
+  Same file, lines 440--493; equation assembly at 466--481. \\
+Native post-assembly operations &
+  Same file, lines 483--489 for relaxation, option constraints,
+  \SAcode{boundaryManipulate()}, solve, post-solve bounding, and boundary
+  correction. \\
+Native \(\widetilde S\) continuation &
+  Same file, lines 141--156. \\
+Native \(\sigma\) default &
+  Same file, lines 206--213. \\
+Native RAS wrapper &
+  \path{/opt/of-v2412/src/TurbulenceModels/turbulenceModels/RAS/SpalartAllmaras/SpalartAllmaras.C},
+  lines 40--95. \\
+Single-phase compressible types &
+  \path{/opt/of-v2412/src/TurbulenceModels/compressible/CompressibleTurbulenceModel/CompressibleTurbulenceModel.H},
+  lines 68--80 and 120--130. \\
+Custom correction &
+  \path{SpalartAllmarasDensityCorrected/SpalartAllmarasDensityCorrected.C},
+  helper at lines 44--67 and input/call path at lines 136--175. \\
+Custom post-assembly operations &
+  Same file, lines 177--193 for relaxation, option constraints,
+  \SAcode{boundaryManipulate()}, solve, post-solve bounding, and boundary
+  correction. \\
+Custom incompressible no-op &
+  \path{SpalartAllmarasDensityCorrected/SpalartAllmarasDensityCorrected.H},
+  lines 77--94. \\
+Custom runtime registrations &
+  \path{SpalartAllmarasDensityCorrected/makeCompressibleSpalartAllmarasDensityCorrected.C}
+  and
+  \path{SpalartAllmarasDensityCorrected/makeIncompressibleSpalartAllmarasDensityCorrected.C},
+  lines 13--16 in each; both translation units are listed in
+  \path{SpalartAllmarasDensityCorrected/Make/files}. \\
+Explicit-source convention &
+  \path{/opt/of-v2412/src/finiteVolume/finiteVolume/fvm/fvmSup.C},
+  lines 92--103 for temporary-field forwarding and lines 72--89 for the
+  matrix-source insertion. \\
+Bounded transient correction &
+  \path{/opt/of-v2412/src/finiteVolume/finiteVolume/ddtSchemes/boundedDdtScheme/boundedDdtScheme.C},
+  lines 140--152 for the three-field \SAcode{fvmDdt(alpha,rho,vf)} overload. \\
+Bounded convection correction &
+  \path{/opt/of-v2412/src/finiteVolume/finiteVolume/convectionSchemes/boundedConvectionScheme/boundedConvectionScheme.C},
+  lines 76--87 for \SAcode{fvmDiv(faceFlux,vf)}. \\
+\bottomrule
+\end{longtable}
+
+Two implementation notes delimit the source evidence:\par\smallskip
+\begin{itemize}
+  \item Immediately below Allmaras 2012 Eq.~(9), the paper appears to print
+    \(\mu=\nu/\rho\), although its Eq.~(1) defines \(\nu\) as kinematic
+    viscosity.  The dimensionally conventional relation is \(\mu=\rho\nu\).
+    This apparent typographical error is not used in the derivation and does
+    not change Allmaras 2012 Eq.~(9).
+  \item The examined native source contains a local
+    \SAcode{boundaryManipulate()} hook in the SA solution path.  The
+    density-weighted transport equation audited here is otherwise unchanged
+    relative to that source tree's Git \SAcode{HEAD}.
+\end{itemize}
+\endgroup
+\clearpage
+\begin{thebibliography}{9}
+\raggedright
+
+\bibitem{SpalartAllmaras1994}
+P.~R. Spalart and S.~R. Allmaras,
+\textquotedblleft{}A One-Equation Turbulence Model for Aerodynamic Flows,''
+\emph{La Recherche A\'erospatiale}, No.~1, pp.~5--21, 1994.
+Journal version available from the
+\href{https://tmbwg.github.io/turbmodels/Papers/RechAerosp_1994_SpalartAllmaras.pdf}{Turbulence Modeling Resource archive}.
+
+\bibitem{SpalartAllmaras1992}
+P.~R. Spalart and S.~R. Allmaras,
+\textquotedblleft{}A One-Equation Turbulence Model for Aerodynamic Flows,''
+AIAA Paper 92-0439, 30th Aerospace Sciences Meeting and Exhibit, 1992.
+
+\bibitem{AJS2012}
+S.~R. Allmaras, F.~T. Johnson, and P.~R. Spalart,
+\textquotedblleft{}Modifications and Clarifications for the Implementation of the
+Spalart--Allmaras Turbulence Model,''
+Seventh International Conference on Computational Fluid Dynamics,
+ICCFD7-1902, 2012.
+
+\bibitem{NASATMRSA}
+NASA Langley Research Center,
+\textquotedblleft{}The Spalart--Allmaras Turbulence Model,''
+Turbulence Modeling Resource,
+\url{https://tmbwg.github.io/turbmodels/spalart.html},
+accessed September 1, 2026.
+
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,16 @@
+\chapter{Numerical framework}
+\label{chap:numerical-framework}
+
+This chapter introduces the OpenFOAM/HiSA framework used in this work and
+summarizes the physical models, numerical methods and implementation changes
+relevant to aerothermal predictions. Particular attention is given to how wall heat-flux
+calculation and internal-face transport are handled, which underpin the later wall-resolved mesh
+assessment and the wall-function mesh-sensitivity analysis. Complete case dictionaries, property coefficients and source modifications are documented in the repository identified in the
+\hyperref[chap:data-avail]{Data Availability statement}.
+
+\input{03_OpenFOAM_HiSA_Numerics/01_Framework_Overview}
+\input{03_OpenFOAM_HiSA_Numerics/01_Governing_Equations_Gas_Transport}
+\input{03_OpenFOAM_HiSA_Numerics/03_Discretization}
+\input{03_OpenFOAM_HiSA_Numerics/06_Wall_Load_Evaluation}
+\input{03_OpenFOAM_HiSA_Numerics/02_OpenFOAM_HiSA_Extensions}
+\input{03_OpenFOAM_HiSA_Numerics/05_Convergence_Monitors}

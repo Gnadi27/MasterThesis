@@ -1,0 +1,69 @@
+{
+  "method": "Typography restoration using unchanged raster curves; not a numerical-data replot",
+  "source_presentation": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Weekly 260803.pptx",
+  "source_slide": 21,
+  "source_zip_member": "ppt/media/image13.png",
+  "source_png_sha256": "9708da54cd3e973f5ca2d962801fb3143dac98e87d9ea43852aa47e65a63a297",
+  "source_size_pixels": [
+    3189,
+    1232
+  ],
+  "preserved_previous_manuscript_png_sha256": "738928c0e20c7f76b014bd2d46be091e638949e22cd1c6b4a250466214f10433",
+  "raw_data_status": "Original Pr_t=0.6/0.8/1.0 plotting script and profile data not located in accessible WSL/Windows sources; no curves digitized, refitted or substituted.",
+  "output_width_mm": 170,
+  "output_height_mm": 75,
+  "font_points": {
+    "axis_labels": 7.7,
+    "tick_labels": 7.7,
+    "legend": 7.7,
+    "panel_titles": 8.4
+  },
+  "font_revision": "User-requested 30% reduction from the previous 11 pt text / 12 pt titles; figure dimensions and curves unchanged.",
+  "math_note": "Math subscripts retain conventional smaller size.",
+  "panels": [
+    {
+      "model": "Spalart\u2013Allmaras",
+      "original_crop_xyxy": [
+        170,
+        160,
+        1618,
+        1104
+      ],
+      "old_legend_replaced_xyxy": [
+        180,
+        865,
+        690,
+        1085
+      ],
+      "pixels_changed_outside_legend": 0,
+      "retau": [
+        467.0,
+        456.3,
+        447.9
+      ],
+      "legend_base_font_pt": 7.7
+    },
+    {
+      "model": "$k$\u2013$\\omega$ SST",
+      "original_crop_xyxy": [
+        1717,
+        160,
+        3165,
+        1104
+      ],
+      "old_legend_replaced_xyxy": [
+        1728,
+        865,
+        2240,
+        1085
+      ],
+      "pixels_changed_outside_legend": 0,
+      "retau": [
+        465.5,
+        459.6,
+        455.1
+      ],
+      "legend_base_font_pt": 7.7
+    }
+  ]
+}

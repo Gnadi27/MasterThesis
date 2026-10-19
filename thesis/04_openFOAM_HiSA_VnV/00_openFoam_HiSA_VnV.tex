@@ -1,0 +1,35 @@
+\chapter{Verification and validation of the numerical framework}
+\label{chap:numerical-verification-validation}
+
+% Establish the credibility of the OpenFOAM/HiSA numerics before turbulence
+% models and wall functions are introduced. The chapter should distinguish
+% code/solution verification from validation and connect each benchmark to the
+% numerical or physical capability that it tests.
+
+Verification assesses whether a mathematical model is implemented correctly and
+its equations are solved with sufficient numerical accuracy, whereas validation
+assesses how accurately the model represents physical reality for its intended
+use.\footnote{Terminology follows AIAA G-077-1998 as summarized in the NASA
+NPARC Alliance glossary: \url{https://www.grc.nasa.gov/www/wind/valid/tutorial/glossary.html}.}
+For the OpenFOAM/HiSA framework introduced in Chapter~\ref{chap:numerical-framework},
+analytical and numerical reference comparisons and convergence studies provide
+verification checks, while comparisons with measurements provide validation
+evidence. The assessment covers attached-shock angles and post-shock states
+(Section~\ref{sec:numerical-vv:shock-angle-post-shock}), detached-shock stand-off
+distances and carbuncle behaviour
+(Section~\ref{sec:numerical-vv:shock-stand-off-carbuncle}), laminar velocity and
+temperature profiles
+(Section~\ref{sec:numerical-vv:laminar-boundary-layer-profiles}), laminar heat-transfer along a flat-plate and through a compression-corner interaction
+(Section~\ref{sec:numerical-vv:laminar-heat-transfer-compression-corner}), and
+adiabatic turbulent velocity profiles and skin-friction
+(Section~\ref{sec:numerical-vv:adiabatic-turbulent-boundary-layer-profiles}).
+Experimental comparisons concern detached-shock stand-off distances and the
+adiabatic turbulent flat-plate. These checks assess the framework's capabilities
+and limitations before the cold-wall turbulence-model and wall-function
+evaluation in Chapter~\ref{chap:comparative-evaluation}.
+
+\input{04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock}
+\input{04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle}
+\input{04_OpenFOAM_HiSA_VnV/04_Laminar_Boundary_Layer_Profiles}
+\input{04_OpenFOAM_HiSA_VnV/05_Laminar_Heat_Transfer_Compression_Corner}
+\input{04_OpenFOAM_HiSA_VnV/06_Adiabatic_Turbulent_Boundary_Layer_Profiles}

@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-19",
+  "purpose": "Exact curated values for the layout-only replot of Figures 7.2 and 7.3. No trends, no quality filtering.",
+  "original_script": "/home/mgnadlinger/ZPG_FP_overview/plot_dns_coefficient_errors.py",
+  "original_script_sha256": "afb3682475fcbf295b5770c321b4e0dc913135e333ca559037e2dd78087e17aa",
+  "data_sha256": "3453041751f86c469939ef4b315bf5d0a8065c714d062e0d78ed35d9c2ff51ab",
+  "sources": {
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/dns_comparison_SA/scalar_error_summary.csv": "3809adf5a696ee9b3363c6599ef60a66d5dde6b8ffc32ca86e8b590c6f4d0cfa",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/dns_comparison_kwSST/scalar_error_summary.csv": "3b6dcad6369918aa693d44eea2a7dbf5aeeb2b8ffec00619c7fedfba77d060ea",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/dns_comparison_SA/scalar_error_summary.csv": "19aba348a59ee6a26cd0cdc113fa2134cfa24e7bce09599f7d6663d668222b6a",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/dns_comparison_kwSST/scalar_error_summary.csv": "323496b9717260334712ce31be549c2f11eab1273b7a417204318e54b688e859",
+    "/home/mgnadlinger/Huang_DNS_ZPGFP/dns_comparison_SA/scalar_error_summary.csv": "103415bdb670e1efa57ed2e590225af418c44f84324270467b6d7df9b33c5fe0",
+    "/home/mgnadlinger/Huang_DNS_ZPGFP/dns_comparison_kwSST/scalar_error_summary.csv": "edb9c41d6534936d50c61a46cd94037a54456aaa8d6c9434aadc6cde6e061880"
+  },
+  "prior_audit": "tmp/wall_resolved_table/figures/coordinate_audit.json",
+  "prior_table": "tmp/wall_resolved_table/current_results.csv"
+}

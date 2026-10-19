@@ -1,0 +1,39 @@
+\chapter{Introduction}
+\label{chap:introduction}
+% Preserve the former motivation chapter's label after consolidation.
+\label{chap:00_Motivation}
+
+Reliable prediction of aerodynamic heating is essential for the thermal design of hypersonic vehicles. Assessing aerothermal heating along a whole flight trajectory makes computational requirement more severe, especially when fast, iterative engineering is asked for. Wall functions promise a way to reduce the computational effort by reducing the near-wall resolution required by Reynolds-averaged Navier--Stokes (RANS) simulations by inferring wall shear stress and heat-flux from the flow samples away from the wall.
+\par\medskip
+
+A wall-function CFD simulation depends on the wall-function's closure relations, the RANS field supplying its input and the discretization of the remaining boundary layer. Comparing the resulting heat-flux with a reference therefore cannot, by itself, identify the source of a discrepancy. This thesis assesses these influences through successive diagnostic comparisons.
+
+\section{Research objectives and approach}
+\label{sec:introduction:research-questions-objectives}
+% Contributions are discussed within this section rather than separately.
+\label{sec:introduction:contributions}
+
+The objective is to assess the accuracy and numerical requirements of analytical wall functions for hypersonic cold-wall RANS calculations. Three questions guide the investigation:
+\begin{enumerate}
+    \item How accurately can existing wall-functions solve wall heat flux and shear stress for hypersonic cold-wall cases?
+    \item What error sources exist and drive the accuracy of these wall-functions?
+    \item How can these error sources be isolated and reduced? 
+\end{enumerate}
+
+The investigation begins with verification and validation of the used OpenFOAM/HiSA numerical framework using canonical shock and boundary layer test cases to assess its capabilities and limitations. Wall-resolved RANS calculations are then compared with direct numerical simulation (DNS) references to assess turbulence and heat-transfer modelling, supported by mesh-convergence studies that establish the required near-wall resolution. Selected analytical wall functions~\cite{li2025WF,griffin2023WF} are first tested on prescribed boundary layer profiles to assess their closure relation predictions without feedback from a full CFD flow solver. They are then evaluated in coupled RANS calculations, comparing conventional meshes with meshes adapted to the local boundary layer profiles. Together, these comparisons examine how turbulence modelling, wall-function relations and mesh resolution affect wall shear stress and heat flux, and identify requirements for reliable predictions in the investigated cold-wall flows.
+\par\medskip
+
+The contribution is a joint assessment of turbulence modelling, wall-function closure and mesh resolution, including a novel boundary layer-informed spacing criterion for internal-face viscous gradients and transport-coefficient interpolation, required for wall-functions in hypersonic cold-wall problems.
+
+\section{Scope and limitations}
+\label{sec:introduction:scope-assumptions-limitations}
+
+The main wall-function assessment is restricted to attached, fully turbulent zero-pressure-gradient (ZPG) flat-plate boundary layers. This setting retains the cold-wall thermal-profile challenge while limiting additional influences associated with pressure gradients, separation and complex geometry. Substantial discrepancies encountered even on these ZPG flat-plate canonical cases motivate examining their origins before drawing conclusions about more complex applications, leaving the assessment of complex geometries to the outlook.
+\par\medskip
+
+The benchmarks use thermally and calorically perfect gases with prescribed wall temperatures or adiabatic wall conditions. Hypersonic cold-wall cases are the principal focus, while adiabatic and lower-Mach comparisons provide context for interpreting their behaviour. The case selection and reference-data limitations are detailed in Section~\ref{sec:evaluation:benchmark-cases}. Conclusions remain conditional on these cases and the investigated implementation. Pressure gradients, separation, shock--boundary-layer interactions and complex geometries require further wall-function assessment. Conjugate heat transfer motivates the application, but coupled structural thermal response is not investigated here. The separate solver assessment includes additional canonical flows to examine the underlying numerical framework.
+\par\medskip
+
+% Retain the roadmap label within the consolidated introduction.
+\label{sec:introduction:thesis-structure}
+Chapter~\ref{chap:physical-modelling-background} establishes the physical and modelling background. Chapter~\ref{chap:numerical-framework} describes the numerical framework. Chapter~\ref{chap:numerical-verification-validation} presents its verification and validation using canonical test cases. Chapter~\ref{chap:wall-function-formulations} introduces the wall-function formulations and their implementation. Chapter~\ref{chap:evaluation-methodology} defines the evaluation methodology with the DNS references used; Chapter~\ref{chap:comparative-evaluation} presents the diagnostic comparisons of the isolated errors. Chapter~\ref{chap:conclusion-outlook} draws the conclusions and identifies priorities for further work.

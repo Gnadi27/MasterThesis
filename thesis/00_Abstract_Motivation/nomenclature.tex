@@ -1,0 +1,127 @@
+\addchap{Nomenclature}
+\label{chap:nomenclature}
+
+% Selection: recurring quantities with at least three uses in the active
+% main manuscript. Appendices, comments and inactive sources are excluded.
+% Indexed variants share a base entry; formulation-specific parameters remain
+% defined locally. The notation key also covers recurring figure notation.
+The following tables collect recurring quantities and notation. Reference
+states, heat-flux signs and formulation-specific parameters are defined where
+used. A dash denotes a dimensionless quantity. Symbols with more than one
+meaning are distinguished by their context and units.
+
+\begingroup
+% The inside-page geometry is already active. Avoid resetting it from the
+% TUM page-style hook while longtable is shipping a continuation page.
+\makeatletter
+\let\@tum@activate@layout@\relax
+\makeatother
+\small
+\renewcommand{\arraystretch}{1.0}
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{\fill}
+
+\begin{longtable}{@{}p{0.16\linewidth}p{0.63\linewidth}p{0.15\linewidth}@{}}
+\toprule
+Symbol & Meaning & SI unit \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning (continued) & SI unit \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\multicolumn{3}{@{}l}{\textbf{Latin symbols}} \\[2pt]
+\(a\) & Speed of sound & \(\mathrm{m\,s^{-1}}\) \\
+\(B_q\) & Dimensionless wall heat-transfer rate; negative for wall cooling & -- \\
+\(c_p\) & Specific heat at constant pressure & \(\mathrm{J\,kg^{-1}\,K^{-1}}\) \\
+\(C_f\) & Skin-friction coefficient & -- \\
+\(C_h,\ St\) & Stanton number, with the stated reference normalization & -- \\
+\(h\) & Specific enthalpy & \(\mathrm{J\,kg^{-1}}\) \\
+\(k\) & Turbulent kinetic energy per unit mass & \(\mathrm{m^2\,s^{-2}}\) \\
+\(M,\ M_\tau\) & Mach number and friction Mach number \(M_\tau=u_\tau/a_w\) & -- \\
+\(p\) & Static pressure & \(\mathrm{Pa}\) \\
+\(Pr,\ Pr_t\) & Molecular and turbulent Prandtl numbers & -- \\
+\(q_w\) & Wall heat-flux; the sign convention is specified locally & \(\mathrm{W\,m^{-2}}\) \\
+\(r\) & Recovery factor & -- \\
+\(R\) & Specific gas constant & \(\mathrm{J\,kg^{-1}\,K^{-1}}\) \\
+\(Re_x\) & Reynolds number based on streamwise distance & -- \\
+\(Re_\theta\) & Momentum-thickness Reynolds number using freestream or edge viscosity & -- \\
+\(Re_{\delta2}\) & Momentum-thickness Reynolds number using wall viscosity & -- \\
+\(Re_\tau\) & Friction Reynolds number based on the stated boundary-layer thickness & -- \\
+\(Re_{\mathrm{cell1}}\) & First-cell acoustic Reynolds number, \(\rho_w a_w y_1/\mu_w\) & -- \\
+\(T\) & Temperature; \(T_w\) is the wall temperature and \(T_r\) the recovery temperature & \(\mathrm{K}\) \\
+\(u,\ U\) & Streamwise or wall-tangential velocity; locally stated averaging & \(\mathrm{m\,s^{-1}}\) \\
+\(u_\tau\) & Friction velocity, \(\sqrt{|\tau_w|/\rho_w}\) & \(\mathrm{m\,s^{-1}}\) \\
+\(x,\ y\) & Streamwise and wall-normal coordinates & \(\mathrm{m}\) \\
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Greek symbols and mesh measures}} \\[2pt]
+\(\gamma\) & Ratio of specific heats & -- \\
+\(\delta\) & Boundary-layer thickness, with the stated edge criterion & \(\mathrm{m}\) \\
+\(\Delta x\) & Streamwise mesh spacing & \(\mathrm{m}\) \\
+\(\Delta y_1\) & Full thickness of the first wall-adjacent cell & \(\mathrm{m}\) \\
+\(h\) & Full cell-centre separation \(y_R-y_L\) in the internal-face stencil analysis & \(\mathrm{m}\) \\
+\(\epsilon\) & Relative tolerance on the checked gradient or coefficient-interpolation error & -- \\
+\(\theta\) & Momentum thickness & \(\mathrm{m}\) \\
+\(\kappa,\ \lambda\) & Thermal conductivity & \(\mathrm{W\,m^{-1}\,K^{-1}}\) \\
+\(\mu\) & Dynamic viscosity & \(\mathrm{Pa\,s}\) \\
+\(\nu\) & Kinematic viscosity & \(\mathrm{m^2\,s^{-1}}\) \\
+\(\rho\) & Density & \(\mathrm{kg\,m^{-3}}\) \\
+\(\tau_w\) & Wall shear stress & \(\mathrm{Pa}\) \\
+\(\omega\) & Specific turbulence-dissipation rate in the SST model & \(\mathrm{s^{-1}}\) \\
+\end{longtable}
+
+\clearpage
+For the wall-normal cells used here, the first-cell-centre distance is
+\(y_1=\delta_n=\Delta y_1/2\). It is distinct from the wall-function sampling
+height \(y_s\), the internal-face position \(y_f\) and the cell-centre
+separation \(h\). Source figures that use \(z\) as the wall-normal coordinate
+are identified in their captions.
+
+\begin{longtable}{@{}p{0.24\linewidth}p{0.72\linewidth}@{}}
+\toprule
+Notation & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Notation & Meaning (continued) \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\multicolumn{2}{@{}l}{\textbf{Subscripts}} \\[2pt]
+\(w\) & Wall value \\
+\(\infty\) & Freestream value \\
+\(e,\ \delta\) & Boundary-layer edge value \\
+\(r\) & Recovery state \\
+\(\mathrm{lam},\ t,\ T,\ \mathrm{eff}\) & Laminar, turbulent (\(t\) or \(T\)) and effective quantities; \(t\) may also denotes a tangential component where stated \\
+\(1,\ 2\) & Cell or sampling indices; pre-shock and post-shock states in shock relations \\
+\(s,\ m\) & Wall-function sampling location and Griffin matching location, respectively \\
+\(f\) & Internal face; finest-grid value in mesh comparisons \\
+\(L,\ R\) & Neighbouring cell centres in the face stencil \\
+\(i,\ 99\) & Inlet condition and 99\% boundary-layer edge criterion, respectively \\
+\(\mathrm{ref}\) & Specified reference value \\
+\(\mathrm{DNS},\ \mathrm{RANS},\ \mathrm{SA}\) & DNS, RANS or Spalart--Allmaras reference \\
+\(\mathrm{WR},\ \mathrm{WF}\) & Wall-resolved or wall-function result \\
+\(\mathrm{std},\ \mathrm{target}\) & Standard evaluation or prescribed target value \\
+\(\mathrm{TL},\ \mathrm{VD}\) & Trettel--Larsson or van Driest transformed quantity \\
+\(\mathrm{grad},\ \mathrm{interp}\) & Gradient reconstruction or coefficient interpolation \\
+\(\mathrm{poly},\ \max\) & Polynomial fit or maximum value \\
+\addlinespace
+\multicolumn{2}{@{}l}{\textbf{Superscripts, accents and operators}} \\[2pt]
+\({}^{+}\) & Wall units: lengths scaled by \(\nu_w/u_\tau\), velocities by \(u_\tau\) \\
+\(y^*\) & Semi-local wall coordinate \\
+\({}^{\mathrm{OF}}\) & Native OpenFOAM output, with its stated sign convention \\
+\(\overline{(\cdot)}\) & Reynolds mean of a flow quantity \\
+\(\widetilde{\nu}\) & Spalart--Allmaras working variable \\
+\(\boldsymbol{u},\ \boldsymbol{n}\) & Bold symbols denote vectors \\
+\({}',\ {}'',\ {}'''\) & Derivatives with respect to physical wall-normal distance in the stencil analysis \\
+\(D_f\) & Discrete internal-face gradient operator \\
+\(\nabla,\ \partial\) & Spatial gradient and partial differentiation \\
+\(\partial/\partial n_{\mathrm{out}}\) & Derivative along the outward unit normal of the fluid domain \\
+\(\left.(\cdot)\right|_w\) & Evaluation at the wall \\
+\(|\cdot|,\ \mathcal{O}(\cdot)\) & Absolute value and asymptotic order, respectively \\
+\end{longtable}
+\endgroup

@@ -1,0 +1,43 @@
+{
+  "purpose": "Typography-only replots of the existing cropped mesh-sweep figures.",
+  "physical_size_mm": [
+    170,
+    120
+  ],
+  "font_size_pt": 10,
+  "source_files_sha256": {
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/reference/normalization.json": "041abe7d5528a36be5a6db299f14b31d345e4809cf1cccaa0430a69b92dafbaf",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/mesh_report_cubic_spacing_limits.csv": "1d92c11087e5bd659e1e44055b74c028bb4bb572489825c8339b371112205897",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/plot_mesh_report.py": "278903deddfea2659ce7a38db097f8561778f3d51db9c4bff24bde6dd9e7d16a",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/1_1p5e-2_grid.json": "2b43aea07420bf449c2b5de17719f0f1b2e7d37643fd49b4da39caf3c11c29da",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/2_3e-2_grid.json": "f7a7b0c2d984475f86e48b8c3be44d12f7e3ee0692249621d320ad4e9e28aaaf",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/60_9e-1_grid.json": "390dd165191276ed007903419a14513ae3ab8657f9f03c319b8e7561890423b1",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/100_1p5_grid.json": "95e2cd2b11d6627221cfb238742eaa87e9df5a5c48bb419b1c2795fe52b0af7e",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/200_3_grid.json": "ba256cfe10632ae6775c123e2e961365790939409ae0a685339586960ccb9ede",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/30_4p5e-1_grid.json": "35398c4278edac906f1f37cf0108fb1d59afb01842b12237943e305fec0ecc7d",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/10_1p5e-1_grid.json": "186328ad0dfbf28bc2f303760e92fae241aa071dd1dead04fe1fc5ea84940922",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/40_6e-1_grid.json": "3ae5ad3abb1b153c3511afd7b2cfddb346686b703820c197752d12f713d34477",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/150_2p25_grid.json": "49bdcf5ee538fe122fbe80f6e0cb28cdc4271a15ce3325cf4753c4a5a8776967",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/5_7p5e-2_grid.json": "f0fcc497c9008e055a54d1d73d2e29bffd7f8e411e76328cfbff33711200fb8b",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/400_6_grid.json": "c45ff2e169411062712caf17f9805095f2cc2bccc62bb41b9d9bef0fab853fb8",
+    "/home/mgnadlinger/WF_validation/LowH_M3/opt_meshes/marching_design/3pct/20_3e-1_grid.json": "6584e75e3eaf2156323bdae58b523ac14118a59728b3de6d162db74ba6e5dafc",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/reference/normalization.json": "199fd04b0e514310187d5c1c7e9845df994e366016ea55dd4a6155e724cb99ec",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/spacing_limits/symmetric_finite_stencil_limits.csv": "76599c99502369472ad2aefe1de0e44bc25e17e32e2da050c5a6e3a78e836099",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/scripts/plot_analysis.py": "0a67cbc4746fa1875102f695bac19f1bbeb4382c3f0d96faa04c54ab2a05c2d8",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/1_1p5e-2_grid.json": "37f55572f3b7021ddc30fe7cb64038307935a5d6762bfe413e977d6e43a86fcc",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/2_3e-2_grid.json": "57157792aadabb1fb635cc460b5670d13f4ac4d271734f0fe94eeacf72e8369a",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/60_9e-1_grid.json": "f206c872c4fe43a8be469fc606e451671655dc4917e4d9a3843b7805c7582522",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/100_1p5_grid.json": "61a06f3c63adbbb3f183337fb226793da6aa818e1de5c1c011a249eaa993a313",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/200_3_grid.json": "d425d03c5979bbc59753e647fda6c35e4545d4ea9716228e16f91cc8a0b68be0",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/30_4p5e-1_grid.json": "4e938dc9f21ae5df4922423974e35609309916102c76b1facfd9beec03a45b6e",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/10_1p5e-1_grid.json": "d9df46c48869084a89d9c2b6c7f8242daa44e4c7bc2c36013fc42e90b8ae64c4",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/40_6e-1_grid.json": "e5c2a81f5cf168fa168fb8931f97f2ff154a155f93116b655b011ad5d9169f9c",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/150_2p25_grid.json": "3a6ee08828d6f34e02d8f0c163b52599cf230fa8504a33cc923857d197bccd6d",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/5_7p5e-2_grid.json": "b879952d61467e892dcc4d5e7028812098b830d2471620237d3f647de336a04f",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/400_6_grid.json": "9dc58010a95915148c125535e8b45605c9985a8963d63fa87c4621f04f6ff257",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/searches/3pct/20_3e-1_grid.json": "33980971bc24fd3999f5fb91f29b823cd63968983088475696504ba36377bba8"
+  },
+  "scientific_operations": "The original complete faces_plus arrays and target_yplus values are retained. The left-panel centre separation remains (diff(f)[:-1]+diff(f)[1:])/2. The same delta99 mask, axis limits, full case names, and original envelope samples are used. No mesh, profile, coefficient, wall normalization or acceptance criterion is changed.",
+  "layout_changes": "A shared full-size legend replaces the small left-panel inset legend; axis labels wrap to two lines. Report titles and footnotes remain omitted, as in the pre-existing manuscript crops.",
+  "retained_plotting_data_sha256": "e490dc617d1c60898bba5a4f6871b35fb6eb1b76c146862f54139bb98d143fae"
+}

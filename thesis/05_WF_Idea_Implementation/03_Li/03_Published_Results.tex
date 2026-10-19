@@ -1,0 +1,7 @@
+\subsection{Scope of the published assessment}
+\label{subsec:wall-functions:gao-li:published-results}
+
+The non-reacting flat-plate case in Li et al. checks the underlying solver and SA model against an experimental data and van Driest II theory~\cite[Section~IV.B and Figure~2]{li2025WF}. There it does not assess the improved wall function. The latter is tested on reacting flat-plates against resolved RANS solutions; the second-reference-point variant is demonstrated at first-point \(y^+=4\) and \(8\), whereas the coarser logarithmic-layer tests use edge quantities~\cite[Sections~IV.B--C]{li2025WF}. These results do not provide an independent DNS or experimental validation of the non-reacting wall function used here and can thus not be used as a way to validate the code implementation.
+\par\medskip
+
+Direct reproduction also requires care because Li et al. use a finite-difference solver. They define the wall distance to the first off-wall grid point, while their coupling acts on viscous fluxes between that point and the wall~\cite[Section~II.A, Eq.~(17) and Figure~16]{li2025WF}. Transfer to a finite-volume method requires matching the physical sampling and flux locations; equal reported \(y^+\) values alone do not establish an equivalent discretization. The published results therefore provide context rather than a direct verification case for the complete implementation.

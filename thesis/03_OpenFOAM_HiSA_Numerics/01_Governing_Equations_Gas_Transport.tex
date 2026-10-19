@@ -1,0 +1,39 @@
+\section{Physical model and thermophysical properties}
+\label{sec:numerical-framework:governing-equations}
+
+HiSA solves the compressible conservation equations for mass, momentum and
+total energy. The turbulent calculations use RANS with the eddy-viscosity and
+thermal closures introduced in Section~\ref{sec:background:rans-turbulence-modelling}. The fluid is treated as a single-component or frozen-composition ideal gas, without chemical reactions. The boundary conditions and property values are chosen to represent each respective reference case and are stated in their respective section throughout this work.
+
+\subsection{Thermophysical properties in OpenFOAM}
+\label{subsec:thermophysical-properties-OF}
+
+OpenFOAM assembles the thermophysical description from separate models for the
+equation of state, caloric properties, transport properties and energy variable.
+Their combination is selected in \texttt{thermophysicalProperties} and must be
+registered in the installation. The \texttt{perfectGas} equation of state, \(p=\rho RT\), can be combined with constant specific heat through \texttt{hConst}, or temperature-dependent
+specific heat through \texttt{janaf}. The latter uses piecewise NASA
+seven-coefficient polynomials to describe the temperature dependent behaviour.
+\par\medskip
+
+Molecular viscosity \(\mu\) and thermal conductivity \(\kappa\) must reproduce
+the reference laws together. Their relation is expressed by the molecular
+Prandtl number, \(Pr=c_p\mu/\kappa\). In particular, the standard
+\texttt{sutherland} transport model couples its viscosity law internally in OpenFOAM to a modified
+Eucken conductivity relation and it is not possible to independently prescribe a constant
+\(Pr\). This is a limitation of that model combination in OpenFOAM. The additional combinations described in Section~\ref{subsec:ext:thermo-physical-extension} permit separate polynomial
+descriptions of \(\mu(T)\) and \(\kappa(T)\). This allows, that for the calorically perfect
+benchmarks with a constant \(Pr\), the conductivity polynomial-coefficients can then be set proportional to the viscosity coefficients so that \(Pr\) can remain constant.
+
+\subsection{Turbulent transport}
+
+The turbulent Prandtl number \(Pr_t\) controls the modelled turbulent heat
+transport and is distinct from molecular \(Pr\). With the gradient-diffusion
+closure, the effective coefficients are
+\(\mu_{\mathrm{eff}}=\mu+\mu_t\) and
+\(\kappa_{\mathrm{eff}}=\kappa+c_p\mu_t/Pr_t\).
+Unless stated otherwise, the turbulent calculations use \(Pr_t=0.9\), as
+specified in Paragraph~\ref{para:turbulent-Prandtl-number}.
+These effective coefficients enter both the numerical transport operations
+below and the later thermal-profile assessment in
+Section~\ref{subsec:comparative:zpg:wr-prandtl}.

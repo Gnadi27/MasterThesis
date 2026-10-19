@@ -1,0 +1,63 @@
+% Native vector replacement for the PowerPoint overview retained as
+% 07_error_overview.png. This is a qualitative roadmap, not a data figure.
+% Uses the thesis font, TUM colours and TikZ already loaded by tumbook.
+% Section references are resolved by the manuscript build.
+\begingroup
+\begin{tikzpicture}[
+    x=\linewidth, y=1cm,
+    stage/.style={circle, draw=TUMBlueDark, fill=white,
+        line width=.65pt, minimum size=6.5mm, inner sep=0pt,
+        font=\small\bfseries, text=TUMBlueDark},
+    heading/.style={anchor=north west, inner sep=0pt, align=left,
+        text width=.32\linewidth, font=\small\bfseries},
+    detail/.style={anchor=north west, inner sep=0pt, align=left,
+        text width=.57\linewidth, font=\small},
+    sectionref/.style={anchor=north west, inner sep=0pt,
+        font=\footnotesize, text=TUMGrayDark}
+]
+    % The spine indicates reading order, not an additive error decomposition.
+    \path[use as bounding box] (0,.15) rectangle (1,-6.4);
+    \fill[TUMBlue!5] (0,-4.78) rectangle (1,-6.4);
+    \draw[TUMGrayLight, line width=.5pt] (.085,-1.45) -- (1,-1.45);
+    \draw[TUMGrayLight, line width=.5pt] (.085,-3.10) -- (1,-3.10);
+    \draw[TUMGrayLight, line width=.5pt] (.085,-4.75) -- (1,-4.75);
+    \draw[->, TUMBlueDark!65, line width=.6pt] (.027,-.51) -- (.027,-1.47);
+    \draw[->, TUMBlueDark!65, line width=.6pt] (.027,-2.16) -- (.027,-3.12);
+    \draw[->, TUMBlueDark!65, line width=.6pt] (.027,-3.81) -- (.027,-4.77);
+
+    \node[stage] at (.027,-.18) {1};
+    \node[heading] at (.085,0) {Wall-resolved baseline};
+    \node[sectionref] at (.085,-.48)
+        {Section~\ref{sec:comparative:zpg:wall-resolved-baselines}};
+    \node[detail] at (.42,0)
+        {SA and \(k\)--\(\omega\) SST compared with DNS.\\[2pt]
+         Wall shear, heat flux and boundary layer profiles.};
+
+    \node[stage] at (.027,-1.83) {2};
+    \node[heading] at (.085,-1.65) {Wall-function closures};
+    \node[sectionref] at (.085,-2.13)
+        {Section~\ref{sec:comparative:zpg:cross-comparison}};
+    \node[detail] at (.42,-1.65)
+        {Li and Griffin inverted on prescribed profiles.\\[2pt]
+         Momentum and thermal relations; sensitivity to\\
+         sampling height, profiles and reference states.};
+
+    \node[stage] at (.027,-3.48) {3};
+    \node[heading] at (.085,-3.3) {Spatial discretization};
+    \node[sectionref] at (.085,-3.78)
+        {Section~\ref{subsec:comparative:zpg:yplus-sensitivity}};
+    \node[detail] at (.42,-3.3)
+        {Conventional and boundary layer-informed meshes.\\[2pt]
+         Internal-face viscous-gradient reconstruction\\
+         and transport-coefficient interpolation.};
+
+    \node[stage] at (.027,-5.13) {4};
+    \node[heading] at (.085,-4.95) {Recovery test};
+    \node[sectionref] at (.085,-5.43)
+        {Section~\ref{subsec:comparative:zpg:fitted-closure}};
+    \node[detail] at (.42,-4.95)
+        {Reference-fitted Li closure on informed meshes.\\[2pt]
+         Recovery of the resolved SA wall quantities\\
+         for LowH\_M3.};
+\end{tikzpicture}
+\endgroup

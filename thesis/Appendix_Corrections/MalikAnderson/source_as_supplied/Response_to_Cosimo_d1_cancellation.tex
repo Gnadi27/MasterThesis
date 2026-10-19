@@ -1,0 +1,964 @@
+\documentclass[11pt]{article}
+
+\usepackage[letterpaper,margin=0.85in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Post-publication analysis of the Sutherland-law coefficient in Malik and Anderson (1991), Eq. (56)},
+  pdfauthor={Michael Gnadlinger},
+  pdfsubject={Consistency assessment using compressible laminar boundary-layer profiles},
+  pdfkeywords={Sutherland law, compressible boundary layer, calorically imperfect gas, reproducibility, Malik Anderson}
+}
+\urlstyle{same}
+
+\definecolor{HypBlue}{HTML}{17324D}
+\definecolor{HypSteel}{HTML}{456C86}
+\definecolor{HypLightBlue}{HTML}{EAF2F7}
+\definecolor{HypLightGreen}{HTML}{EAF6EF}
+\definecolor{HypLightRed}{HTML}{FBEDEC}
+\definecolor{HypGray}{HTML}{F5F7F9}
+\definecolor{HypRule}{HTML}{D8E0E6}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\renewcommand{\arraystretch}{1.25}
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+
+\newcommand{\MA}{Malik-Anderson}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ue}{u_e}
+\newcommand{\Te}{T_e}
+\newcommand{\rhoe}{\rho_e}
+\newcommand{\mue}{\mu_e}
+\newcommand{\cpe}{c_{p,e}}
+\newcommand{\Przero}{Pr_0}
+
+\newcommand{\note}[2]{%
+  \vspace{0.3em}%
+  \noindent\colorbox{#1}{%
+    \begin{minipage}{0.965\linewidth}
+      #2
+    \end{minipage}}%
+  \vspace{0.3em}%
+}
+
+\newcommand{\eqbox}[2]{%
+  \vspace{0.1em}%
+  \noindent\fcolorbox{HypRule}{#1}{%
+    \begin{minipage}{0.955\linewidth}
+      #2
+    \end{minipage}}%
+  \vspace{0.1em}%
+}
+
+\title{\vspace{-3em}\textcolor{HypBlue}{Post-publication analysis of the Sutherland-law coefficient in Malik and Anderson (1991), Eq.~(56)}\\[1.2em]\large \textit{Consistency assessment using compressible laminar boundary-layer profiles}\vspace{-1em}}
+\author{Michael Gnadlinger}
+\date{August 31, 2026}
+
+\begin{document}
+\maketitle
+\vspace{-1em}
+\hrule
+\vspace{-1em}
+
+\section{Summary}
+\label{sec:short_conclusion}
+This report concerns M.~R. Malik and E.~C. Anderson, ``Real gas effects on hypersonic boundary-layer stability,'' \emph{Physics of Fluids A} \textbf{3}, 803--821 (1991), \href{https://doi.org/10.1063/1.858012}{doi:10.1063/1.858012}~\cite{malik1991}. Their Eq.~(56) states the Sutherland law
+\[
+  \mu(T)=d_1\frac{\sqrt{T}}{1+d_2/T},
+  \qquad d_2=110~\mathrm{K},
+\]
+with \(d_{1,\mathrm{print}}=1.0869\times10^{-6}\). When \(T\) is measured in kelvin and \(\mu\) in SI units, dimensional consistency requires
+\[
+  [d_1]=\mathrm{kg\,m^{-1}\,s^{-1}\,K^{-1/2}}.
+\]
+The unit printed with Eq.~(56) omits the factor \(\mathrm{K^{-1/2}}\); this dimensional typo is separate from the numerical-coefficient inconsistency investigated here.
+
+The Mach-15 calorically imperfect mean-flow profiles in Fig.~3 cannot be reproduced with the printed coefficient under the stated Sutherland, Keyes, and Eggers closures. The tested candidate \(d_{1,\mathrm{cand}}=1.5869\times10^{-6}\,\mathrm{kg\,m^{-1}\,s^{-1}\,K^{-1/2}}\) gives substantially closer agreement with the digitized Fig.~3 profiles. Analytically, the distinction is consistent: the Sutherland constant \(d_1\) cancels from the Reynolds-normalized perfect-gas similarity problem, whereas it remains in the calorically imperfect energy equation through the thermal-diffusion coefficient \(K\propto d_1^{-1}\).
+
+\note{HypLightBlue}{%
+\begin{itemize}
+    \item \textbf{Strong indication of a typo:} the printed coefficient in Eq.~(56) is inconsistent with the calorically imperfect mean-flow profiles in Fig.~3, whereas \(d_1=1.5869\times10^{-6}\) gives substantially closer agreement. This strongly indicates a typographical or implementation inconsistency, although the exact replacement value is not uniquely established by the digitized profiles.
+    \item \textbf{Perfect-gas cases are unaffected:} although they use the same Sutherland law, \(d_1\) cancels from the Reynolds-normalized perfect-gas similarity equations and from the plotted wall coordinate. This report demonstrates the cancellation analytically and confirms it with the profile reproductions.
+    \item \textbf{Real-gas cases are unaffected by Eq.~(56):} the real-gas calculations, which form the main contribution of the paper, use a Wilke mixture-viscosity model instead of the disputed Sutherland coefficient. They are therefore outside the direct scope of this inconsistency.
+    \item \textbf{Figure 13 remains unresolved:} Fig.~13 includes a calorically imperfect stability curve and may therefore be affected. Neither its perfect-gas nor its imperfect-gas curve was reproduced here, so no conclusion is drawn about the magnitude or direction of a possible effect.
+\end{itemize}
+}
+
+\subsection*{Outline}
+
+\begin{itemize}
+    \item Section~\ref{sec:wall_coordinate} shows that the discrepancy does not originate in the length scale. Reconstructing $y$ from the Levy--Lees similarity coordinate $\eta$ and then normalizing it as $Y=y/L_r$ introduces no explicit dependence on $d_1$: the factor cancels.
+    \item Section~\ref{sec:perfect_gas_similarity} shows that the Reynolds-normalized perfect-gas profiles are independent of $d_1$. The momentum and energy similarity equations contain no explicit $d_1$.
+    \item Section~\ref{sec:imperfect_gas_similarity} shows why the calorically imperfect profiles do depend on $d_1$. The thermal-diffusion coefficient satisfies $K\propto 1/d_1$, so $d_1$ affects the temperature profile directly and the velocity profile through the coupled similarity equations.
+    \item Section~\ref{sec:profile_validation_plots} compares the perfect- and calorically imperfect-gas solutions with the digitized profiles from Fig.~3 of Malik and Anderson. For the Mach-15 calorically imperfect case, the candidate $d_{1,\mathrm{cand}}=1.5869\times10^{-6}$ is substantially more consistent with the published profiles than the printed value. A non-converged printed-coefficient marching attempt is also shown as a visual diagnostic; neither comparison is a unique fit of the exact replacement value.
+\end{itemize}
+
+The detailed mathematical derivations are given in the appendices and referenced throughout the main text.
+
+\section{\MA{} property setup}
+\label{sec:property_setup}
+
+The paper gives the Sutherland viscosity law as Eq.~(56)~\cite{malik1991}:
+\begin{equation}
+  \mu(T)
+  = d_1 \frac{\sqrt{T}}{1+d_2/T}
+  = d_1 \frac{T^{3/2}}{T+d_2},
+  \qquad d_2 = 110~\mathrm{K}.
+  \label{eq:sutherland}
+\end{equation}
+
+The printed and candidate values compared in this report are
+\begin{align}
+  d_{1,\mathrm{print}}&=1.0869\times10^{-6}~\mathrm{kg\,m^{-1}\,s^{-1}\,K^{-1/2}},\\
+  d_{1,\mathrm{cand}}&=1.5869\times10^{-6}~\mathrm{kg\,m^{-1}\,s^{-1}\,K^{-1/2}}.
+\end{align}
+The second value is treated as a tested candidate, not as a uniquely fitted correction.
+
+\eqbox{HypGray}{%
+\textbf{\MA{} Mach 10 / 15 "perfect"-gas model}
+\begin{align}
+  p &= \rho R T, &
+  c_p &= \mathrm{const.}, &
+  \Przero &= 0.7, &
+  k &= \frac{\mu c_p}{\Przero}.
+\end{align}
+}
+
+
+\eqbox{HypGray}{%
+\textbf{\MA{} Mach 15 "imperfect"-gas model}
+\begin{align}
+  p &= \rho R T, \qquad R=\mathrm{const.},\\
+  c_p &= c_p(T) \quad \text{from the Eggers vibrational formula (\MA{} Eq.~59)},\\
+  k &= k(T) \quad \text{from the Keyes formula (\MA{} Eq.~58)},\\
+  \mu &= \mu(T) \quad \text{from Sutherland's law (\MA{} Eq.~56)}.
+\end{align}
+}
+
+The important distinction is that, in the perfect gas, \(k\) is proportional to \(\mu\). In the imperfect gas, \(k(T)\) is specified independently of \(\mu(T)\).
+
+\subsection{Cases, boundary conditions, and held parameters}
+
+The profile comparisons use the published edge states and unit Reynolds numbers, with the numerical station and wall conditions listed below. The same values are held fixed when the two candidate coefficients are compared.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Case & \(M_e\) & \(T_e\,[\mathrm{K}]\) & \(Re_{\mathrm{unit}}\,[\mathrm{m^{-1}}]\) & \(x\,[\mathrm{m}]\) & Wall condition \\
+\midrule
+Fig.~1, perfect & 10 & 350 & \(6.6\times10^6\) & 0.1 & adiabatic \\
+Fig.~3, perfect & 15 & 700 & \(3.4\times10^6\) & 0.1 & \(T_w/T_e=1.75\) \\
+Fig.~3, imperfect & 15 & 700 & \(3.4\times10^6\) & 0.1 & \(T_w/T_e=1.75\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For every similarity solve,
+\begin{equation}
+  f(0)=0,\qquad f'(0)=0,\qquad f'(\infty)=1,
+\end{equation}
+and the thermal boundary conditions are
+\begin{equation}
+  \left(\frac{T}{T_e}\right)'_{\!w}=0
+  \quad\text{(adiabatic)},
+  \qquad
+  \frac{T_w}{T_e}=1.75
+  \quad\text{(isothermal)},
+  \qquad
+  \frac{T(\infty)}{T_e}=1.
+\end{equation}
+Also held fixed are \(R=287~\mathrm{J\,kg^{-1}\,K^{-1}}\), \(\gamma=1.4\) for the perfect-gas reference, \(d_2=110~\mathrm{K}\), the Keyes and Eggers constants where applicable, and the definitions of \(Y\) and \(Re_x\). At fixed \(M_e\), \(T_e\), and unit Reynolds number, changing \(d_1\) changes \(\mu_e\); the edge density and pressure are consequently recomputed to preserve the prescribed unit Reynolds number. The comparison is therefore a fixed nondimensional-flow-condition test, not a fixed-edge-pressure test.
+
+\section{Wall-coordinate normalization: explicit cancellation of \texorpdfstring{\(d_1\)}{d1}}
+\label{sec:wall_coordinate}
+
+This section shows that the \MA{} paper's plotted wall-normal coordinate \(Y\) contains no explicit dependence on \(d_1\); it therefore cannot introduce or remove any \(d_1\)-dependence in the similarity equations.
+
+The similarity equations are solved as functions of the similarity variable \(\eta\):
+
+\[
+  \eta\mapsto
+  \left(Y(\eta),\frac{u}{\ue}(\eta)\right),
+  \qquad
+  \eta\mapsto
+  \left(Y(\eta),\frac{T}{\Te}(\eta)\right).
+\]
+
+The physical wall-normal distance \(y\) is then reconstructed from \(\eta\) using the Levy--Lees transformation, and the plotted coordinate is obtained by normalizing this distance as \(Y=y/L_r\). Therefore, the full coordinate mapping
+\[
+  \eta \mapsto y(\eta) \mapsto Y(\eta)
+\]
+must be checked for explicit \(d_1\)-dependence.
+
+\subsection{\texorpdfstring{Levy--Lees transformation \(\eta \mapsto y\)}{Levy--Lees transformation eta to y}}\label{sec:LD_transformation}
+Schlichting and Gersten give the Levy--Lees transformation in integral form as their Eq.~(10.68)~\cite{schlichting2017}:
+\begin{equation}
+  \eta=\frac{\ue}{\sqrt{2\xi}}\int_0^y \rho\,\dd y,
+  \qquad
+  \xi=\int_0^x \rho_e\mue\ue\,\dd x.
+  \label{eq:LD_integral}
+\end{equation}
+At a fixed streamwise station \(x\), the quantities \(\xi\) and \(\ue\) are constants with respect to \(y\). Differentiating the first relation with respect to \(y\) therefore gives
+\begin{equation}
+  \dd\eta
+  =
+  \frac{\ue}{\sqrt{2\xi}}\rho\,\dd y,
+  \qquad \text{or}\qquad
+  \dd y
+  =
+  \frac{\sqrt{2\xi}}{\rho\ue}\,\dd\eta.
+  \label{eq:LD_differential}
+\end{equation}
+For the \MA{} flat-plate zero-pressure-gradient case, the boundary-layer edge quantities are constant in \(x\), so
+\begin{equation}
+  \xi
+  =
+  \int_0^x \rhoe\mue\ue\,\dd x
+  =
+  \rhoe\mue\ue x.
+  \label{eq:xi_flat_plate}
+\end{equation}
+Using \(Re_x=\rhoe\ue x/\mue\), this can be rewritten as
+\begin{equation}
+  \xi=Re_x\,\mue^2.
+  \label{eq:xi_rex}
+\end{equation}
+Inserting this into Eq.~\eqref{eq:LD_differential} gives
+\begin{equation}
+  \dd y
+  =
+  \frac{\sqrt{2Re_x\,\mue^2}}{\rho \ue}\,\dd \eta,
+  \label{eq:dy_rex}
+\end{equation}
+
+with an apparent explicit dependence on \(\mue\) and thus \(d_1\). However, the subsequent normalization step cancels this explicit dependence, as shown in the next section.
+
+\subsection{\texorpdfstring{Wall-normal coordinate normalization \(y \mapsto Y\)}{Wall-normal coordinate normalization y to Y}}\label{sec:LD_normalization}
+
+\MA{} normalize the physical wall-normal distance \(y\) by the length scale \(L_r=\sqrt{\nu_e x/\ue}=x/\sqrt{Re_x}\). Thus the plotted wall-normal coordinate is
+\begin{equation}
+  Y
+  =
+  \frac{y}{L_r}
+  =
+  y\sqrt{\frac{\rhoe\ue}{\mue x}}
+  =
+  \frac{y\sqrt{Re_x}}{x},
+  \label{eq:Ydef}
+\end{equation}
+or in differential form,
+\begin{equation}
+  \dd Y
+  =
+  \frac{\sqrt{Re_x}}{x}\,\dd y.
+  \label{eq:dYdef}
+\end{equation}
+
+This is the \MA{} normalization \(y\mapsto Y\). Written alone, it appears to contain \(\mue^{-1/2}\) through \(\sqrt{Re_x}\).
+
+\subsection{\texorpdfstring{Full coordinate mapping \(\eta \mapsto y \mapsto Y\) and explicit cancellation of \(d_1\)}{Full coordinate mapping eta to y to Y and explicit cancellation of d1}}
+
+Substitution of Eq.~\eqref{eq:dy_rex} into Eq.~\eqref{eq:dYdef} gives
+
+\begin{align}
+  \dd Y
+  &=
+  \frac{\sqrt{Re_x}}{x}\,\dd y
+  \nonumber\\
+  &=
+  \frac{\sqrt{Re_x}}{x}
+  \frac{\sqrt{2Re_x\,\mue^2}}{\rho \ue}\,\dd\eta
+  \nonumber\\
+  &=
+  \frac{\sqrt{2}\,Re_x\,\mue}{x\rho\ue}\,\dd\eta.
+  \label{eq:Ycancel_step1}
+\end{align}
+Now insert \(Re_x=\rhoe\ue x/\mue\):
+\begin{align}
+  \dd Y
+  &=
+  \frac{\sqrt{2}}{x\rho\ue}
+  \left(\frac{\rhoe\ue x}{\mue}\right)
+  \mue\,\dd\eta
+  =
+  \sqrt{2}\,\frac{\rhoe}{\rho}\,\dd\eta
+  \label{eq:Ycancel_step2}
+\end{align}
+and, with the thermally perfect equation of state and \(p=p_e\) across a zero-pressure-gradient boundary layer, so that \(\rhoe/\rho=T/\Te\), the normalized coordinate satisfies
+\begin{equation}
+  \dd Y=\sqrt{2}\,\frac{T}{\Te}\,\dd\eta,
+  \qquad
+  Y(\eta)=\sqrt{2}\int_0^\eta \frac{T(\tilde{\eta})}{\Te}\,\dd\tilde{\eta}.
+  \label{eq:Ycancel}
+\end{equation}
+\eqbox{HypLightGreen}{%
+\begin{itemize}
+    \item The edge-viscosity \(\mue\), and therefore \(d_1\), cancels during the transformation-normalization mapping \(\eta\mapsto y(\eta)\mapsto Y(\eta)\). 
+    \item The remaining dependence of \(Y(\eta)\) is only through the solved temperature profile \(T(\eta)/\Te\).
+    \item For the perfect-gas case, \(T(\eta)/\Te\) is independent of \(d_1\), so \(Y(\eta)\) is also independent of \(d_1\) (see Section~\ref{sec:perfect_gas_similarity}). 
+    \item For the calorically imperfect case, \(T(\eta)/\Te\) changes through the \(d_1\)-dependent energy equation (see Section~\ref{sec:imperfect_gas_similarity}). \(Y(\eta)\) changes indirectly, but does not cancel out any \(d_1\) dependence.
+\end{itemize}
+}
+\section{Analysis of the perfect gas momentum and energy similarity equations}
+\label{sec:perfect_gas_similarity}
+In this section, the perfect-gas boundary-layer similarity equations are introduced and examined with respect to their dependence on \(d_1\).
+
+The perfect-gas similarity problem is governed by the streamwise momentum equation (derivation in Appendix~\ref{subsec:derv_momentum_similarity})
+
+\eqbox{HypLightGreen}{%
+\begin{equation}
+  \left(C f''\right)' + f f''=0,
+  \qquad
+  C=\frac{\rho\mu}{\rhoe\mue},
+  \label{eq:momentum_C_perfect_intro}
+\end{equation}
+}
+
+The coefficient \(C\) is the Chapman-Rubesin viscosity-density coefficient; local quantities \(\rho\) and \(\mu\) are evaluated at the local static temperature \(T(\eta)\), while subscript \(e\) denotes boundary-layer edge values.
+
+The corresponding static-temperature energy equation is (derivation in Appendix~\ref{subsubsec:derv_perf_energy_similarity})
+
+\eqbox{HypLightGreen}{%
+\begin{equation}
+  \left[\frac{C}{\Przero}\left(\frac{T}{\Te}\right)'\right]'
+  + f\left(\frac{T}{\Te}\right)'
+  + C Q \left(f''\right)^2 = 0,
+  \qquad
+  Q=\frac{\ue^2}{c_p\Te}.
+  \label{eq:perfect_gas_energy_coeff_intro}
+\end{equation}
+}
+
+In this equation, \(T/\Te\) is the normalized static-temperature profile, \(\Przero\) is the prescribed constant perfect-gas Prandtl number, and \(Q\) is the nondimensional kinetic-energy scale that comes from writing total enthalpy as \(H=h+u^2/2\). For the perfect gas, \(c_p\) is constant.
+
+Thus, the normalized perfect-gas profiles depend only on \(C(T/\Te)\), \(Q\), and the prescribed value \(\Przero=0.7\).
+
+\begin{equation}
+  \begin{aligned}
+    C\!\left(\frac{T}{\Te}\right) &\ \text{is independent of } d_1 \text{ (see Appendix~\ref{sec:C_dependence})},\\
+    \Przero=0.7 &\ \text{is prescribed (Section~\ref{sec:property_setup})},\\
+    Q=\frac{\ue^2}{c_p\Te} &\ \text{is independent of }d_1.
+  \end{aligned}
+  \label{eq:pgindependent}
+\end{equation}
+
+\note{HypLightGreen}{For fixed boundary conditions and the perfect-gas closure stated in Section~\ref{sec:property_setup}, the similarity equations contain no explicit \(d_1\)-dependence. The normalized velocity and temperature profiles are therefore insensitive to \(d_1\). The Mach-10 and Mach-15 perfect-gas reproductions illustrate this cancellation, but cannot diagnose the printed-coefficient inconsistency (see Figures~\ref{fig:ma10_perfect_validation} and \ref{fig:ma15_perfect_validation}).}
+
+\section{Analysis of the calorically imperfect gas momentum and energy similarity equations}
+\label{sec:imperfect_gas_similarity}
+In this section, the calorically imperfect-gas boundary-layer similarity equations are introduced and examined with respect to their dependence on \(d_1\). Calorically imperfect herein is as defined in the \MA{} paper, where \(R\) is constant but \(c_p(T)\) and \(k(T)\) vary and are prescribed independently of \(\mu(T)\) (see Section~\ref{sec:property_setup}).
+
+The imperfect-gas similarity problem is governed by the streamwise momentum equation (derivation in Appendix~\ref{subsec:derv_momentum_similarity})
+
+\eqbox{HypLightGreen}{%
+\begin{equation}
+  \left(C f''\right)' + f f''=0,
+  \qquad
+  C=\frac{\rho\mu}{\rhoe\mue},
+  \label{eq:momentum_C_imperfect_intro}
+\end{equation}
+}
+
+The coefficient \(C\) is the Chapman-Rubesin viscosity-density coefficient. The momentum equation therefore has the same form as for the perfect gas (see Eq. \eqref{eq:momentum_C_perfect_intro}); the difference between the gas models only enters through the temperature field used to evaluate the local properties.
+
+The corresponding static-temperature energy equation is (derivation in Appendix~\ref{subsubsec:derv_imperfect_energy_similarity})
+
+\eqbox{HypLightRed}{%
+\begin{equation}
+  \left[
+    K\,
+    \left(\frac{T}{\Te}\right)'
+  \right]'
+  + \frac{c_p(T)}{\cpe}\, f\left(\frac{T}{\Te}\right)'
+  + C Q \left(f''\right)^2 = 0,
+  \label{eq:imperfect_gas_energy_coeff_intro}
+\end{equation}
+with
+\begin{equation}
+  K=\frac{\rho k(T)}{\rhoe\mue \cpe},\qquad
+  C=\frac{\rho\mu}{\rhoe\mue},\qquad
+  Q=\frac{\ue^2}{\cpe\,\Te}.
+  \label{eq:imperfectcoeffs_intro}
+\end{equation}
+}
+
+Here \(\cpe=c_p(\Te)\) is the edge heat capacity, and \(K\) is the normalized thermal-diffusion coefficient multiplying the static-temperature gradient. The conductivity \(k(T)\) is the Keyes thermal conductivity law used by \MA{} (see Section~\ref{sec:property_setup}). As in the perfect-gas equation, \(Q\) is the nondimensional kinetic-energy scale in the energy equation.
+
+\begin{equation}
+  \begin{gathered}
+  \begin{aligned}
+    C\!\left(\frac{T}{\Te}\right) &\ \text{contains no explicit }d_1 \text{ at fixed }T/\Te \text{ (see Appendix~\ref{sec:C_dependence})},\\
+    Q=\frac{\ue^2}{\cpe\,\Te} &\ \text{is independent of }d_1,\\
+    \frac{c_p(T)}{\cpe} &\ \text{is prescribed by the Eggers law (see Section~\ref{sec:property_setup})}.
+  \end{aligned}\\[0.35em]
+  \fcolorbox{HypRule}{HypLightRed}{$\displaystyle K=\frac{\rho k(T)}{\rhoe\mue \cpe}\ \propto\ \frac{1}{d_1}\quad\text{(see Appendix~\ref{sec:K_dependence})}. $}
+  \end{gathered}
+  \label{eq:imperfect_independent_coeffs}
+\end{equation}
+
+\note{HypLightRed}{The calorically imperfect energy equation retains explicit \(d_1\)-dependence through \(K\). The temperature profile therefore changes directly, and the velocity profile changes indirectly because the momentum equation is coupled to the changed temperature field (see Figure \ref{fig:ma15_imperfect_validation}).}
+
+\section{Diagnostic result and scope}
+\label{sec:final_diagnostic}
+
+\eqbox{HypLightGreen}{%
+\textbf{Perfect gas with constant \(Pr\).}
+\[
+  d_1 \text{ cancels from all normalized profile equations and from the plotted }Y\text{ coordinate.}
+\]
+\begin{center}
+Thus no \(d_1\)-dependence is expected in these plotted mean-flow profiles.
+\end{center}
+}
+
+\eqbox{HypLightRed}{%
+\textbf{Calorically imperfect gas with Keyes \(k(T)\) and Eggers \(c_p(T)\).}
+\[
+  d_1 \text{ remains in }K,\text{ so the energy equation changes.}
+\]
+\begin{center}
+Temperature changes directly; velocity changes through coupling to the changed temperature profile. While the transformation-normalization mapping \(Y(\eta)\) contains no explicit \(d_1\)-dependence, there is no cancellation of \(d_1\) from the energy equation. The \(d_1\)-dependence of the energy equation therefore remains in the plotted profiles (see Figure \ref{fig:ma15_imperfect_validation}).
+\end{center}
+}
+
+A perfect-gas replication provides a consistency check on the solver and normalization, but it cannot distinguish
+\[
+  d_1 = 1.0869\times10^{-6}
+  \qquad\text{from}\qquad
+  d_1 = 1.5869\times10^{-6}.
+\]
+The Mach-15 calorically imperfect mean-flow profiles in Fig.~3 are therefore the discriminating case examined here.
+
+These results do not prove that the exact replacement is \(d_1=1.5869\times10^{-6}\), nor do they distinguish a typographical error in Eq.~(56) from an undocumented difference in the original implementation. They establish the narrower result that the calorically imperfect Fig.~3 mean-flow profiles are inconsistent with the printed value under the published closures and are much better matched by the tested value near \(1.59\times10^{-6}\).
+
+\note{HypLightBlue}{Figure~13 of \MA{} also includes a calorically imperfect stability result, so it is potentially within the scope of the Eq.~(56) inconsistency. Neither the perfect-gas nor the imperfect-gas stability curve in Fig.~13 was reproduced successfully in this work. Figure~13 is therefore outside the quantitative conclusions of this report: no claim is made about whether it changes, or about the magnitude or direction of any change.}
+
+\subsection{Profile Validation Plots}
+\label{sec:profile_validation_plots}
+
+The self-similar boundary-value solutions provide the coefficient-sensitivity comparison. For the calorically imperfect case, the solver retains the temperature-dependent \(c_p(T)\), \(\mu(T)\), and \(k(T)\) closures stated by \MA{}.
+
+A separate parabolic streamwise-marching implementation uses a Crank--Nicolson-type implicit finite-difference discretization based on the method class documented by Anderson and Lewis~\cite{andersonlewis1971}, which \MA{} cite for their mean-flow calculation. The present marching code is an independent implementation of the method described by Anderson and Lewis. Because Malik and Anderson do not provide all numerical implementation details, it should not be regarded as an exact reproduction of their original solver. Both marching tests are initialized from the converged self-similar \(d_1=1.5869\times10^{-6}\) profile. Retaining that coefficient during the march gives a result that agrees closely with the self-similar solution and therefore provides a cross-check of the numerical formulation and discretization.
+
+For comparison, a second march changes the Sutherland constant in the transport closure to the printed \(d_1=1.0869\times10^{-6}\) while retaining the same initial profile no converged state can be reached. The resulting strongly distorted velocity and temperature profiles are included in Figure~\ref{fig:ma15_imperfect_validation} because they make the incompatibility of the printed coefficient with this marching reconstruction visually immediate. They remain an explicitly non-converged diagnostic, however, and are not used as quantitative coefficient evidence. In particular, their failure cannot establish how the original \MA{} implementation behaved or uniquely identify the corrected value.
+
+For the two self-similar Mach-15 calorically imperfect profiles plotted in Figure~\ref{fig:ma15_imperfect_validation}, the unweighted errors relative to the digitized Fig.~3 points are:
+\begin{center}
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Tested \(d_1\) & RMSE in \(u/u_e\) & RMSE in \(T/T_e\) \\
+\midrule
+\(1.0869\times10^{-6}\) & 0.0425 & 1.343 \\
+\(1.5869\times10^{-6}\) & 0.00393 & 0.165 \\
+\bottomrule
+\end{tabular}
+\end{center}
+These descriptive errors quantify the improvement between the two sampled coefficients; they are not a continuous fit and do not include digitization uncertainty.
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.95\linewidth]{\detokenize{01 Ma10_prfG_x0p1/MA1991_Fig1_Ma10_perfect_profile_validation.png}}
+  \caption{Mach-10 perfect-gas comparison with \MA{} Fig.~1. The self-similar profiles for \(d_1=1.0869\times10^{-6}\) and \(d_1=1.5869\times10^{-6}\) are indistinguishable on the normalized axes.}
+  \label{fig:ma10_perfect_validation}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.95\linewidth]{\detokenize{02 Ma15_prfG_x0p1/MA1991_Fig3_Ma15_perfect_profile_validation.png}}
+  \caption{Mach-15 perfect-gas comparison with \MA{} Fig.~3. As in the Mach-10 case, the self-similar perfect-gas profiles are insensitive to the multiplicative Sutherland coefficient.}
+  \label{fig:ma15_perfect_validation}
+\end{figure}
+
+\clearpage
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{03 Ma15_impG_x0p1/MA1991_Fig3_Ma15_imperfect_profile_validation_with_CN_diagnostic.png}}
+  \caption{Mach-15 calorically imperfect-gas comparison with \MA{} Fig.~3. The self-similar solutions reveal the difference between the two tested \(d_1\) values. The converged Crank--Nicolson-type result at \(d_1=1.5869\times10^{-6}\) agrees closely with the corresponding self-similar solution and serves as a numerical-formulation check. The printed-coefficient marching attempt (purple dashed) reaches the Picard iteration cap and produces strongly distorted profiles; it is included as an explicitly visual diagnostic.}
+  \label{fig:ma15_imperfect_validation}
+\end{figure}
+
+\clearpage
+\appendix
+
+\section{Levy--Lees reduction of the \MA{} boundary-layer equations}
+\label{sec:similarity_coefficients}
+
+This appendix starts from the boundary-layer equations of \MA{} (Eqs.~(38)--(41b))~\cite{malik1991} and uses the Levy--Lees transformation given by Schlichting and Gersten (Eq.~(10.68))~\cite{schlichting2017}. The transformed equations are first reduced under the assumptions used for the flat-plate profiles and are then rewritten in static-temperature form. This identifies the coefficients \(C\), \(Q\), and \(K\) without relying on a particular numerical discretization.
+
+Schlichting and Gersten define
+\begin{equation}
+  \xi=\int_0^x \rhoe\mue\ue\,\dd x,
+  \qquad
+  \eta=\frac{\ue}{\sqrt{2\xi}}\int_0^y\rho\,\dd y,
+  \qquad
+  \frac{u}{\ue}=f'(\xi,\eta),
+  \qquad
+  g(\xi,\eta)=\frac{H-H_e}{H_e},
+  \label{eq:levy_lees_definitions}
+\end{equation}
+where \(H=h+u^2/2\) is dimensional total enthalpy, \(H_e=h_{t,e}\), and a prime denotes partial differentiation with respect to \(\eta\). The normalized total enthalpy used by \MA{} approaches one at the edge, whereas \(g\) approaches zero; the two definitions differ only by an additive constant, so their derivatives are identical after the edge scale is restored.
+
+\subsection{Common momentum similarity equation and the coefficient \texorpdfstring{\(C\)}{C}}
+\label{subsec:derv_momentum_similarity}
+
+The transformed momentum equation of Schlichting and Gersten (Eqs.~(10.70) and (10.72)) is
+\begin{equation}
+  (Cf'')'+ff''
+  +\beta\left(\frac{\rhoe}{\rho}-f'^2\right)
+  =2\xi\left(
+    f'\frac{\partial f'}{\partial\xi}
+    -f''\frac{\partial f}{\partial\xi}
+  \right),
+  \qquad
+  \beta=\frac{2\xi}{\ue}\frac{\dd\ue}{\dd\xi},
+  \qquad
+  C=\frac{\rho\mu}{\rhoe\mue}.
+  \label{eq:levy_lees_momentum_general}
+\end{equation}
+
+For the planar \MA{} flat-plate cases, the geometry exponent in Eqs.~(38)--(40a) is \(j=0\). The edge state is uniform and the pressure gradient is zero, so \(\ue\) is constant and \(\beta=0\). The present calculation seeks the similar solution
+\begin{equation}
+  f(\xi,\eta)=f(\eta),
+  \qquad
+  g(\xi,\eta)=g(\eta),
+  \label{eq:similarity_ansatz}
+\end{equation}
+so all partial derivatives with respect to \(\xi\) on the right-hand side of Eq.~\eqref{eq:levy_lees_momentum_general} vanish. The constant edge state and streamwise-invariant wall condition (constant \(T_w/T_e\), or an adiabatic wall) ensure that the remaining nondimensional property ratios are functions of \(\eta\) only. Hence
+
+\eqbox{HypLightGreen}{%
+\begin{equation}
+  \left(C f''\right)' + f f''=0,
+  \qquad
+  C=\frac{\rho\mu}{\rhoe\mue}.
+  \label{eq:sim_momentum_C}
+\end{equation}
+This is the momentum equation used in the remainder of the analysis for both gas models.
+}
+
+\subsection{Energy similarity equation and static-temperature reductions}
+\label{subsec:derv_imperfect_energy_similarity}
+
+The energy equation is where the perfect-gas and calorically imperfect closures differ. Schlichting and Gersten write the transformed total-enthalpy equation as their Eq.~(10.71):
+\begin{equation}
+  \left[
+    \frac{C}{Pr}g'
+    +C\frac{\ue^2}{H_e}\left(1-\frac{1}{Pr}\right)f'f''
+  \right]'
+  +fg'
+  =2\xi\left(
+    f'\frac{\partial g}{\partial\xi}
+    -g'\frac{\partial f}{\partial\xi}
+  \right).
+  \label{eq:levy_lees_energy_general}
+\end{equation}
+Under Eq.~\eqref{eq:similarity_ansatz}, the right-hand side vanishes, giving
+\begin{equation}
+  \left(\frac{C}{Pr}g'\right)'
+  +fg'
+  +\left[
+    C\frac{\ue^2}{H_e}\left(1-\frac{1}{Pr}\right)f'f''
+  \right]'=0.
+  \label{eq:prof_energy_totalH}
+\end{equation}
+
+Schlichting and Gersten derive Eq.~(10.71) for an ideal gas with constant \(c_p\) and constant \(Pr\). It is used here as the standard Levy--Lees structure and notation, not as the constitutive derivation for the calorically imperfect model. For that model, applying Eq.~\eqref{eq:LD_integral} directly to the planar (\(j=0\)) \MA{} Eq.~(40a), after restoring the edge scales implicit in \(f\) and \(g\), gives the same reduced flux structure with the local \(Pr(T)=\mu(T)c_p(T)/k(T)\). The reduction below is therefore based on \MA{} Eq.~(40a): first scale the total-enthalpy equation with \(\cpe\Te\), then rewrite the total-enthalpy derivative in terms of static temperature, and finally use the momentum equation to collapse the kinetic-energy terms. The perfect-gas equation follows as the constant-\(c_p\), constant-\(Pr\) special case.
+
+\subsubsection{Imperfect-gas static-temperature energy equation}
+\label{subsubsec:derv_imperfect_energy_similarity}
+
+Define the edge heat capacity and introduce the nondimensional kinetic-energy scale \(Q\) as
+\begin{equation}
+  \cpe \equiv c_p(\Te),
+  \qquad
+  Q=\frac{\ue^2}{\cpe\,\Te}.
+  \label{eq:Q_general}
+\end{equation}
+
+Multiplying Eq.~\eqref{eq:prof_energy_totalH} by \(H_e/(\cpe\,\Te)\) gives
+\begin{equation}
+  \left[
+    \frac{C}{Pr}
+    \frac{H_e}{\cpe\,\Te}g'
+  \right]'
+  +
+  f\frac{H_e}{\cpe\,\Te}g'
+  +
+  \left[
+    C\frac{\ue^2}{\cpe\,\Te}
+    \left(1-\frac{1}{Pr}\right)f'f''
+  \right]'=0.
+  \label{eq:energy_scaled_g}
+\end{equation}
+
+Since \(H_e\) is an edge constant, the scaled total-enthalpy derivative can be rewritten as
+\begin{equation}
+  g'=\left(\frac{H}{H_e}\right)'=\frac{1}{H_e}H',
+  \label{eq:g_prime}
+\end{equation}
+Because \(H_e\), \(\cpe\), and \(\Te\) are edge constants at the \(x\)-station, Eq.~\eqref{eq:g_prime} rewrites the terms \(H_e/(\cpe\Te)\,g'\) in Eq.~\eqref{eq:energy_scaled_g} as
+\begin{equation}
+  \frac{H_e}{\cpe\,\Te}g'
+  =
+  \left(\frac{H}{\cpe\,\Te}\right)'.
+  \label{eq:g_to_Hscaled}
+\end{equation}
+Substituting Eqs.~\eqref{eq:g_to_Hscaled} and \(Q\) from \eqref{eq:Q_general} into Eq.~\eqref{eq:energy_scaled_g} gives
+\begin{equation}
+  \left[
+    \frac{C}{Pr}
+    \left(\frac{H}{\cpe\,\Te}\right)'
+  \right]'
+  +
+  f
+  \left(\frac{H}{\cpe\,\Te}\right)'
+  +
+  \left[
+    CQ\left(1-\frac{1}{Pr}\right)f'f''
+  \right]'=0.
+  \label{eq:energy_scaled_H}
+\end{equation}
+
+For the calorically imperfect gas,
+\begin{equation}
+  H=h(T)+\frac{u^2}{2},
+  \qquad
+  \frac{\dd h}{\dd T}=c_p(T),
+  \qquad
+  \frac{u}{\ue}=f'.
+  \label{eq:imperfect_enthalpy_def}
+\end{equation}
+The \(\eta\)-derivative of \(H\) is obtained by applying the chain rule:
+\begin{align}
+  H'
+  &=
+  \frac{\dd}{\dd\eta}
+  \left[
+    h(T(\eta))+\frac{u(\eta)^2}{2}
+  \right]
+  \nonumber\\
+  &=
+  \frac{\dd h}{\dd T}\frac{\dd T}{\dd\eta}
+  +
+  u\frac{\dd u}{\dd\eta}
+  \nonumber\\
+  &=
+  c_p(T)T'
+  +
+  u\frac{\dd u}{\dd\eta}.
+  \label{eq:Hprime_chain}
+\end{align}
+Therefore, using Eq.~\eqref{eq:Hprime_chain}, the scaled total-enthalpy derivative is
+\begin{align}
+  \left(\frac{H}{\cpe\,\Te}\right)'
+  =
+  \frac{H'}{\cpe\,\Te}
+  \nonumber\\
+  =
+  \frac{1}{\cpe\,\Te}
+  \left[
+    c_p(T)T'
+    +
+    u\frac{\dd u}{\dd\eta}
+  \right]
+  \nonumber\\
+  =
+  \frac{c_p(T)}{\cpe}
+  \left(\frac{T}{\Te}\right)'
+  +
+  \frac{\ue^2}{\cpe\,\Te}
+  \frac{u}{\ue}
+  \left(\frac{u}{\ue}\right)'
+  \nonumber\\
+  =
+  \frac{c_p(T)}{\cpe}\,\left(\frac{T}{\Te}\right)'
+  +
+  Qf'f''.
+  \label{eq:Hscaled_derivative}
+\end{align}
+Substituting Eq.~\eqref{eq:Hscaled_derivative} into Eq.~\eqref{eq:energy_scaled_H} gives
+\begin{equation}
+  \left\{
+    \frac{C}{Pr}
+    \left[
+      \frac{c_p(T)}{\cpe}\,\left(\frac{T}{\Te}\right)'
+      +
+      Qf'f''
+    \right]
+  \right\}'
+  +
+  f\left[
+    \frac{c_p(T)}{\cpe}\,\left(\frac{T}{\Te}\right)'
+    +
+    Qf'f''
+  \right]
+  +
+  \left[
+    CQ\left(1-\frac{1}{Pr}\right)f'f''
+  \right]'=0.
+  \label{eq:imperfect_energy_expanded}
+\end{equation}
+Now split Eq.~\eqref{eq:imperfect_energy_expanded} into the static-temperature-gradient \(T/T_e\) terms and the terms proportional to \(Q\):
+\begin{align}
+  &
+  \left[
+    \frac{C}{Pr}
+    \frac{c_p(T)}{\cpe}
+    \left(\frac{T}{\Te}\right)'
+  \right]'
+  +
+  f\frac{c_p(T)}{\cpe}
+  \left(\frac{T}{\Te}\right)'
+  \nonumber\\
+  &\qquad
+  +
+  Q\left\{
+    \left[\frac{C}{Pr}f'f''\right]'
+    +
+    ff'f''
+    +
+    \left[C\left(1-\frac{1}{Pr}\right)f'f''\right]'
+  \right\}
+  =
+  0.
+  \label{eq:imperfect_energy_split}
+\end{align}
+Using \(Pr(T)=\mu(T)c_p(T)/k(T)\) and the definition of the Chapman-Rubesin coefficient, the first coefficient multiplying the diffusive static-temperature-gradient term is
+\begin{align}
+  \frac{C}{Pr}\frac{c_p(T)}{\cpe}
+  &=
+  \frac{\rho\mu(T)}{\rhoe\mue}
+  \frac{k(T)}{\mu(T) c_p(T)}
+  \frac{c_p(T)}{\cpe}
+  \nonumber\\
+  &=
+  \frac{\rho k(T)}{\rhoe\mue \cpe}
+  \equiv K.
+  \label{eq:K_from_CPr}
+\end{align}
+Therefore the static-temperature-gradient group in Eq.~\eqref{eq:imperfect_energy_split} becomes
+\begin{equation}
+  \left[
+    K\left(\frac{T}{\Te}\right)'
+  \right]'
+  +
+  \frac{c_p(T)}{\cpe}\,
+  f\left(\frac{T}{\Te}\right)'.
+  \label{eq:temperature_group_K}
+\end{equation}
+The \(Q\)-group in Eq.~\eqref{eq:imperfect_energy_split} reduces by combining the two derivative terms and then using the momentum equation:
+\begin{align}
+  Q\left\{
+  \left[\frac{C}{Pr}f'f''\right]'
+  +
+  ff'f''
+  +
+  \left[C\left(1-\frac{1}{Pr}\right)f'f''\right]'
+  \right\}
+  &=
+  Q\left\{
+  \left[Cf'f''\right]' + ff'f''
+  \right\}
+  \nonumber\\
+  &=
+  Q\left\{
+  f'\left[\left(Cf''\right)' + ff''\right]
+  +
+  C(f'')^2
+  \right\}
+  \nonumber\\
+  &=
+  CQ(f'')^2,
+  \label{eq:Q_terms_reduce}
+\end{align}
+where the last step uses the reduced momentum equation \(\left(Cf''\right)'+ff''=0\) (see Eq.~\eqref{eq:sim_momentum_C}). Combining Eqs.~\eqref{eq:temperature_group_K} and \eqref{eq:Q_terms_reduce} yields the calorically imperfect static-temperature similarity equation
+
+\eqbox{HypLightRed}{%
+\begin{equation}
+  \left[
+    K\,
+    \left(\frac{T}{\Te}\right)'
+  \right]'
+  + \frac{c_p(T)}{\cpe}\, f\left(\frac{T}{\Te}\right)'
+  + C Q \left(f''\right)^2 = 0,
+  \label{eq:imperfectstatic}
+\end{equation}
+with
+\begin{equation}
+  K=\frac{\rho k(T)}{\rhoe\mue \cpe},\qquad
+  C=\frac{\rho\mu}{\rhoe\mue},\qquad
+  Q=\frac{\ue^2}{\cpe\,\Te}.
+  \label{eq:imperfectcoeffs}
+\end{equation}
+This is the calorically imperfect static-temperature energy equation used in the remainder of the analysis.
+}
+
+\subsubsection{Perfect-gas static-temperature energy equation as a special case}
+\label{subsubsec:derv_perf_energy_similarity}
+
+The perfect-gas static-temperature equation follows directly as a special case. For a perfect gas,
+\begin{equation}
+  c_p(T)=c_p(\Te)=c_p,\qquad
+  \frac{c_p(T)}{\cpe}=1,\qquad
+  Q=\frac{\ue^2}{c_p\Te},
+  \qquad
+  k=\frac{\mu c_p}{\Przero}.
+  \label{eq:perfect_limits}
+\end{equation}
+Therefore,
+\begin{equation}
+  K
+  =
+  \frac{\rho}{\rhoe\mue c_p}\frac{\mu c_p}{\Przero}
+  =
+  \frac{C}{\Przero}.
+  \label{eq:K_to_CPr}
+\end{equation}
+Substituting \(K=C/\Przero\) and \(c_p(T)/\cpe=1\) into Eq.~\eqref{eq:imperfectstatic} gives
+
+\eqbox{HypLightGreen}{%
+\begin{equation}
+  \left[\frac{C}{\Przero}\left(\frac{T}{\Te}\right)'\right]'
+  + f\left(\frac{T}{\Te}\right)'
+  + C Q \left(f''\right)^2 = 0,
+  \qquad
+  Q=\frac{\ue^2}{c_p\Te}.
+  \label{eq:pgenergy_coeff_intro}
+\end{equation}
+This is the perfect-gas static-temperature energy equation used in the remainder of the analysis.
+}
+
+\section{Cancellation of \texorpdfstring{\(d_1\)}{d1} in the Chapman-Rubesin coefficient \texorpdfstring{\(C(T/T_e)\)}{C(T/Te)}}
+\label{sec:C_dependence}
+
+The Chapman-Rubesin coefficient used in the transformed boundary-layer equations is the viscosity-density coefficient
+\begin{equation}
+  C
+  =
+  \frac{\rho\mu}{\rhoe\mue}.
+  \label{eq:C_appendix_def}
+\end{equation}
+Here \(\rho\) and \(\mu\) are local boundary-layer values evaluated at \(T(\eta)\), while \(\rhoe\) and \(\mue\) are boundary-layer edge values. This coefficient appears in the transformed momentum equation (Eq.~\eqref{eq:sim_momentum_C}) and in both static-temperature energy equations (Eqs.~\eqref{eq:imperfectstatic} and \eqref{eq:pgenergy_coeff_intro}).
+
+For both gas models considered here, the gas is thermally perfect:
+\begin{equation}
+  p=\rho R T.
+  \label{eq:thermally_perfect}
+\end{equation}
+Because \(p=p_e\) across a zero-pressure-gradient boundary layer,
+\begin{equation}
+  \frac{\rho}{\rhoe}
+  =
+  \frac{\Te}{T}.
+  \label{eq:densityratio}
+\end{equation}
+For the viscosity ratio, using a shortened notation for Sutherland's law:
+\begin{equation}
+  \mu(T)=d_1\phi(T), \qquad
+  \mue=\mu(\Te)=d_1\phi(\Te),\qquad
+  \phi(T)=\frac{\sqrt{T}}{1+d_2/T},
+  \label{eq:defs}
+\end{equation}
+Then
+\begin{align}
+  \frac{\mu}{\mue}
+  &=
+  \frac{d_1\phi(T)}{d_1\phi(\Te)}
+   =
+  \frac{\phi(T)}{\phi(\Te)}.
+  \label{eq:muratio}
+\end{align}
+\note{HypLightGreen}{%
+Therefore,
+\begin{equation}
+  C
+  =
+  \frac{\rho\mu}{\rhoe\mue}
+  =
+  \frac{\Te}{T}\frac{\phi(T)}{\phi(\Te)}.
+  \label{eq:Ccancel}
+\end{equation}
+
+At fixed \(T/\Te\), \(C\) contains no explicit \(d_1\) for either gas model, as long as both use the thermally perfect equation of state \(p=\rho RT\) and the same Sutherland form for \(\mu(T)\). The coefficient can still depend on \(T/\Te\), \(T_e\), and \(d_2\). In the calorically imperfect problem, \(C(\eta)\) can consequently change \emph{indirectly} when the \(d_1\)-dependent energy equation changes \(T(\eta)\).}
+
+\section{Dependence of the thermal-diffusion coefficient \texorpdfstring{\(K\)}{K} on \texorpdfstring{\(d_1\)}{d1}}
+\label{sec:K_dependence}
+
+For the calorically imperfect gas model, the static-temperature energy equation contains the thermal-diffusion coefficient \(K\) multiplying the static-temperature-gradient term (see Eq.~\eqref{eq:imperfectstatic}). The coefficient is defined as
+\begin{equation}
+  K=\frac{\rho k(T)}{\rhoe\mue \cpe},
+  \qquad
+  \cpe=c_p(\Te).
+  \label{eq:K_appendix_def}
+\end{equation}
+The question is whether this coefficient contains the Sutherland constant \(d_1\). Write Sutherland's law locally as
+\begin{equation}
+  \mu(T)=d_1\phi(T),
+  \qquad
+  \mue=\mu(\Te)=d_1\phi(\Te),
+  \qquad
+  \phi(T)=\frac{\sqrt{T}}{1+d_2/T}.
+\end{equation}
+In contrast, \MA{} define the thermal conductivity independently by the Keyes law (their Eq.~58),
+\begin{equation}
+  k(T)
+  =
+  d_3
+  \frac{\sqrt{T}}
+       {1+\left(d_4/T\right)10^{-d_5/T}},
+  \qquad
+  d_3=2.646\times10^{-3},\quad
+  d_4=245.4~\mathrm{K},\quad
+  d_5=12~\mathrm{K}.
+\end{equation}
+This conductivity closure contains the constants \(d_3,d_4,d_5\), but no Sutherland constant \(d_1\).
+Using the thermally perfect equation of state and \(p=p_e\) across the boundary layer gives \(\rho/\rhoe=\Te/T\). Therefore
+
+\note{HypLightRed}{%
+\begin{align}
+  K
+  &=
+  \frac{\rho k(T)}{\rhoe\mue \cpe}
+   \\
+  &=
+  \frac{\Te}{T}
+  \frac{k(T)}{d_1\phi(\Te)\cpe}
+  \propto \frac{1}{d_1}.
+  \label{eq:Kdepends}
+\end{align}
+\(K\) is proportional to \(1/d_1\). Therefore \(d_1\) remains in the calorically imperfect static-temperature energy equation through the thermal-diffusion coefficient \(K\).
+}
+
+\clearpage
+\begin{thebibliography}{9}
+
+\bibitem{malik1991}
+M.~R. Malik and E.~C. Anderson,
+``Real gas effects on hypersonic boundary-layer stability,''
+\emph{Physics of Fluids A: Fluid Dynamics} \textbf{3}(5), 803--821 (1991).
+\href{https://doi.org/10.1063/1.858012}{doi:10.1063/1.858012}.
+
+\bibitem{andersonlewis1971}
+E.~C. Anderson and C.~H. Lewis,
+\emph{Laminar or Turbulent Boundary-Layer Flows of Perfect Gases or Reacting Gas Mixtures in Chemical Equilibrium},
+NASA Contractor Report NASA CR-1893 (National Aeronautics and Space Administration, Washington, DC, 1971).
+\url{https://ntrs.nasa.gov/citations/19720003639}.
+
+\bibitem{schlichting2017}
+H.~Schlichting and K.~Gersten,
+\emph{Boundary-Layer Theory}, 9th ed. (Springer-Verlag, Berlin Heidelberg, 2017), pp.~247--248.
+\href{https://doi.org/10.1007/978-3-662-52919-5}{doi:10.1007/978-3-662-52919-5}.
+
+\end{thebibliography}
+
+\end{document}

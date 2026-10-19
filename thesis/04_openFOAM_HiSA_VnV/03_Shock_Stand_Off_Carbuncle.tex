@@ -1,0 +1,480 @@
+% Figure-provenance audit: 2026-10-19. ValData below denotes the Windows-hosted
+% /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData
+% directory (C:\Users\MichaelGnadlinger\OneDrive - Hypersonica\Hypersonica Team - Documents\02 Technical\03 Flight physics\16 Theses\2026\01 Gnadl\Files\ValData).
+% Underlying datasets and exact image/export matches are distinguished below;
+% a retained case family alone does not establish the rendered iteration.
+\section{Shock stand-off distance and carbuncle behaviour}
+\label{sec:numerical-vv:shock-stand-off-carbuncle}
+
+The detached-shock cases in this section compare the predicted shock stand-off distance with
+the measurements of Kim~\citep{Kim1956CircularCylinder} on a cylinder and
+the wedge experiments of Hornung and Smith~\citep{HornungSmith1979ShockDetachment}.
+The aim is to assess the accuracy of the OpenFOAM/HiSA setup with the implemented
+AUSMDV2\(^+\) (see Section~\ref{subsec:ext:AUSM}) for whether or not it can resolve strong, detached shocks physically correctly. In this study also the so-called carbuncle behaviour was encountered and it's cause, effect and inevitably is discussed. It was chosen to run this validation laminar, to isolate the underlying numerics from potentially influence of unphysical behaviour of turbulence models at stagnation points \cite{durbin1996k} or across shocks \cite{tian2023correction}. Both Kim and Hornung and Smith, have tested and found their experiments to be suitably approximated as 2D phenomenons.
+
+\paragraph{General case setup.}
+
+The Kim configuration consists of a circular cylinder with diameter
+\(D=10\,\mathrm{mm}\) in air at \(M_\infty=6\). The Hornung--Smith
+configuration comprises a symmetrical sharp wedge in argon at
+\(M_\infty=16\), with flank length \(w=51\,\mathrm{mm}\) and face
+inclination \(\delta_w=46.2^\circ\) to the freestream. Figure~\ref{fig:Kim-mesh-coarse-6k} and Figure~\ref{fig:Hornung-mesh-coarse-16k} show the respective geometries and the coarsest meshes investigated respectively alongside the applied boundary conditions. For the Hornung--Smith sharp wedge mesh it was elected to retain the refinement of the structured mesh specifically around the zone along the stagnation line where the shock is expected to sit, rather than systematically refineing the whole domain. It was elected to not fit either meshes in a shock-curved manner, as to keep subsequent mesh refinement steps more easily controllable by simple halving the x and y related spacing. For the radially structured mesh for the Kim et al study, it was ensured, that the stagnation line runs through cell centres and not between cells, so to avoid any unnecessary interpolation to resolve the pressure along the stagnation line, as was necessary for the H-grid of the Hornung--Smith mesh. 
+\par\medskip
+
+Both configurations are represented by two-dimensional, laminar, viscous calculations. The air in the experiment by Kim et al is modelled as thermally perfect, calorically imperfect gases using ideal-gas equation of state with temperature-dependent JANAF caloric
+properties. The Argon in the experiment by Hornung--Smith et al, is specifically chosen to avoid dissociation and explicitly stated to behave as a perfect gas, thus modelled as thermally and calorically perfect, with constant \(\gamma=5/3\) \cite{HornungSmith1979ShockDetachment}. Both cases employ Sutherland viscosity, \(\mu=A_sT^{3/2}/(T+T_s)\), with constants specific to the respective gas. The prescribed simulation conditions are
+summarized in detail in Table~\ref{tab:shock-stand-off-setup}. The shock stand-off distance is measured along the stagnation line from the upstream cylinder surface or wedge tip and normalized by \(D\) or \(w\), respectively, following the definitions used in the reference studies.
+
+\begin{table}[H]
+    \centering
+    \caption{Geometry, prescribed freestream and wall conditions, and gas-model
+        parameters of the shock stand-off simulations. The dimensional inputs
+        describe the present calculations, with their relation to the experimental
+        references is discussed in the text below.}
+    \label{tab:shock-stand-off-setup}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}p{0.43\linewidth}>{\centering\arraybackslash}p{0.25\linewidth} >{\centering\arraybackslash}p{0.25\linewidth}@{}}
+        \toprule
+        Quantity & \multicolumn{1}{>{\centering\arraybackslash}p{0.25\linewidth}}{Kim cylinder} & \multicolumn{1}{>{\centering\arraybackslash}p{0.25\linewidth}}{Hornung--Smith wedge} \\
+        \midrule
+        Characteristic dimension
+            & \multicolumn{1}{>{\centering\arraybackslash}p{0.25\linewidth}}{\(D=10\,\mathrm{mm}\)} & \multicolumn{1}{>{\centering\arraybackslash}p{0.25\linewidth}}{\(w=51\,\mathrm{mm}\)} \\
+        Wedge face inclination \(\delta_w\) [\(^{\circ}\)]
+            & {---} & \num{46.2} \\
+        Mach number \(M_\infty\) & \num{6} & \num{16} \\
+        Static pressure \(p_\infty\) [\(\mathrm{Pa}\)]
+            & \num{327} & \num{261} \\
+        Static temperature \(T_\infty\) [\(\mathrm{K}\)]
+            & \num{34} & \num{57} \\
+        Heat-capacity ratio \(\gamma\)
+            & \multicolumn{1}{>{\centering\arraybackslash}p{0.25\linewidth}}{\(c_p/(c_p-R)\)} & \multicolumn{1}{>{\centering\arraybackslash}p{0.25\linewidth}}{\(5/3\)} \\
+        Wall temperature \(T_w\) [\(\mathrm{K}\)]
+            & \num{295} & \num{295} \\
+        \midrule
+        Gas
+            & \multicolumn{1}{>{\centering\arraybackslash}p{0.25\linewidth}}{Air \(c_p(T)\)} & \multicolumn{1}{>{\centering\arraybackslash}p{0.25\linewidth}}{Argon \(c_p\)} \\
+        Specific heat \(c_p\)
+            & \multicolumn{1}{>{\centering\arraybackslash}p{0.25\linewidth}}{JANAF \(c_p(T)\)} & \multicolumn{1}{>{\centering\arraybackslash}p{0.25\linewidth}}{Constant \(c_p = 520.3\)} \\
+        Specific gas constant \(R\) [\(\mathrm{J\,kg^{-1}\,K^{-1}}\)]
+            & \num{287.102} & \num{208.132} \\
+        Sutherland \(A_s\) [\(\mathrm{Pa\,s\,K^{-1/2}}\)]
+            & \num{1.458e-6} & \num{1.96e-6} \\
+        Sutherland \(T_s\) [\(\mathrm{K}\)]
+            & \num{110.4} & \num{144} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The prescribed wall temperature is a modelling assumption for both cases, as neither explicitly states it. Kim et al do not specify the particular dimensional freestream state \(p_\infty=327\,\mathrm{Pa}\), \(T_\infty=34\,\mathrm{K}\) in their own publication, but the values must rather be taken from the associated shock tunnel evaluation study in \cite[Run 434, Channel 2 (sonic throat at inlet, AR = 28)]{tamaki1956divergent}. Hornung and Smith report the nominal conditions in the test section for the Argon case as \(M_\infty=16\), \(T_\infty=57\,\mathrm{K}\) and \(\rho_\infty=2.2e^{-5}\,\mathrm{g\,cm^{-3}}\) in their Table~1. The specific gas constant \(R\) and heat-capacity ratio \(\gamma\) are taken from the NIST database\footnote{\url{https://webbook.nist.gov/cgi/inchi/InChI\%3D1S/Ar} [accessed May 20, 2026]}. The Sutherland viscosity law constants for Argon and air are taken from \cite[Table 1-1]{white2006viscous}, with a given accuracy of +-2\% within the temperature of 120 - 1500K and 170 - 1900K respectively. No source of a farther validated Sutherland could be found. With the extremely low inflow temperatures this results in a certain extrapolation in the viscosity and thus modelling uncertainty for reproducing the experiments. Additionally these extremely low temperatures and pressures for the cold-air experiment by Kim et al are well below the air saturation line (\(\approx\)45 K under these reservoir conditions for nitrogen \cite{frels1974vapour}), but Tamaki argues supersaturation over the ~1 ms test time prevented any observable condensation under same test conditions in the same facility, but a different experiment\cite{tamaki1956divergent}.
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): underlying mesh retained at
+    % ValData/FIN/Kim/00 mesh/6K/Kim_6k.ansa and Kim_6k.msh;
+    % OpenFOAM mesh: ValData/FIN/Kim/01 mesh_sens/6k/constant/polyMesh/.
+    % Boundary inputs: that case's 0.org/include/{setup,boundaries}, 0.org/{p,U,T}.
+    % The annotated raster is retained here; the editable annotation/export source
+    % and original rendering settings were not recovered.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Kim_mesh_coarse_6k.png}
+    \caption{Computational domain and coarse 6\,000-cell radially structured mesh for the \(D=10\,\mathrm{mm}\) cylinder of Kim et al.}
+    \label{fig:Kim-mesh-coarse-6k}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): underlying mesh retained at
+    % ValData/Tunel/01 ShockStandOff/Hornung/00 mesh/46p2/16k/Hornung_16k.ansa
+    % and Hornung_16k.msh; OpenFOAM mesh and boundary inputs are under
+    % ValData/FIN/Hornung/mesh_sens/16k/{constant/polyMesh,0.org,system}/.
+    % The annotated raster is retained here; the editable annotation/export source
+    % and original rendering settings were not recovered.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_mesh_coarse_16k.png}
+    \caption{Computational domain and coarse 16\,000-cell structured mesh for the \(\delta_w=46.2^\circ\) wedge of Hornung and Smith, with local refinement along the stagnation line where the shock is expected to sit.}
+    \label{fig:Hornung-mesh-coarse-16k}
+\end{figure}
+
+\paragraph{Extraction of verification quantities.}
+
+The shock is located using a pressure-gradient maximum, following the same
+principle as in Section~\ref{sec:numerical-vv:shock-angle-post-shock}. Here,
+fonly the one-dimensional pressure along the stagnation line is exported and analysed, rather than the whole pressure field. The shock position is associated to the cell centre sample location with
+the largest streamwise pressure gradient \(\mathrm{d}p/\mathrm{d}x\). Its distance to the cylinder nose or wedge tip gives the stand-off distance, sometimes given normalized by \(D\) or \(w\), respectively. Half the local cell width is reported as uncertainty due to spatial discretization. Figure~\ref{fig:shock-stand-off-extraction} illustrates the procedure for the Kim cylinder case on the coarsest mesh (\(6\,000\) cells, panels a and c) and the finest mesh (\(2.3\) million cells, panels b and d) - this also illustrates the strength of the low-dissipative AUSMDV2\(^+\) which is able to capture the shock with a singular intermediate cell.
+
+% Extraction sources: Files/ValData/FIN/Kim/01 mesh_sens/plot_stagline_pressure_iters.py
+% and FIN/Hornung/mesh_sens/plot_stagline_pressure_iters.py.
+% Both select a sampled maximum of np.gradient(p, x), with no sub-sample fit.
+% The profiles use FIN/Kim/01 mesh_sens/6k/25k.csv and 2p3M/45k.csv.
+% Physical x is plotted in mm; the nose lies at x = -5 mm.
+% The wide profile exports retain the original samples and shock detection;
+% regenerate with Figures/plot_kim_shock_extraction.py and the source data above.
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.49\linewidth}
+        \centering
+        % Figure provenance (audited 2026-10-19): processed image match found in
+        % ValData/FIN/Kim_1/ShockStandoff.pptx, slide 5, ppt/media/image6.png.
+        % Bicubic resize from 658 x 767 to the included 384 x 448 pixels reproduces
+        % RGB values to mean absolute difference 0.00096 on the 0--255 scale.
+        % The slide pairs it with an older 6k/25k-iteration profile; retained candidate
+        % raw cases are FIN/Kim_1/01 Ma6 mesh sens/Ma6_6k_impG/ and
+        % Tunel/01 ShockStandOff/Kim/mesh_sens/old_AUSMDV/Ma6_6k_impG/ under ValData
+        % (each has 25000/p and constant/polyMesh). This establishes the earlier image
+        % export, but does not establish which raw case was rendered or equivalence to
+        % the current FIN/Kim/01 mesh_sens/6k/25k.csv used in panel (c).
+        \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Kim_pressure_field_coarse.png}
+        \par\smallskip
+        {\small (a) Coarsest mesh: static pressure field [Pa].\par}
+    \end{minipage}\hfill
+    \begin{minipage}[b]{0.49\linewidth}
+        \centering
+        % Figure provenance (audited 2026-10-19): corresponding manuscript case data
+        % are retained in ValData/FIN/Kim/01 mesh_sens/2p3M/{45000/p,constant/polyMesh}/;
+        % the pressure-line export used in panel (d) is 2p3M/45k.csv.
+        % ValData/FIN/Hornung/mesh_sens/overview.pvsm also retains a reader for this
+        % 2p3M case. Exact source export and rendered iteration/camera were not recovered;
+        % the older 400k screenshot in FIN/Kim_1/ShockStandoff.pptx is a different image.
+        \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Kim_pressure_field_fine.png}
+        \par\smallskip
+        {\small (b) Finest mesh: static pressure field [Pa].\par}
+    \end{minipage}
+    \par\medskip
+    \begin{minipage}{\linewidth}
+        \centering
+        % Figure provenance (audited 2026-10-19): exact generator identified by PDF
+        % Creator metadata: thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_kim_shock_extraction.py.
+        % Input: ValData/FIN/Kim/01 mesh_sens/6k/25k.csv; helpers loaded from that
+        % mesh_sens/plot_stagline_pressure_iters.py. Raw case: 6k/{25000/p,constant/polyMesh}/.
+        % The generator changes layout/fonts only; it retains native samples and detection.
+        \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Kim_stag_line_shock_identified_coarse_wide.pdf}
+        \par\smallskip
+        {\small (c) Coarsest mesh: stagnation-line pressure profile.\par}
+    \end{minipage}
+    \par\medskip
+    \begin{minipage}{\linewidth}
+        \centering
+        % Figure provenance (audited 2026-10-19): exact generator identified by PDF
+        % Creator metadata: thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_kim_shock_extraction.py.
+        % Input: ValData/FIN/Kim/01 mesh_sens/2p3M/45k.csv; helpers loaded from that
+        % mesh_sens/plot_stagline_pressure_iters.py. Raw case: 2p3M/{45000/p,constant/polyMesh}/.
+        % The generator changes layout/fonts only; it retains native samples and detection.
+        \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Kim_stag_line_shock_identified_fine_wide.pdf}
+        \par\smallskip
+        {\small (d) Finest mesh: stagnation-line pressure profile.\par}
+    \end{minipage}
+    \caption[Extraction of shock stand-off distance for the Kim cylinder]{%
+        Shock stand-off extraction for the Kim cylinder at \(M_\infty=6\).
+        Top (a, b): static pressure fields in \(\mathrm{Pa}\) and sampling
+        lines for the coarsest (approximately \(6\,000\) cells) and finest
+        (approximately \(2.3\) million cells) meshes.
+        Below (c, d): corresponding normalized pressure profiles against
+        physical \(x\)-position in millimetres. The red dotted line marks
+        the detected shock; the black dashed line marks the cylinder nose.
+        The shaded band spans half the local cell width on either side of
+        the detected shock, indicating spatial extraction uncertainty.
+        The inset in (d) enlarges the shock rise; dots mark exported
+        cell-centre samples. The same extraction procedure was applied to
+        the Hornung--Smith cases.}
+    \label{fig:shock-stand-off-extraction}
+\end{figure}
+
+\paragraph{Mesh convergence on shock stand-off distance.}
+
+The Kim mesh family comprises seven refinement levels, ranging from approximately
+\(6\,000\) to \(2.3\) million cells. Refinement retains the radial mesh structure
+and the outward growth of cell widths. The Hornung--Smith family comprises six
+levels, labelled \(16\,000\), \(65\,000\), \(260\,000\), \(1\), \(4\) and
+\(8\) million equivalent cells. The finer Hornung--Smith calculations use a
+reduced domain with a symmetry boundary to limit the computational cost. Their
+labels indicate the equivalent refinement level of the original mesh family,
+rather than the actual number of cells, for example, the \(1\)-million-equivalent
+case contains \(\approx500\,000\) cells.
+\par\medskip
+
+Figures~\ref{fig:Kim-mesh-convergence} and~\ref{fig:Hornung-mesh-convergence}
+compare the extracted stand-off distances with the experimental references and
+show the signed relative error to the experimental measurement. The reference values are
+\(d_{\mathrm{ref}}=2.280\,\mathrm{mm}\) for the Kim cylinder and \(\Delta_{\mathrm{ref}}=12.189\,\mathrm{mm}\) for the Hornung--Smith wedge, corresponding to \(d/D=0.228\) and \(\Delta/w=0.239\), respectively. The error bars represent the extraction resolution associated with half the
+local cell width as described above in the extraction methodology.
+
+% Convergence figures regenerated from Files/ValData/FIN/Kim/01 mesh_sens
+% and FIN/Hornung/mesh_sens by Figures/plot_shock_convergence.py.
+% Fixed 170 mm PDF width gives 9.5--10 pt text at manuscript linewidth.
+% The original extraction routines, error bars and history marker selection are retained.
+% Hornung 8M uses the retained HPC shock_standoff.csv and shock_history/provenance.csv;
+% some underlying intermediate pressure profiles are unavailable, but all plotted
+% numerical observations are retained. No missing observations are reconstructed.
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): PDF Creator identifies
+    % thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py.
+    % Data root: ValData/FIN/Kim/01 mesh_sens/; native final profiles:
+    % {6k,16k,38k,90k,250k}/25k.csv, 750k/20k.csv and 2p3M/45k.csv.
+    % Each corresponding case retains its pressure field and constant/polyMesh.
+    % Extraction helpers: plot_stagline_pressure_iters.py in the same source root.
+    % Earlier export: mesh_convergence_kim.{png,pdf}; the included PDF is a replot.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Kim_mesh_convergence.pdf}
+    \caption[Mesh dependence of the Kim shock stand-off distance]{%
+        Shock stand-off distance \(d\) ahead of the Kim cylinder (left) and
+        signed relative discrepancy from the experimental reference (right).
+        Error bars indicate half the local sampling interval, expressed in
+        millimetres or as a percentage of the reference distance.}
+    \label{fig:Kim-mesh-convergence}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): PDF Creator identifies
+    % thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py.
+    % Data root: ValData/FIN/Hornung/mesh_sens/; imported generator:
+    % plot_hornung_convergence.py; inputs: 16k/25k.csv, 65k/50k.csv, 260k/100k.csv,
+    % 1M_eq_260ksym/280k.csv, 4M_eq_920ksym/141k.csv, and
+    % 8M_eq_3M/hpc_results_18996/{shock_standoff.csv,shock_history/provenance.csv}.
+    % Source manifest: hornung_mesh_convergence_data.csv; HPC import details and
+    % its distinct midpoint-gradient detector are in hpc_results_18996/IMPORT_NOTES.md.
+    % Full 8M fields/mesh: /home/mgnadlinger/Hornung_8M_restart_242276_128cores_20260924/results/18996/.
+    % The included PDF is a replot; unavailable intermediate HPC fields are not reconstructed.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_mesh_convergence.pdf}
+    \caption[Mesh dependence of the Hornung--Smith shock stand-off distance]{%
+        Shock stand-off distance \(\Delta\) ahead of the Hornung--Smith wedge
+        tip (left) and signed relative discrepancy from the experimental
+        reference (right). The abscissa gives equivalent cell counts for the
+        refinement family. Error bars indicate half the local sampling interval,
+        expressed in millimetres or as a percentage of the reference distance.}
+    \label{fig:Hornung-mesh-convergence}
+\end{figure}
+
+For the Kim cylinder, the discrepancies range from approximately \(-3.05\%\)
+to \(+2.10\%\), with \(+1.53\%\) on the finest mesh. Refinement changes the
+sign of the error several times, without a consistently decreasing
+amplitude. The Hornung--Smith results show a larger initial mesh dependence:
+the discrepancy decreases in magnitude from \(-22.06\%\) on the coarsest mesh
+to \(-3.81\%\) at \(260\,000\) cells, but increases again to \(-5.35\%\)
+on the \(1\)-million-equivalent mesh. The two finest levels give \(-0.58\%\)
+and \(+1.78\%\), respectively. Thus, refinement generally improves the
+Hornung--Smith result, but neither family establishes a systematic monotonic
+or damped oscillatory mesh convergence behaviour. A reliable order of convergence or extrapolated mesh-independent value cannot be inferred from these sequences.
+\par\medskip
+
+The pressure fields provide an explanation for part of this irregular mesh
+dependence. Figures~\ref{fig:Kim-carbuncles-overview}
+and~\ref{fig:Hornung-carbuncles-overview} show local distortions of the captured
+shock wave, instead of a smoothly curved line. It's severity vary between meshes. These distortions are consistent with the carbuncle phenomenon discussed in the following paragraph. For the Kim cylinder, the close-up in Figure~\ref{fig:Kim-250k-carbuncles-close-up} shows distinct dents away from the stagnation line. For the Hornung--Smith wedge, a local indentation is
+visible on the lower part of the shock at \(65\,000\) cells, while the
+\(260\,000\)-cell and \(1\)-million-equivalent cases exhibit distortions
+near the stagnation line. The latter is enlarged in
+Figure~\ref{fig:Hornung-1M-carbuncles-close-up}. A deformation in this region
+directly affects the measured stand-off distance. Consequently, the refinement
+study combines ordinary resolution effects with changes in shock shape that
+need not diminish smoothly with cell size.
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): underlying six case families retained
+    % under ValData/FIN/Kim/01 mesh_sens/{16k,38k,90k,250k,750k,2p3M}/,
+    % including constant/polyMesh and pressure fields at their last saved iterations
+    % 25000, 25000, 25000, 25000, 20000 and 45000, respectively.
+    % Related retained export: mesh_sens/Screenshot 2026-06-18 161824.png, which shows
+    % a different, earlier eight-view layout. It is not the included six-view raster.
+    % Exact screenshot/export state, rendered iterations and crop were not recovered;
+    % the last saved fields identify available data, not a verified image match.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Kim_pressure_map_overview.png}
+    \caption[Pressure fields across the Kim mesh family]{%
+        Static pressure fields in \(\mathrm{Pa}\) for the Kim cylinder at the
+        final evaluated iterations. From left to right, the top row shows
+        the \(16\,000\), \(38\,000\) and \(90\,000\)-cell meshes, and the
+        bottom row the \(250\,000\), \(750\,000\) and \(2.3\)-million-cell
+        meshes. Local shock distortions vary between refinement levels.}
+    \label{fig:Kim-carbuncles-overview}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): corresponding case family retained at
+    % ValData/FIN/Kim/01 mesh_sens/250k/; raw fields include 25000/p and
+    % constant/polyMesh, and final stagnation-line data are in 25k.csv.
+    % Exact screenshot export, rendered iteration and close-up camera were not recovered;
+    % 25000 is the available final field, not an independently verified image timestamp.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Kim_250k_carbuncles_close-up.png}
+    \caption{Close-up of the Kim cylinder pressure field in \(\mathrm{Pa}\)
+        on the \(250\,000\)-cell mesh, showing local indentations of the
+        shock away from the stagnation line.}
+    \label{fig:Kim-250k-carbuncles-close-up}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): case readers/reflection filters and
+    % view settings retained in ValData/FIN/Hornung/mesh_sens/overview.pvsm.
+    % This state identifies {16k,65k,260k,1M_eq_260ksym,4M_eq_920ksym,8M_eq_3M}/
+    % under that root. Their current final fields are at 25000, 50000, 100000,
+    % 280000, 141000 and 300000, respectively; meshes are retained in constant/polyMesh.
+    % The saved state has ViewTime=45000 and lists only 35000/37500 for 8M;
+    % it therefore does not establish that this raster shows the final 300000 HPC field.
+    % Related Screenshot 2026-06-09 195200.png has a different layout/camera.
+    % Exact included screenshot export and per-panel rendered iterations remain unverified.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_pressure_map_overview.png}
+    \caption[Pressure fields across the Hornung--Smith mesh family]{%
+        Static pressure fields in \(\mathrm{Pa}\) for the Hornung--Smith wedge
+        at the final evaluated iterations. From left to right, the top row
+        shows the \(16\,000\), \(65\,000\) and \(260\,000\)-cell meshes,
+        and the bottom row the \(1\), \(4\) and \(8\)-million-equivalent
+        meshes. The shock shape does not change smoothly with refinement.}
+    \label{fig:Hornung-carbuncles-overview}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): corresponding reduced-domain case
+    % ValData/FIN/Hornung/mesh_sens/1M_eq_260ksym/ retains constant/polyMesh and
+    % pressure snapshots through 280000/p. The associated reader and reflection
+    % filters are recorded in mesh_sens/overview.pvsm.
+    % Exact close-up export, rendered iteration and camera were not recovered;
+    % 280000 identifies available final data, not a verified screenshot timestamp.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_1M_carbuncles_close-up.png}
+    \caption{Close-up of the Hornung--Smith pressure field in \(\mathrm{Pa}\)
+        on the \(1\)-million-equivalent mesh, showing an indentation of the
+        shock in the stagnation region.}
+    \label{fig:Hornung-1M-carbuncles-close-up}
+\end{figure}
+
+Iterative convergence must therefore be distinguished from mesh convergence. In the following the iterative convergence of the specific cases with severe carbuncling and subsequently being outliers in the mesh converegence, is discussed in detail, so show that these cases infact reach a stationary, converged state. The residual histories were inspected together with the evolution of the shock position and comparisons of the pressure field between iterations.
+Representative stand-off histories are shown in
+Figures~\ref{fig:Kim-iteration-convergence}
+and~\ref{fig:Hornung-iteration-convergence}. For the Kim \(250\,000\)-cell
+case, the detected shock position remains unchanged from \(12\,000\) to
+\(25\,000\) iterations. On the \(2.3\)-million-cell mesh, the final samples
+at \(43\,000\)--\(45\,000\) iterations identify the same position.
+The Hornung--Smith histories likewise approach plateaus, including the visibly
+distorted \(1\)-million-equivalent case. For that case,
+Figure~\ref{fig:Hornung-proof-convergence} additionally shows pressure changes
+below \(0.1\%\) in magnitude in the displayed region between
+\(200\,000\) and \(250\,000\) pseudo-iterations. These observations support
+an effectively stationary shock configuration at the available extraction
+resolution, even when its shape remains distorted. Continuing the iterations
+alone therefore does not resolve the observed mesh dependence.
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): PDF Creator identifies
+    % thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py;
+    % loads ValData/FIN/Kim/01 mesh_sens/plot_kim_iteration_convergence.py.
+    % Plotted inputs: iteration_convergence/profiles/{250k,2p3M}/*k.csv under that
+    % source root. Raw fields and sampling details are enumerated in
+    % iteration_convergence/extraction_provenance.json; extractor:
+    % iteration_convergence/extract_kim_iteration_profiles.py. All retained snapshots
+    % are used; the PDF is a layout/font replot of the original history analysis.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Kim_iteration_convergence.pdf}
+    \caption[Iteration histories of the Kim shock stand-off distance]{%
+        Evolution of the Kim shock stand-off distance for the
+        \(250\,000\)-cell (left) and \(2.3\)-million-cell (right) meshes.
+        Dashed lines mark the final extracted distances, error bars indicate
+        half the local sampling interval.}
+    \label{fig:Kim-iteration-convergence}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): PDF Creator identifies
+    % thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py;
+    % loads ValData/FIN/Hornung/mesh_sens/plot_hornung_iteration_convergence.py.
+    % Local profiles: iteration_convergence/profiles/{65k,260k,1M_eq_260ksym}/*k.csv;
+    % raw fields, sample lines and extractor are documented in
+    % iteration_convergence/{extraction_provenance.json,extract_hornung_iteration_profiles.py}.
+    % 8M inputs: 8M_eq_3M/hpc_results_18996/{shock_standoff.csv,shock_history/provenance.csv};
+    % original WSL case: /home/mgnadlinger/Hornung_8M_restart_242276_128cores_20260924/results/18996/.
+    % Some intermediate HPC pressure fields are missing; all plotted history observations
+    % and their extraction provenance are retained. Marker thinning preserves the curves.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_iteration_convergence.pdf}
+    \caption[Iteration histories of the Hornung--Smith shock stand-off distance]{%
+        Evolution of the Hornung--Smith shock stand-off distance for the
+        \(65\,000\)-cell, \(260\,000\)-cell, \(1\)-million-equivalent and
+        \(8\)-million-equivalent meshes. Dashed lines mark the final extracted
+        distances, error bars indicate half the local sampling interval.}
+    \label{fig:Hornung-iteration-convergence}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19): underlying pressure pair verified at
+    % ValData/FIN/Hornung/mesh_sens/1M_eq_260ksym/{200000/p,250000/p}, with
+    % constant/polyMesh retained. The raster's colour-bar expression explicitly reads
+    % (p-200k-p-250k)/p-250k*100 (%), consistent with the caption.
+    % Exact ParaView calculator/export state and camera were not recovered;
+    % mesh_sens/overview.pvsm retains the case reader, but no difference calculator.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_example_for_proof_of_stationary.png}
+    \caption[Pressure-field stationarity for the Hornung--Smith wedge]{%
+        Relative pressure change
+        \(100(p_{200\,000}-p_{250\,000})/p_{250\,000}\) in percent for the
+        Hornung--Smith \(1\)-million-equivalent case, where subscripts denote
+        pseudo-iterations. The displayed differences remain below
+        \(0.1\%\) in magnitude despite the persistent shock deformation.}
+    \label{fig:Hornung-proof-convergence}
+\end{figure}
+
+The effect of these distortions on stagnation-region heat-transfer is outside
+the scope of the present stand-off assessment. This region is commonly laminar,
+while turbulence closures may additionally suffer from a stagnation-point
+anomaly~\citep{durbin1996k}. The present laminar calculations isolate the
+shock-capturing behaviour from that additional modelling issue.
+
+% Keep the mesh-study figures ahead of the literature discussion.
+\clearpage
+\paragraph{On carbuncles.}
+\label{para:carbuncles}
+
+The observed shock distortions are attributed to the so-called carbuncle
+phenomenon: a shock instability arising from the interaction between the
+numerical discretization, particularly the flux scheme, and the
+mesh~\citep{Robinet2000ShockInstabilityCarbuncle,Dumbser2004CarbuncleStability}.
+A particular difficulty is that the instability can evolve into a stationary,
+iteratively converged solution while leaving local, potentially asymmetric
+irregularities in the shock~\citep[p.~238]{Robinet2000ShockInstabilityCarbuncle}.
+Thus, convergence of the iterative solution does not by itself exclude a
+carbuncle.
+\par\medskip
+
+Robinet et al.~\citep[p.~261]{Robinet2000ShockInstabilityCarbuncle} relate this
+behaviour to the possibility of multiple solutions of the Euler equations and
+note that even the Navier--Stokes equations need not possess a unique solution
+at high Reynolds numbers. The laminar,
+viscous formulation used here therefore offers no automatic protection against
+carbuncles. The physical interpretation and implication of carbuncles is also not entirely settled: Dumbser et al.~\citep[p.~648]{Dumbser2004CarbuncleStability} discuss whether the
+phenomenon should be regarded as wholly numerical or whether it may have a
+physical counterpart. For the present validation, the relevant issue is the
+dependence of the computed shock shape on the mesh and numerical treatment, but no high resolution images of the measured shocks in the experiments are available for comparison.
+\par\medskip
+
+Carbuncles are particularly associated with strong shocks aligned with grid
+lines, although their occurrence is not restricted to this
+configuration~\citep{Elling2009CarbuncleIncurable,PhongthanapanichMatthujak2021AUSMDV2Plus}, thus fitting the mesh to the shock can in fact worsen the carbunlce phenomenon.
+Their onset, location and severity cannot be inferred reliably from mesh size
+alone either. Elling~\citep{Elling2009CarbuncleIncurable} argues that a
+universal cure is not available and that numerical methods can instead be made
+more resistant to the instability, for example through additional dissipation.
+Such stabilization must be balanced against the accuracy sought from a scheme
+with low numerical dissipation. Refinement alone consequently provides no
+guarantee of suppression, and the distortion need not grow or diminish
+monotonically as the mesh is refined~\citep{Elling2009CarbuncleIncurable}.
+\par\medskip
+
+The study introducing the AUSMDV2\(^+\) scheme used here also examines
+carbuncle distortions in blunt-body shock calculations, including the
+stagnation region in which the present stand-off distance is
+measured~\citep{PhongthanapanichMatthujak2021AUSMDV2Plus}. Its comparisons
+illustrate the sensitivity to the flux formulation, while reporting improved
+shock stability for the proposed scheme in the cases tested. Related work
+specifically addresses carbuncle suppression for AUSMDV on triangular
+grids~\citep{Phongthanapanich2016CarbuncleHealing}. These results motivate
+improved robustness, but do not establish freedom from carbuncles for every
+mesh and flow configuration.
+\par\medskip
+
+For the present mesh families, changes in carbuncle severity between different meshes prevent a clean interpretation of the stand-off results as a conventional mesh-convergence
+sequence. The practical validation finding is more limited:
+the Kim results lie within approximately \(\pm3\%\) of the reference, and
+the two finest Hornung--Smith results, whose shocks show only weak visible
+distortions, also lie within this range. This is an observed level of agreement
+for the tested cases, rather than a general numerical-uncertainty bound.
+For subsequent simulations containing strong shocks, the shock shape must
+therefore be inspected in detail and the presence and severity of carbuncles
+assessed individually.

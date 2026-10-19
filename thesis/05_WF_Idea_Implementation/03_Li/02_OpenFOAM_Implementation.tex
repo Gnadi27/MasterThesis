@@ -1,0 +1,14 @@
+\subsection{Non-reacting implementation and reference-state choice}
+\label{subsec:wall-functions:gao-li:openfoam-implementation}
+
+The present implementation uses fixed composition and omits chemical reactions and species-diffusion contributions. The enthalpy-based closure is retained. With the additional calorically perfect-gas assumption, \(h=c_pT\), its thermal relation reduces to the Zhang temperature--velocity relation reproduced by Li et al.~\cite[Eqs.~(8)--(13)]{li2025WF}. This equivalence concerns the thermal closure; the momentum closure remains Li's unified velocity law. Removing chemistry alone does not require constant specific heat.
+\par\medskip
+
+A useful feature is that the reference velocity and enthalpy need not be taken at the boundary layer edge. Li et al. reformulate both closures using an interior reference point and select the second off-wall grid point in their implementation~\cite[Section~IV.C, Eqs.~(40)--(42)]{li2025WF}. Here, the matching cell and a second cell farther from the wall provide the two velocity--enthalpy states. Together with the physical wall state, they determine the thermal relation. The unified velocity law is then inverted for the wall shear at the matching height, and the inferred thermal wall slope supplies the heat-flux. A prescribed-edge option is retained for comparison.
+\par\medskip
+
+This local reference construction avoids explicit edge detection, whose mesh-dependent reconstruction introduces additional sensitivity into Griffin's closure inputs (Section~\ref{subsec:wall-functions:griffin:edge-detection}). The second reference point remains distinct from the matching point; neither location should be confused with the full height of the wall-adjacent cell.
+\par\medskip
+
+\label{subsec:wall-functions:gao-li:turbulence-coupling}
+The recovered shear stress and heat-flux are delivered directly to HiSA (Section~\ref{subsec:wall-functions:direct-flux-delivery}). Following Li et al.~\cite[Eqs.~(36)--(39)]{li2025WF}, the velocity-law derivative also supplies a compatible eddy viscosity and hence a constraint on the SA variable at the selected near-wall layer. This turbulence constraint is separate from prescribing the wall fluxes.

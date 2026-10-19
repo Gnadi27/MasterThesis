@@ -1,0 +1,317 @@
+{
+  "records": [
+    {
+      "pressure_Pa": 1550,
+      "profile_snapshot_pseudo_iteration": 50000,
+      "case_current_path": "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/legacy/dy1_1e-3_dx_1p5/1550_pinf",
+      "station_m": 0.04,
+      "station_x_over_L": 0.4,
+      "source_profile_csv": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/1550_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv",
+      "source_profile_sha256": "f7ac84fb8e742e1799b53d23df3ee34cc3a29fd4a4bd9bdbe2fc4f66b528167f",
+      "source_summary": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/validation_summary.json",
+      "reference_velocity_processed_csv": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/1550_pinf_reference_velocity_profile.csv",
+      "reference_velocity_sha256": "54bff63d7914af78c7e3f7c1db2857cd882796e0e28c165b38a3178906842ff3",
+      "reference_temperature_processed_csv": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/1550_pinf_reference_temperature_profile.csv",
+      "reference_temperature_sha256": "a3729d8c4000e84913f1e7c132d389b729e5bf2b49b3ad0c92c26e94d7f32097",
+      "digitization_velocity_original_csv": "/home/mgnadlinger/Cao_lamZPGFP/Digitization/Cao_Transition to turbulence/U-BL_Figure7a.csv",
+      "digitization_temperature_original_csv": "/home/mgnadlinger/Cao_lamZPGFP/Digitization/Cao_Transition to turbulence/T-BL_Figure7a.csv",
+      "outputs": [
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/selected_legacy_1550/05_1550_pinf_boundary_layer_profiles.png",
+          "sha256": "4ef0bc0d482e2a693117ccd133f3b28b943acd77c134989525a3bb1b272a1d16"
+        },
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/selected_legacy_1550/05_1550_pinf_boundary_layer_profiles.pdf",
+          "sha256": "4a83d01ba88b428f8d16968432633c06adb2ccc98c65924fae749cc4cb1953b1"
+        }
+      ],
+      "notes": [
+        "Data are read from documented exported CSVs without smoothing or changes.",
+        "Current case resides under legacy after archive relocation; historical summary stores the pre-relocation path.",
+        "Profile verified against saved iteration 50000 U and T fields; first streamwise cell length is 0.01 mm.",
+        "CFD label identifies mesh spacings; reference label omits ambiguous DNS classification."
+      ],
+      "historical_script": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/docs_and_presentations/thesis_tex/tmp/compression_corner_review/selected_legacy_1550/regenerate_profiles.py",
+      "historical_script_sha256": "93e96a49affd1fefa1ed9b9cfa8ef6b367cf79b07bd5b3d5316b0ee9cdf06fab",
+      "previous_figure_sha256": "2de87edc889f6589e114b556572710e8026056025629b8c44dae340f6ffa60c8",
+      "previous_title_visible": false,
+      "previous_figure_matching_export": {
+        "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/selected_legacy_1550/05_1550_pinf_boundary_layer_profiles.png",
+        "crop_rows": [
+          157,
+          1215
+        ]
+      },
+      "snapshots": {
+        "source_profile_csv": {
+          "file": "1550_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv",
+          "sha256": "f7ac84fb8e742e1799b53d23df3ee34cc3a29fd4a4bd9bdbe2fc4f66b528167f",
+          "original_path": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/1550_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv"
+        },
+        "reference_velocity_processed_csv": {
+          "file": "1550_pinf_reference_velocity_profile.csv",
+          "sha256": "54bff63d7914af78c7e3f7c1db2857cd882796e0e28c165b38a3178906842ff3",
+          "original_path": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/1550_pinf_reference_velocity_profile.csv"
+        },
+        "reference_temperature_processed_csv": {
+          "file": "1550_pinf_reference_temperature_profile.csv",
+          "sha256": "a3729d8c4000e84913f1e7c132d389b729e5bf2b49b3ad0c92c26e94d7f32097",
+          "original_path": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/1550_pinf_reference_temperature_profile.csv"
+        }
+      },
+      "original_axes": [
+        {
+          "xlim": [
+            -0.02,
+            1.05
+          ],
+          "ylim": [
+            0.0,
+            18.0
+          ],
+          "xlabel": "$U_x/U_\\infty$",
+          "ylabel": "$\\eta=(y/x)\\sqrt{Re_x}$",
+          "xticks": [
+            -0.2,
+            0.0,
+            0.2,
+            0.4000000000000001,
+            0.6000000000000001,
+            0.8,
+            1.0000000000000002,
+            1.2000000000000002
+          ],
+          "yticks": [
+            0.0,
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0,
+            12.0,
+            14.0,
+            16.0,
+            18.0
+          ]
+        },
+        {
+          "xlim": [
+            0.85,
+            4.1
+          ],
+          "ylim": [
+            0.0,
+            18.0
+          ],
+          "xlabel": "$T/T_\\infty$",
+          "ylabel": "",
+          "xticks": [
+            0.5,
+            1.0,
+            1.5,
+            2.0,
+            2.5,
+            3.0,
+            3.5,
+            4.0,
+            4.5
+          ],
+          "yticks": [
+            0.0,
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0,
+            12.0,
+            14.0,
+            16.0,
+            18.0
+          ]
+        }
+      ],
+      "original_lines": [
+        {
+          "label": "OpenFOAM/HiSA, $x/L=0.4$\n$\\Delta y_1=0.001\\,\\mathrm{mm},\\;\\Delta x=1.5\\,\\mathrm{mm}$",
+          "points": 111,
+          "sha256": "c989568dc762e789871d149306d6fd23087e00ba4385c7d0cd75f48dfdc16080"
+        },
+        {
+          "label": "Cao et al. (digitized)",
+          "points": 16,
+          "sha256": "023a3033d1d825c84546a829286b02e228f53bb7f2d6e761e7ede971e1fb725a"
+        },
+        {
+          "label": "_child2",
+          "points": 2,
+          "sha256": "ae2cc60d29de85c7ed46adf5bb27e89a62bdafc75e3f8822473568055af8b86e"
+        },
+        {
+          "label": "OpenFOAM/HiSA, $x/L=0.4$\n$\\Delta y_1=0.001\\,\\mathrm{mm},\\;\\Delta x=1.5\\,\\mathrm{mm}$",
+          "points": 111,
+          "sha256": "521c91b5225ba7a5a158811fefd021fbb445139b9532b1565a83f65ac08c9be6"
+        },
+        {
+          "label": "Cao et al. (digitized)",
+          "points": 31,
+          "sha256": "83c53c0c1924e3babb5463aab917d304083ed8385afba76e189e2401a3f92239"
+        }
+      ]
+    },
+    {
+      "pressure_Pa": 760,
+      "profile_snapshot_pseudo_iteration": 50000,
+      "case_current_path": "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/legacy/dy1_1e-3_dx_1p5/760_pinf",
+      "station_m": 0.04,
+      "station_x_over_L": 0.4,
+      "source_profile_csv": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv",
+      "source_profile_sha256": "e445c105f9d2ff0bff022b5ca126555feb5683d88649b45d1c94a084e301410f",
+      "source_summary": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/validation_summary.json",
+      "reference_velocity_processed_csv": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_reference_velocity_profile.csv",
+      "reference_velocity_sha256": "542eda31b2f4dfca71b9296bcc66e384e5640b728ba2886c0781762ae00b1b6e",
+      "reference_temperature_processed_csv": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_reference_temperature_profile.csv",
+      "reference_temperature_sha256": "bb89dd466247ce37c90bcee3716a1476ac660d2d1cc5c29db49a7ff18a915c06",
+      "digitization_velocity_original_csv": "/home/mgnadlinger/Cao_lamZPGFP/Digitization/Cao_Unsteady effects/U-BL_Figure2b.csv",
+      "digitization_temperature_original_csv": "/home/mgnadlinger/Cao_lamZPGFP/Digitization/Cao_Unsteady effects/T-BL_Figure2b.csv",
+      "outputs": [
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/05_760_pinf_boundary_layer_profiles.png",
+          "sha256": "7f229a162d3fbf1634b212b6fc48303216809fe52fbb8a0f3639a2295db0dcda"
+        },
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/05_760_pinf_boundary_layer_profiles.pdf",
+          "sha256": "4fd9dffb67e7f1c57fc0b618a1dbceffc8407dd286a5cd7c074ab8b55c194cbe"
+        }
+      ],
+      "notes": [
+        "Data are read from documented exported CSVs without smoothing or changes.",
+        "The supplied original PNG cannot establish its snapshot iteration by image metadata alone.",
+        "CFD label identifies mesh spacings; reference label omits ambiguous DNS classification.",
+        "Current case resides under legacy after archive relocation; historical summary stores the pre-relocation path."
+      ],
+      "historical_script": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/docs_and_presentations/thesis_tex/tmp/compression_corner_review/regenerate_profiles.py",
+      "historical_script_sha256": "517043173aa1e508cae0a2e4976972cd248732d99f20e4014792845608022690",
+      "previous_figure_sha256": "7f229a162d3fbf1634b212b6fc48303216809fe52fbb8a0f3639a2295db0dcda",
+      "previous_title_visible": true,
+      "previous_figure_matching_export": {
+        "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/05_760_pinf_boundary_layer_profiles.png",
+        "crop_rows": null
+      },
+      "snapshots": {
+        "source_profile_csv": {
+          "file": "760_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv",
+          "sha256": "e445c105f9d2ff0bff022b5ca126555feb5683d88649b45d1c94a084e301410f",
+          "original_path": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv"
+        },
+        "reference_velocity_processed_csv": {
+          "file": "760_pinf_reference_velocity_profile.csv",
+          "sha256": "542eda31b2f4dfca71b9296bcc66e384e5640b728ba2886c0781762ae00b1b6e",
+          "original_path": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_reference_velocity_profile.csv"
+        },
+        "reference_temperature_processed_csv": {
+          "file": "760_pinf_reference_temperature_profile.csv",
+          "sha256": "bb89dd466247ce37c90bcee3716a1476ac660d2d1cc5c29db49a7ff18a915c06",
+          "original_path": "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_reference_temperature_profile.csv"
+        }
+      },
+      "original_axes": [
+        {
+          "xlim": [
+            -0.02,
+            1.05
+          ],
+          "ylim": [
+            0.0,
+            18.0
+          ],
+          "xlabel": "$U_x/U_\\infty$",
+          "ylabel": "$\\eta=(y/x)\\sqrt{Re_x}$",
+          "xticks": [
+            -0.2,
+            0.0,
+            0.2,
+            0.4000000000000001,
+            0.6000000000000001,
+            0.8,
+            1.0000000000000002,
+            1.2000000000000002
+          ],
+          "yticks": [
+            0.0,
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0,
+            12.0,
+            14.0,
+            16.0,
+            18.0
+          ]
+        },
+        {
+          "xlim": [
+            0.85,
+            4.1
+          ],
+          "ylim": [
+            0.0,
+            18.0
+          ],
+          "xlabel": "$T/T_\\infty$",
+          "ylabel": "",
+          "xticks": [
+            0.5,
+            1.0,
+            1.5,
+            2.0,
+            2.5,
+            3.0,
+            3.5,
+            4.0,
+            4.5
+          ],
+          "yticks": [
+            0.0,
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0,
+            12.0,
+            14.0,
+            16.0,
+            18.0
+          ]
+        }
+      ],
+      "original_lines": [
+        {
+          "label": "OpenFOAM/HiSA, $x/L=0.4$\n$\\Delta y_1=0.001\\,\\mathrm{mm},\\;\\Delta x=1.5\\,\\mathrm{mm}$",
+          "points": 122,
+          "sha256": "c07cf5253c4be57c336dee22c05d69c7092abb4bcfeda51be9e63194a93cdfa1"
+        },
+        {
+          "label": "Cao et al. (digitized)",
+          "points": 17,
+          "sha256": "b739cb7e9751680fac72cef499eb2f60bd0f77f72e1359bb44269a279fc6e082"
+        },
+        {
+          "label": "_child2",
+          "points": 2,
+          "sha256": "ae2cc60d29de85c7ed46adf5bb27e89a62bdafc75e3f8822473568055af8b86e"
+        },
+        {
+          "label": "OpenFOAM/HiSA, $x/L=0.4$\n$\\Delta y_1=0.001\\,\\mathrm{mm},\\;\\Delta x=1.5\\,\\mathrm{mm}$",
+          "points": 122,
+          "sha256": "e6ed8ccd72affc59b89b624dc0ea2fbdae47450fd79e49c4823c9e8017a36416"
+        },
+        {
+          "label": "Cao et al. (digitized)",
+          "points": 35,
+          "sha256": "fefd7c6e89638e6ab1b165b4082e13d51ff9f2d8a474acb32fc6f6fca183392d"
+        }
+      ]
+    }
+  ]
+}

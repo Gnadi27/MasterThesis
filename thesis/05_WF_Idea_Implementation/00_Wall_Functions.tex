@@ -1,0 +1,39 @@
+\chapter{Wall-function formulations and implementation}
+\label{chap:wall-function-formulations}
+
+The investigated wall functions combine momentum and thermal closures to infer wall shear stress and heat-flux from a sampled boundary layer state. Figure~\ref{fig:WF:wall-function-idea-illustration} shows this coupling: the sampled velocity and thermodynamic state, the physical wall temperature and the required reference information determine the wall loads. Their delivery to the CFD equations is distinct from the closure itself. Coupling to a RANS turbulence model additionally requires a compatible near-wall turbulence constraint.
+
+\begin{figure}[H]
+    \centering
+    % Preserve the supplied raster diagram and typeset its wall label consistently.
+    % Coordinates are relative to the 964 x 321 pixel source image.
+    \begingroup
+    \setlength{\unitlength}{\linewidth}
+    \begin{picture}(1,0.33299)
+        \put(0,0){\includegraphics[width=\linewidth]{05_WF_Idea_Implementation/Wallfunction_Idea.png}}
+        \put(0.0674,0.0342){\textcolor{white}{\rule{0.0778\unitlength}{0.0228\unitlength}}}
+        \put(0.0716,0.0467){\makebox(0,0)[l]{\fontsize{8}{9.6}\selectfont\textcolor[RGB]{82,104,121}{Wall, \(T_w\)}}}
+    \end{picture}
+    \endgroup
+    \caption{Wall-function coupling using the first cell as the sample. Momentum and thermal closures infer wall shear stress and heat-flux from the sampled state and the wall and reference conditions, and return these loads to the CFD solver.}
+    \label{fig:WF:wall-function-idea-illustration}
+\end{figure}
+
+\section{Wall-function sampling and mesh geometry}
+\label{subsec:wall-functions:sampling-geometry}
+
+The wall-function sampling height is denoted by \(y_s\), and the wall-to-first-cell-centre distance by \(y_1\). On a conventional wall-function mesh, the first cell supplies the sample, so \(y_s=y_1\). Increasing the first-cell height consequently moves the sample outwards and coarsens the neighbouring internal-face stencils (Figure~\ref{fig:WF:wall-function-conventional-mesh}). The term \emph{conventional coarse wall-function mesh} refers to this coupled change in sampling height and mesh spacing throughout this work.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{05_WF_Idea_Implementation/Wallfunction_Meshes.png}
+    \caption{Conventional wall-function mesh strategy. Enlarging the wall-adjacent cell increases both the first-cell sampling height \(y_s=y_1\) and the spacing of the nearby internal-face stencils. The indicated wall-unit heights refer to the cell centres, not the full cell heights.}
+    \label{fig:WF:wall-function-conventional-mesh}
+\end{figure}
+
+The implemented Li and Griffin wall functions can also sample an interior cell while retaining finer cells below it. The selected cell supplies the closure inputs and its wall-normal distance supplies \(y_s\), denoted \(y_m\) in Griffin's formulation. The associated SA constraint is applied at that same cell, while the predicted loads are delivered at the physical wall. The cells below the sample remain part of the CFD solution. This option separates closure sampling from the first-cell distance \(y_1\) and the centre separation \(h\) across an internal face at \(y_f\), defined in Equation~\eqref{eq:numerical-framework:internal-face-operators}. Because the wall loads are inferred from modelled wall slopes, the sample need not meet the wall-resolved secant requirement of Section~\ref{sec:openFOAM_qw_tauw}. Its location must nevertheless lie within the closure's applicable range. Moreover, prescribing the wall loads does not replace internal-face gradient reconstruction or transport-coefficient interpolation. Section~\ref{subsec:comparative:zpg:informed-mesh} uses the independent sampling option to assess the additional mesh requirement within the retained boundary layer. The following section first explains the common flux-delivery mechanism and subsequent sections present the individual closures and their RANS coupling.
+
+\input{05_WF_Idea_Implementation/02_general_implementation_considerations}
+\input{05_WF_Idea_Implementation/03_Li/00_Li_Wall_Function.tex}
+\input{05_WF_Idea_Implementation/04_Griffin/00_Griffin_Wall_Function.tex}
+\input{05_WF_Idea_Implementation/05_Wang/00_Wang_Craft_Wall_Function.tex}

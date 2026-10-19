@@ -1,0 +1,11 @@
+\section{Wang--Craft analytical wall function}
+\label{sec:wall-functions:wang-craft}
+
+The third an final wall function investigated in this work is by Wang et al \cite{wang2023WF}. It is unique compared Li et al and Griffin et al in that it does not rely on analytical momentum and energy closures, but rather on an analytical result of a proposed integral across the boundary layer. The downside of this approach being that it is not possible to run CFD independent analyses like the a-priori solves of the Li and Griffin wall functions (see Section~\ref{sec:comparative:zpg:cross-comparison}).
+The implementation of this wall function raised several issue and ambiguities. Most notably on the streamwise integration necessary. While in the thesis work of Wang \cite{wang2019Thesis} it explicitly was implemented and tested on OpenFOAM there is no publicly available resource of the specific implementation. Contacting Wang unfortunately yielded in no response.
+\par\medskip
+
+The final implementation that was able to be achieved in the scope of this work showed some significant instabilities, most likely stemming from the downstream integration process at the leading edge of the flat-plates. Additionally the heat-flux and skin-friction output were unphysical. The afformentioned lack of a possibility to perform any kind of CFD-independent analysis further complicates debugging and identifying whether or not the issue is with the implementation or fundamentally with the wall function model - also because throughout the works of Wang on this wall function no investigation on a ZPG flat-plate was ever published. Thus it was decided to cut further debugging and development work in favour of spending the time on the analysis of the turbulence models and other two wall functions. 
+\par\medskip
+
+But for future research this wall function should anything but be disregarded, as it was the only investigated wall function that focused on, and proposed, good heat-flux and skin-friction prediction capability on SWBLI and complex geometries including separation.

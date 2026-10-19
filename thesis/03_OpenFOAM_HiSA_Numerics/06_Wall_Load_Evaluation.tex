@@ -1,0 +1,62 @@
+\section{Wall heat-flux and shear stress}
+\label{sec:openFOAM_qw_tauw}
+
+Wall heat-flux and shear stress depend on local derivatives, so their numerical evaluation is part of the near-wall resolution requirement. This section describes the standard OpenFOAM evaluation of heat-flux and shear stress.
+
+\subsection{Heat-flux and effective thermal transport}
+
+% Implementation evidence (OpenFOAM v2412):
+% /opt/of-v2412/src/functionObjects/field/wallHeatFlux/wallHeatFlux.C
+% /opt/of-v2412/src/thermophysicalModels/basic/heThermo/heThermo.C
+% /opt/of-v2412/src/TurbulenceModels/compressible/EddyDiffusivity/EddyDiffusivity.C
+% HiSA energy residual:
+% /home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/modules/hysa/src/modules/hisa/residualsUpdate.H
+The \texttt{wallHeatFlux} function object in OpenFOAM evaluates the effective energy diffusivity multiplied by the outward-normal gradient of sensible internal energy in the present HiSA setup. With radiation omitted,
+\begin{equation}
+    q_w^{\mathrm{OF}}
+    = \alpha_{\mathrm{eff},w}\left.\frac{\partial e}{\partial n_{\mathrm{out}}}\right|_w,
+    \qquad
+    \alpha_{\mathrm{eff}}
+    = \frac{c_p}{c_v}(\alpha+\alpha_t),
+    \qquad
+    \alpha=\frac{\kappa}{c_p}.
+    \label{eq:q_w_openFOAM_math}
+\end{equation}
+Here \(e\) denotes sensible internal energy and \(c_v\) the specific heat at constant volume. The field \texttt{alphat} stores \(\alpha_t\), the turbulent contribution to heat transport. It is related to the kinematic eddy viscosity \(\nu_t\), stored as \texttt{nut}, through the turbulent Prandtl number \(Pr_t\):
+\begin{equation}
+    Pr_t=\rho\,\frac{\nu_t}{\alpha_t}.
+    \label{eq:openfoam-alphat-nut}
+\end{equation}
+Here \(\rho\) is the fluid density.
+\par\medskip
+
+For constant specific heats, a fixed wall temperature and an orthogonal wall-adjacent cell, the discrete expression for the wall-heat-flux thus becomes
+\begin{equation}
+    q_w^{\mathrm{OF}}
+    = \kappa_{\mathrm{eff},w}\frac{T_w-T_1}{y_1},
+    \qquad q_w=-q_w^{\mathrm{OF}}.
+    \label{eq:q_w_openFOAM_simple}
+\end{equation}
+The distance \(y_1\) is measured from the wall face to the first cell centre.
+
+\subsection{Shear stress and effective viscosity}
+
+% Implementation evidence:
+% /opt/of-v2412/src/functionObjects/field/wallShearStress/wallShearStress.C
+% /opt/of-v2412/src/TurbulenceModels/turbulenceModels/linearViscousStress/linearViscousStress.C
+The \texttt{wallShearStress} function object in OpenFOAM calculates wall shear stress from the velocity gradient and effective viscosity. For a flat, stationary no-slip wall, the tangential stress acting on the fluid is approximated by
+\begin{equation}
+    \boldsymbol{\tau}_{w,t}^{\mathrm{OF}}
+    \simeq -\mu_{\mathrm{eff},w}\frac{\boldsymbol{U}_{1,t}}{y_1},
+    \qquad
+    \mu_{\mathrm{eff}}=\mu+\rho\nu_t.
+    \label{eq:tau_w_openFOAM_simple}
+\end{equation}
+It opposes the tangential fluid velocity. From the shear stress \(\tau_w\), the skin-friction coefficient \(C_f\) is obtained by normalizing this stress with the specified reference dynamic pressure. In wall-resolved simulations, the turbulent contributions vanish at the wall. Wall shear stress and heat-flux therefore depend on the molecular transport coefficients and the resolved temperature and velocity gradients only.
+
+\subsection{Implications for mesh resolution}
+
+Equations~\eqref{eq:q_w_openFOAM_simple} and~\eqref{eq:tau_w_openFOAM_simple} use a wall-to-cell secant to approximate the wall derivative. This one-sided approximation is generally first-order accurate at the wall, even when the internal-face discretization is second-order accurate. A small nominal \(y_1^+\) alone does not establish that the secant represents the wall slope. Section~\ref{sec:evaluation:mesh-families-yplus} assesses the required first-cell spacing through mesh-convergence studies.
+\par\medskip
+
+A wall function instead supplies modelled wall heat-flux and shear stress from a sampled boundary layer state. Their direct substitution into HiSA, described in Section~\ref{subsec:wall-functions:direct-flux-delivery}, avoids the wall-gradient approximation above. Transport across internal faces still depends on the numerical methods in Section~\ref{sec:numerical-framework:discretization}, the resulting mesh sensitivity is examined in Section~\ref{subsec:comparative:zpg:mesh-criterion}.

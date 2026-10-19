@@ -1,0 +1,7 @@
+# Keep complete local archives; store their split volumes in Git LFS.
+/01_VnV.7z
+/02_WallResolvedTMs.7z
+/04_WallFunctions.7z
+
+# Override the repository's general numeric-extension ignore rules.
+!/*.7z.[0-9][0-9][0-9]

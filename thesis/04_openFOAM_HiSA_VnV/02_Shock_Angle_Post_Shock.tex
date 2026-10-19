@@ -1,0 +1,536 @@
+\section{Shock angle and post-shock conditions}
+\label{sec:numerical-vv:shock-angle-post-shock}
+
+This case of an wedge in hypersonic flow compares the predicted shock angle and downstream state with the weak attached-shock solution of the \(\theta\)--\(\beta\)--\(M\) and
+Rankine--Hugoniot relations for a calorically perfect gas with \(\gamma=1.4\).
+A mesh-refinement study at \(M_\infty=10\), \(\theta=15^\circ\) is complemented
+by a sweep over \(M_\infty=2,4,6,8,10\) at wedge angles of \(5^\circ\) and
+\(15^\circ\).
+\par\medskip
+
+The aim is to verify the shock-capturing accuracy of the OpenFOAM/HiSA setup
+employing the AUSM flux scheme (see Section~\ref{subsec:ext:AUSM}). The inviscid
+Euler cases first isolate shock capturing from molecular transport and turbulence
+modelling. The same meshes are then used with Sutherland viscosity and either
+Spalart--Allmaras (SA) or \(k\)--\(\omega\) SST. The SA implementation includes
+the correction described in Section~\ref{subsec:ext:spalart-allmaras-of-correction}. The inclusion of the turbulence model analysis was chosen because Tian et al \cite{tian2023correction} showed that especially eddy-viscosity models suffer from serious unphysical increase in turbulence quantities across shock. So this investigation serves to study if this also seriously effects the shock-angle or post-shock conditions. Retaining the slip wall permits a comparison of shock angle and downstream state without the effects of a developing boundary layer. The shared setup and extraction procedure are described below, followed by the Euler and viscous turbulence model results separately.
+
+\paragraph{General case setup.}
+
+The domain shown in Figure~\ref{fig:mesh-coarse-3000-15-deg-wedge}
+extends from \(x=0\) to \(0.15\,\mathrm{m}\), with an upper boundary at
+\(y=0.08\,\mathrm{m}\). The lower wall is horizontal up to the wedge leading
+edge at \((x,y)=(0.05,0)\,\mathrm{m}\), followed by the inclined wedge surface.
+A single cell in the spanwise direction and \texttt{empty} front and back
+boundaries give a two-dimensional calculation. The cases share the freestream
+and wall settings in Table~\ref{tab:shock-inflow-wall}. The structured mesh family
+contains 3\,000, 12\,000, 48\,000 and 192\,000 cells, where both x and y directions
+are refined by a factor of two between successive meshes. A uniform freestream is supplied through characteristic farfield inlet conditions (Section~\ref{subsec:numerical-framework:hisa}). The rear and upper boundaries use \texttt{zeroGradient} extrapolation for velocity, pressure and temperature.
+
+% Sources: wedge/{mesh_sensitivity,Ma_angle_sweep}/Ma*/0.org/include/setup,
+% 0.org/{U,p,T}; the saved 2668 fields confirm the 48k refinement-case BCs.
+\begin{table}[H]
+    \centering
+    \caption{Freestream and wall conditions shared by the Euler and viscous wedge cases.}
+    \label{tab:shock-inflow-wall}
+    \small
+    \begin{tabular}{@{}p{0.38\linewidth}p{0.56\linewidth}@{}}
+        \toprule
+        Quantity or condition & Value or specification \\
+        \midrule
+        Mach number \(M_\infty\) & \(2,4,6,8,10\); \(10\) for mesh refinement \\
+        Static pressure \(p_\infty\) & \(101\,325\,\mathrm{Pa}\) \\
+        Static temperature \(T_\infty\) & \(300\,\mathrm{K}\) \\
+        Velocity \(\boldsymbol{U}_\infty\)
+            & \((M_\infty a_\infty,0,0)\),
+              \(a_\infty\simeq347.250\,\mathrm{m\,s^{-1}}\) \\
+        Wall velocity and pressure
+            & Impermeable slip; \texttt{characteristicWallPressure} \\
+        Wall temperature
+            & Not prescribed; \(\partial T/\partial n=0\)
+              (\texttt{zeroGradient}) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+All cases use the same calorically perfect-gas model
+(Table~\ref{tab:shock-gas-transport}). In the Euler cases, the \texttt{const}
+transport model with \(\mu=0\) gives \(\kappa=c_p\mu/Pr=0\). Together with
+disabled turbulence modelling, this reduces the flow model to the compressible
+Euler equations. The viscous cases instead use Sutherland's law,
+\(\mu=A_sT^{3/2}/(T+T_s)\), with
+\(A_s=1.458\times10^{-6}\,\mathrm{Pa\,s\,K^{-1/2}}\) and
+\(T_s=110.4\,\mathrm{K}\), and the associated OpenFOAM thermal-conductivity
+model (see Section \ref{subsec:thermophysical-properties-OF}). The turbulence inflow settings in Table~\ref{tab:shock-gas-transport} follow the recommendations on the Turbulence Modeling Resource website \footnote{\url{https://tmbwg.github.io/turbmodels/spalart.html}}\footnote{\url{https://tmbwg.github.io/turbmodels/sst.html}}. All viscous cases are advanced to 10\,000 iterations with post-shock probe histories recorded to assess iterative stability.
+
+% Sources: original wedge constant/{thermophysicalProperties,turbulenceProperties};
+% wedge_with_TM/*/constant and 0.org/include/setup (same conventions in the sweep).
+% R = 8.314462618 / 0.02896; gamma = Cp/(Cp-R) = 1.39999757.
+\begin{table}[H]
+    \centering
+    \caption{Gas model, transport models and turbulence inflow settings for the wedge cases.}
+    \label{tab:shock-gas-transport}
+    \small
+    \begin{tabular}{@{}p{0.38\linewidth}p{0.56\linewidth}@{}}
+        \toprule
+        Property or model & Specification \\
+        \midrule
+        Gas model & Calorically perfect air
+            (\texttt{perfectGas}, \texttt{hConst}) \\
+        Specific heat \(c_p\)
+            & \(1004.86\,\mathrm{J\,kg^{-1}\,K^{-1}}\) \\
+        Specific gas constant \(R\)
+            & \(287.102\,\mathrm{J\,kg^{-1}\,K^{-1}}\),
+              from \(W=28.96\,\mathrm{kg\,kmol^{-1}}\) \\
+        Heat-capacity ratio \(\gamma\)
+            & \(c_p/(c_p-R)\simeq1.4\) \\
+        Euler transport and turbulence
+            & \(\mu=0\), \(\kappa=0\); turbulence disabled \\
+        Viscous molecular transport
+            & Sutherland; \(\mu_\infty=1.846\times10^{-5}\,\mathrm{Pa\,s}\) \\
+        Viscous turbulence model
+            & SA or \(k\)--\(\omega\) SST; \(Pr_t=0.9\) \\
+        SA inflow
+            & \(\widetilde{\nu}_\infty/\nu_\infty=4\) \\
+        SST inflow
+            & \(I=5.594\times10^{-5}\),
+              \(\nu_{t,\infty}/\nu_\infty=10^{-3}\) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; Windows-hosted paths):
+    %   Retained figure: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/02_mesh_coarse_3000_wedge_15.png
+    %   Underlying ANSA mesh: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/00 mesh/wedge_15deg_3k.ansa
+    %   Exported OpenFOAM mesh: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/00 mesh/wedge_15deg_3k/constant/polyMesh
+    %   Corresponding Euler case: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/Ma10_15deg_3k
+    %   Related editable artwork: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Wedge_Shock.pptx (slide 1; ppt/media/image1.png).
+    %   Match: the presentation contains the same 3k mesh/domain and boundary annotations,
+    %     but an older screenshot and different wording; it is not the exact retained export.
+    %   Gap: the final annotated-image export/editing source was not located; no plotting script
+    %     was found for this mesh illustration. The ANSA and OpenFOAM mesh sources are retained.
+    % End figure provenance.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/02_mesh_coarse_3000_wedge_15.png}
+    \caption{Computational domain and coarse 3\,000-cell mesh for the \(15^\circ\) wedge, reused for the Euler and viscous cases.}
+    \label{fig:mesh-coarse-3000-15-deg-wedge}
+\end{figure}
+
+\paragraph{Extraction of verification quantities.}
+The extraction procedure described in the following is applied to the exported CFD fields of all three flow models - Euler and both viscous turbulence model cases. Figure~\ref{fig:shock-extraction-example} illustrates it for an
+Euler case. Local maxima of the normalized pressure-gradient magnitude \(S=|\nabla p|/p\) are
+selected in successive streamwise strips to identify the shock ridge. A robust
+straight-line fit through these points gives the shock angle. Pressure, temperature and Mach number are averaged over an interior region (orange region in Figure~\ref{fig:shock-extraction-example}) between the wedge wall and the fitted shock, with density evaluated pointwise from \(\rho=p/(RT)\) before averaging. The subsequently reported quantity-ratios of pre- and post-shock conditions use the inflow quantities as pre-shock reference. On coarse meshes, finite grid spacing and the numerically broadened shock limit the precision of the ridge localization. This is an extraction
+sensitivity, rather than an independently established uncertainty bound.
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; Windows-hosted paths):
+    %   Original export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/pressure_map.png
+    %   Python script: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/plot_pressure_field.py
+    %   Native field: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/2500/p
+    %   Native mesh: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/constant/polyMesh
+    %   Colour-map state: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/shock_detection.pvsm
+    %   Recorded source hashes: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/pressure_map_provenance.json
+    %   Match: byte-identical PNG (SHA-256 c531270e5e20143af5996befca34d41db82834e1a2eb6d3b6ea3ca108ecdb778).
+    %     Native pressure SHA-256 also matches the retained provenance record (iteration 2500).
+    % End figure provenance.
+    \includegraphics[width=\linewidth,height=0.36\textheight,keepaspectratio]{04_OpenFOAM_HiSA_VnV/Figures/02_Ma4_15deg_example_pressure_map.png}
+    \par\smallskip
+    {\small (a) Static pressure field.\par}
+    \medskip
+    % Figure provenance (audited 2026-10-19; Windows-hosted paths):
+    %   Original export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/shock_fit.png
+    %   Python script: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/postprocess_wedge_shock_csv_prfG.py
+    %   Input point-field export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/Ma4_15deg.csv
+    %   Diagnostics: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/shock_diagnostics.txt
+    %   Native fields/mesh: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k
+    %   Retained ParaView extraction state: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/shock_detection.pvsm
+    %   Match: byte-identical PNG (SHA-256 e3dfbc8b33e713cfaee45ca0ce1f8e719dbc41c3716d6d30fda6139c94d61268).
+    % End figure provenance.
+    \includegraphics[width=\linewidth,height=0.32\textheight,keepaspectratio]{04_OpenFOAM_HiSA_VnV/Figures/02_Ma4_15deg_example_shock_fit_script.png}
+    \par\smallskip
+    {\small (b) Shock-ridge fit and post-shock sampling.\par}
+    \caption[Pressure field and extraction of shock angle and post-shock conditions]{%
+        Euler CFD result and extraction procedure for \(M_\infty=4\), wedge angle
+        \(\theta=15^\circ\) on the 48\,000-cell mesh.
+        Top: static pressure field, showing the pressure rise across the oblique shock.
+        Bottom: the blue points with white outlines denote the detected shock ridge,
+        the cyan line shows its straight-line fit. The orange interior samples define
+        the post-shock region where the post-shock quantities are averaged across. The orange line represents the wedge wall. The background shows the exported point values of \(S/S_{\max}\) on a linear scale, where \(S=|\nabla p|/p\) and \(S_{\max}\) is its maximum over the field.
+        Dark colours identify the resolved shock transition, weak gradients appear pale.}
+    \label{fig:shock-extraction-example}
+\end{figure}
+
+For the following assessment the signed relative errors of a quantity \(\phi\)from its analytical
+reference \(\phi_{\mathrm{ref}}\) is defined as
+\begin{equation}
+    e(\phi)=100\,\frac{\phi-\phi_{\mathrm{ref}}}{\phi_{\mathrm{ref}}}
+    \quad [\%].
+    \label{eq:shock-reference-discrepancy}
+\end{equation}
+
+% Keep the shared extraction figure ahead of the Euler findings.
+\clearpage
+\subsection{Inviscid Euler flow}
+\label{subsec:shock-euler}
+
+In the following the investigated \(\theta= 5^\circ\) and \(15^\circ\) wedges are simulated using inviscid Euler formulation. First the mesh convergence is discussed, then the results across the various Mach numbers quantitativly and qualitativly assessed.
+
+\paragraph{Mesh sensitivity and numerical uncertainty.}
+The four structured meshes give refinement ratios of \(h/h_{\mathrm{f}}=8,4,2,1\), where the
+subscript \(\mathrm{f}\) denotes the finest mesh. Figure~\ref{fig:04_02_shock_mesh convergence} shows the mesh convergence with mesh refinement. A general reduction in error towards the finest mesh can be observed, with relative errors of the finest mesh for all quantities being well below 1\% (Table~\ref{tab:shock-mesh-accuracy} \(e_f\)).
+
+% Numerical source: wedge/mesh_sensitivity/eca_hoekstra_analysis/summary.csv.
+% e_f and e_0 are signed percentages; u_f is the positive relative half-width.
+\begin{table}[H]
+    \centering
+    \caption[Finest-grid accuracy and mesh uncertainty for the wedge case]{%
+        Finest-grid accuracy and E\c{c}a--Hoekstra extrapolated mesh uncertainty for \(M_\infty=10\), \(\theta=15^\circ\). The CFD values are from the 192\,000-cell mesh. The errors \(e_{\mathrm{f}}\) and \(e_0\)
+        refer to the finest-grid and extrapolated values, respectively. $u_f$ is the E\c{c}a--Hoekstra estimated relative uncertainty of the finest-grid result due to mesh resolution.}
+    \label{tab:shock-mesh-accuracy}
+    \small
+    \setlength{\tabcolsep}{5pt}
+    \begin{tabular}{@{}l S[table-format=2.5] S[table-format=2.5] S[table-format=+1.3] S[table-format=1.3] S[table-format=+1.3]@{}}
+        \toprule
+        Quantity & {Theory} & {CFD} & {\(e_{\mathrm{f}}\) [\%]}
+            & {\(u_{\mathrm{f}}\) [\%]} & {\(e_0\) [\%]} \\
+        \midrule
+        \(\beta\) [\(^{\circ}\)] & 19.94158 & 19.92027 & -0.107 & 0.251 & -0.018 \\
+        \(p_2/p_1\)             & 13.40437 & 13.41125 & +0.051 & 0.576 & +0.298 \\
+        \(T_2/T_1\)             &  3.19434 &  3.19485 & +0.016 & 2.413 & -0.787 \\
+        \(\rho_2/\rho_1\)       &  4.19628 &  4.19781 & +0.036 & 0.785 & +0.539 \\
+        \(M_2\)                 &  5.27926 &  5.27879 & -0.009 & 1.411 & +0.461 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; Windows-hosted paths):
+    %   Original export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/euler_shock_mesh_conv.png
+    %   Python script: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/plot_wedge_convergence.py
+    %   Plot inputs: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/eca_hoekstra_analysis/input_values.csv
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/eca_hoekstra_analysis/fit_results.json
+    %   Input-table/extraction audit: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/eca_hoekstra_analysis/analyze_wedge.py
+    %   Native cases and original CSVs/diagnostics: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/Ma10_15deg_{3k,12k,48k,192k}
+    %     Native retained iterations: 5000 (3k,12k,192k) and 2668 (48k).
+    %   Match: retained image is an exact RGB crop of the original export, removing 87 top rows
+    %     (2382 x 1392 to 2382 x 1305 pixels); PNG encoding/metadata differ.
+    % End figure provenance.
+    \includegraphics[width=0.7\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/02_euler_shock_mesh_conv.png}
+    \caption{Euler mesh dependence of the shock angle $\beta$ and post-shock conditions for
+        \(M_\infty=10\) and wedge angle \(\theta=15^\circ\). Signed relative error between CFD and theory $e_f$ according to Equation~\eqref{eq:shock-reference-discrepancy}.}
+    \label{fig:04_02_shock_mesh convergence}
+\end{figure}
+
+The E\c{c}a--Hoekstra assessment
+(Section~\ref{sec:numerical-framework:convergence}) supports treating
+the finest mesh as sufficiently converged for this shock-verification study
+(Table~\ref{tab:shock-mesh-accuracy}). Both finest-grid \(e_{\mathrm{f}}\) and extrapolated \(e_0\)
+results agree closely with theory, and all analytical values lie within
+the estimated uncertainty intervals \(u_{\mathrm{f}}\). The larger uncertainties for the
+temperature ratio and downstream Mach number nevertheless show that
+small finest-grid errors do not imply negligible mesh sensitivity. Sensitivity
+to the actual extraction, such as the shock angle resolution on the spatial discretization, or from the averaging, limits the interpretation of these intervals as bounds on discretization error alone.
+
+% Supporting diagnostics retained from the detailed discussion:
+% Safety factors: 1.25 for shock angle and density ratio; 3 for other quantities.
+% A common streamwise averaging window changes extrapolated state quantities
+% by up to 0.219% relative to the original extraction.
+
+\paragraph{Accuracy across Mach number and wedge angle.}
+The Mach-number sweep uses the 48\,000-cell mesh for each of the two wedge
+angles, as it was shown to be sufficiently mesh converged and allows quick computation. Table~\ref{tab:shock-sweep-accuracy} reports the largest absolute error across the five Mach numbers for each quantity, while Figures~\ref{fig:04_02_comparison_post_shock} and~\ref{fig:04_02_comparison_shock_angle} retain the variation across individual
+cases. The maximum shock-angle differences are \(0.162^\circ\) and
+\(0.094^\circ\) for the \(5^\circ\) and \(15^\circ\) wedges, respectively.
+All four post-shock state quantities remain well within \(1\%\) of their
+analytical references throughout the sweep. This supports the accuracy of the simulation setup to resolve oblique shocks.
+
+% Numerical sources: wedge/Ma_angle_sweep/simulation_errors.csv; full-precision
+% nominal-reference maxima in wedge_with_TM/Ma_angle_sweep/analysis/maximum_errors.csv.
+% Each entry is max_M |error| at fixed theta, rounded to three decimal places.
+\begin{table}[H]
+    \centering
+    \caption[Maximum discrepancies across the wedge Mach-number sweep]{%
+        Maximum Euler error magnitudes on the 48\,000-cell meshes over
+        \(M_\infty=2,4,6,8,10\). For the shock angle, the reported value is
+        \(\max |\beta_{\mathrm{CFD}}-\beta_{\mathrm{ref}}|\) in degrees,
+        for the post-shock quantities, it is \(\max |e(\phi)|\) in percent
+        according to Eq.~\eqref{eq:shock-reference-discrepancy}.
+        The maxima occur at \(M_\infty=10\), except
+        for the pressure ratio at \(\theta=15^\circ\), whose maximum occurs
+        at \(M_\infty=8\).}
+    \label{tab:shock-sweep-accuracy}
+    \begin{tabular}{@{}ll S[table-format=1.3] S[table-format=1.3]@{}}
+        \toprule
+        Quantity & Unit & {\(\theta=5^\circ\)} & {\(\theta=15^\circ\)} \\
+        \midrule
+        Shock angle           & \(^{\circ}\) & 0.162 & 0.094 \\
+        Pressure ratio        & \(\%\)       & 0.326 & 0.066 \\
+        Temperature ratio     & \(\%\)       & 0.253 & 0.582 \\
+        Density ratio         & \(\%\) & 0.579 & 0.516 \\
+        Downstream Mach number & \(\%\)           & 0.132 & 0.339 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; Windows-hosted paths):
+    %   Original export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/post_shock_conditions_comparison.png
+    %   Python script: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/plot_theta_beta_mach_comparison.py (plot_post_shock_comparison).
+    %   Per-case inputs: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k/shock_diagnostics.txt
+    %   Corresponding point CSVs/native cases: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/{5deg,15deg}
+    %   Tabulated values: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/simulation_and_theory_values.csv
+    %   Match: exact RGB crop removing 75 top rows (3150 x 2400 to 3150 x 2325 pixels);
+    %     PNG encoding/metadata differ. Braced path sets denote the ten individual cases.
+    % End figure provenance.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/02_euler_post_shock_conditions_comparison.png}
+    \caption{Euler CFD post-shock conditions on the 48\,000-cell meshes for
+        \(5^\circ\) and \(15^\circ\) wedges at freestream Mach numbers from
+        2 to 10, compared with the weak oblique-shock solution of the
+        Rankine--Hugoniot relations.}
+    \label{fig:04_02_comparison_post_shock}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; Windows-hosted paths):
+    %   Original export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/theta_beta_mach_comparison.png
+    %   Python script: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/plot_theta_beta_mach_comparison.py (plot_comparison).
+    %   Per-case inputs: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k/shock_diagnostics.txt
+    %   Corresponding point CSVs/native cases: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/{5deg,15deg}
+    %   Tabulated comparison: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/theta_beta_mach_comparison.csv
+    %   Match: processed copy with 64 top rows removed (2700 x 2400 to 2700 x 2336 pixels);
+    %     RGB comparison finds only 11 differing pixels, in a two-row patch at retained y=1238--1239.
+    %     This is a near-identical processed export, not a byte-identical original.
+    % End figure provenance.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/02_euler_theta_beta_mach_comparison}
+    \caption{Euler CFD shock angles on the 48\,000-cell meshes for \(5^\circ\) and
+        \(15^\circ\) wedges at freestream Mach numbers from 2 to 10.
+        Top: comparison with the analytical \(\theta\)--\(\beta\)--\(M\)
+        curves. Bottom: signed angular difference
+        \(\beta_{\mathrm{CFD}}-\beta_{\mathrm{ref}}\) in degrees.}
+    \label{fig:04_02_comparison_shock_angle}
+\end{figure}
+
+
+% Flush Euler figures before the viscous findings.
+\clearpage
+\subsection{Viscous flow with SA and SST}
+\label{subsec:shock-viscous-tm}
+
+In the following the investigated \(\theta= 5^\circ\) and \(15^\circ\) wedges are simulated including turbulence modelling formulation. First the mesh convergence is discussed, then the results across the various Mach numbers quantitativly and qualitativly assessed.
+
+\paragraph{Mesh sensitivity.}
+Figure~\ref{fig:shock-tm-mesh-convergence} shows the four-grid results for both
+viscous setups, Spalart--Allmaras and \(k\)--\(\omega\) SST. Their refinement trends closely follow those of the previous discussed Euler simulation where non-monotonic mesh convergence behaviour therefore persists with molecular and turbulent transport. On the finest mesh, the four post-shock state discrepancies are all below \(0.032\%\) in magnitude (Table~\ref{tab:shock-tm-mesh-accuracy}). Both models give \(\beta=19.91692^\circ\), a difference of \(-0.02465^\circ\) from theory, compared with \(-0.02131^\circ\) for Euler. Thus the same finest, 192\,000-cell mesh shows equally good mesh convergence behaviour with viscousity and turbulence modelled into the simulation. At both post-shock probes, the eight refinement runs show no recorded variation over the last 1\,000 iterations at the output precision of approximately six significant digits. This supports iterative stability at those points.
+
+% Source: /home/mgnadlinger/wedge_with_TM/analysis/convergence_values.csv.
+% Fixed nominal reference: M=10, theta=15 degrees, gamma=1.4.
+\begin{table}[H]
+    \centering
+    \caption[Finest-grid accuracy of the viscous wedge cases]{%
+        Measured values and signed relative discrepancies on the 192\,000-cell
+        mesh at \(M_\infty=10\), \(\theta=15^\circ\). Both models use
+        Sutherland viscosity and the analytical references in
+        Table~\ref{tab:shock-mesh-accuracy}. The errors follow
+        Eq.~\eqref{eq:shock-reference-discrepancy}, including for \(\beta\).}
+    \label{tab:shock-tm-mesh-accuracy}
+    \small
+    \begin{tabular}{@{}l S[table-format=2.5] S[table-format=+1.3] S[table-format=2.5] S[table-format=+1.3]@{}}
+        \toprule
+        & \multicolumn{2}{c}{SA} & \multicolumn{2}{c}{SST} \\
+        \cmidrule(lr){2-3}\cmidrule(l){4-5}
+        Quantity & {CFD} & {\(e_{\mathrm{f}}\) [\%]}
+            & {CFD} & {\(e_{\mathrm{f}}\) [\%]} \\
+        \midrule
+        \(\beta\) [\(^{\circ}\)] & 19.91692 & -0.124 & 19.91692 & -0.124 \\
+        \(p_2/p_1\)             & 13.40856 & +0.031 & 13.40865 & +0.032 \\
+        \(T_2/T_1\)             &  3.19463 & +0.009 &  3.19458 & +0.007 \\
+        \(\rho_2/\rho_1\)       &  4.19726 & +0.023 &  4.19734 & +0.025 \\
+        \(M_2\)                 &  5.27901 & -0.005 &  5.27905 & -0.004 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; WSL absolute paths):
+    %   Original export: /home/mgnadlinger/wedge_with_TM/analysis/tm_shock_mesh_conv.png
+    %   Python script: /home/mgnadlinger/wedge_with_TM/analysis/analyze_tm_convergence.py
+    %   Plot data: /home/mgnadlinger/wedge_with_TM/analysis/convergence_values.csv
+    %   Native cases: /home/mgnadlinger/wedge_with_TM/{SA_DensityCorrected,kOmegaSST}_Ma10_15deg_{3k,12k,48k,192k}
+    %     Each case retains 10000/{p,T,Ma} and constant/polyMesh.
+    %   Extracted point CSVs, samples and source hashes:
+    %     /home/mgnadlinger/wedge_with_TM/analysis/{SA_DensityCorrected,kOmegaSST}_Ma10_15deg_{3k,12k,48k,192k}
+    %   Match: exact RGB crop removing 93 top rows (2310 x 850 to 2310 x 757 pixels);
+    %     PNG encoding/metadata differ. Braced path sets denote the eight individual cases.
+    % End figure provenance.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/02_tm_shock_mesh_conv.png}
+    \caption{Mesh dependence with Sutherland viscosity and Spalart--Allmaras
+        (left) or SST (right) at \(M_\infty=10\), \(\theta=15^\circ\).
+        Both panels use the same scale and show signed relative discrepancies
+        according to Eq.~\eqref{eq:shock-reference-discrepancy}.}
+    \label{fig:shock-tm-mesh-convergence}
+\end{figure}
+
+\paragraph{Accuracy across Mach number and wedge angle.}
+The twenty viscous sweep cases repeat the same conditions as used for the Euler runs on the same
+48\,000-cell meshes. Figures~\ref{fig:shock-sa-post-shock-comparison}
+and~\ref{fig:shock-sst-post-shock-comparison} compare the downstream states
+with the analytical weak oblique-shock solution for SA and SST, respectively.
+Figures~\ref{fig:shock-sa-theta-beta-mach}
+and~\ref{fig:shock-sst-theta-beta-mach} show the corresponding shock angles
+against the \(\theta\)--\(\beta\)--\(M\) theory, together with their signed
+angular discrepancies. Table~\ref{tab:shock-tm-sweep-accuracy} summarizes their
+maximum discrepancies. For both turbulence models, the maximum
+shock-angle differences round to \(0.162^\circ\) at \(5^\circ\) and
+\(0.094^\circ\) at \(15^\circ\). Every post-shock state discrepancy is well below
+\(1\%\) in magnitude for either models. These maxima are
+close to the Euler values, with only small changes across the sweep. Across all twenty runs, the largest recorded peak-to-peak variation over the last
+1\,000 iterations is \(0.0135\%\), in pressure at one probe for the SST case
+at \(M_\infty=2\), \(\theta=15^\circ\), hence full iterative convergence is ensured for these results. All in all, this shows, that both SA and SST models are equally applicable in capturing and resolving oblique shocks and recovering their post-shock states in the used numerical setup. 
+
+% Source: wedge_with_TM/Ma_angle_sweep/analysis/maximum_errors.csv.
+% Nominal-angle references; values rounded to three decimal places.
+\begin{table}[H]
+    \centering
+    \caption[Maximum discrepancies across the viscous wedge sweeps]{%
+        Maximum error magnitudes over \(M_\infty=2,4,6,8,10\) on the
+        48\,000-cell meshes. Shock-angle errors are absolute differences in
+        degrees, state errors are \(\max|e(\phi)|\) in percent according to
+        Eq.~\eqref{eq:shock-reference-discrepancy}. Both turbulence models use
+        Sutherland viscosity.}
+    \label{tab:shock-tm-sweep-accuracy}
+    \small
+    \begin{tabular}{@{}ll *{4}{S[table-format=1.3]}@{}}
+        \toprule
+        & & \multicolumn{2}{c}{SA} & \multicolumn{2}{c}{SST} \\
+        \cmidrule(lr){3-4}\cmidrule(l){5-6}
+        Quantity & Unit & {\(5^\circ\)} & {\(15^\circ\)}
+            & {\(5^\circ\)} & {\(15^\circ\)} \\
+        \midrule
+        Shock angle            & \(^{\circ}\) & 0.162 & 0.094 & 0.162 & 0.094 \\
+        Pressure ratio         & \(\%\)       & 0.324 & 0.064 & 0.324 & 0.064 \\
+        Temperature ratio      & \(\%\)       & 0.247 & 0.580 & 0.246 & 0.580 \\
+        Density ratio          & \(\%\)       & 0.570 & 0.511 & 0.570 & 0.511 \\
+        Downstream Mach number & \(\%\)       & 0.129 & 0.337 & 0.129 & 0.337 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; WSL absolute paths):
+    %   Original export: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/post_shock_conditions_comparison.png
+    %   Python driver: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/analyze_sweep.py (model_plots).
+    %   Plot implementation: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/plot_theta_beta_mach_comparison.py (plot_post_shock_comparison).
+    %   Per-case extraction: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k
+    %     Each analysis directory retains points.csv.gz, shock_diagnostics.txt, post_shock_samples.csv
+    %     and export_provenance.json with native-field/mesh hashes.
+    %   Native cases: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/{5deg,15deg}/SA_DensityCorrected_Ma{2,4,6,8,10}_*deg_48k
+    %     Each native case retains 10000/{p,T,Ma} and constant/polyMesh.
+    %   Tabulated values: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/simulation_and_theory_values.csv
+    %   Match: exact RGB crop removing 147 top rows (3150 x 2400 to 3150 x 2253 pixels);
+    %     PNG encoding/metadata differ. Braced path sets denote the ten individual cases.
+    % End figure provenance.
+    \includegraphics[width=\linewidth,height=0.75\textheight,keepaspectratio]{04_OpenFOAM_HiSA_VnV/Figures/02_sa_post_shock_conditions_comparison.png}
+    \caption[Spalart--Allmaras post-shock conditions compared with theory]{%
+        Post-shock conditions with Spalart--Allmaras and Sutherland viscosity
+        on the 48\,000-cell meshes for \(5^\circ\) and \(15^\circ\) wedges
+        at \(M_\infty=2,4,6,8,10\). Crosses denote the CFD averages, curves
+        show the weak oblique-shock solution of the Rankine--Hugoniot relations.
+        The four panels show pressure ratio, temperature ratio, density ratio
+        and downstream Mach number.}
+    \label{fig:shock-sa-post-shock-comparison}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; WSL absolute paths):
+    %   Original export: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/theta_beta_mach_comparison.png
+    %   Python driver: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/analyze_sweep.py (model_plots).
+    %   Plot implementation: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/plot_theta_beta_mach_comparison.py (plot_comparison).
+    %   Per-case extraction: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k
+    %     Each analysis directory retains points.csv.gz, shock_diagnostics.txt, post_shock_samples.csv
+    %     and export_provenance.json with native-field/mesh hashes.
+    %   Native cases: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/{5deg,15deg}/SA_DensityCorrected_Ma{2,4,6,8,10}_*deg_48k
+    %     Each native case retains 10000/{p,T,Ma} and constant/polyMesh.
+    %   Tabulated values: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/simulation_and_theory_values.csv
+    %   Match: processed copy with 127 top rows removed (2700 x 2400 to 2700 x 2273 pixels);
+    %     RGB comparison finds only 12 differing pixels, in a two-row patch at retained y=1175--1176.
+    %     This is a near-identical processed export, not a byte-identical original.
+    % End figure provenance.
+    \includegraphics[width=\linewidth,height=0.75\textheight,keepaspectratio]{04_OpenFOAM_HiSA_VnV/Figures/02_sa_theta_beta_mach_comparison.png}
+    \caption[Spalart--Allmaras shock angles compared with theory]{%
+        Shock angles with Spalart--Allmaras and Sutherland viscosity on the
+        48\,000-cell meshes for \(5^\circ\) and \(15^\circ\) wedges at
+        \(M_\infty=2,4,6,8,10\). Top: CFD fitted angles (crosses) and the
+        analytical \(\theta\)--\(\beta\)--\(M\) curves. Bottom: signed angular
+        difference \(\beta_{\mathrm{CFD}}-\beta_{\mathrm{ref}}\) in degrees,
+        using the weak-shock reference.}
+    \label{fig:shock-sa-theta-beta-mach}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; WSL absolute paths):
+    %   Original export: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/post_shock_conditions_comparison.png
+    %   Python driver: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/analyze_sweep.py (model_plots).
+    %   Plot implementation: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/plot_theta_beta_mach_comparison.py (plot_post_shock_comparison).
+    %   Per-case extraction: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k
+    %     Each analysis directory retains points.csv.gz, shock_diagnostics.txt, post_shock_samples.csv
+    %     and export_provenance.json with native-field/mesh hashes.
+    %   Native cases: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/{5deg,15deg}/kOmegaSST_Ma{2,4,6,8,10}_*deg_48k
+    %     Each native case retains 10000/{p,T,Ma} and constant/polyMesh.
+    %   Tabulated values: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/simulation_and_theory_values.csv
+    %   Match: exact RGB crop removing 137 top rows (3150 x 2400 to 3150 x 2263 pixels);
+    %     PNG encoding/metadata differ. Braced path sets denote the ten individual cases.
+    % End figure provenance.
+    \includegraphics[width=\linewidth,height=0.75\textheight,keepaspectratio]{04_OpenFOAM_HiSA_VnV/Figures/02_sst_post_shock_conditions_comparison.png}
+    \caption[SST post-shock conditions compared with theory]{%
+        Post-shock conditions with \(k\)--\(\omega\) SST and Sutherland
+        viscosity on the 48\,000-cell meshes for \(5^\circ\) and
+        \(15^\circ\) wedges at \(M_\infty=2,4,6,8,10\). Crosses denote the
+        CFD averages, curves show the weak oblique-shock solution of the
+        Rankine--Hugoniot relations. The four panels show pressure ratio,
+        temperature ratio, density ratio and downstream Mach number.}
+    \label{fig:shock-sst-post-shock-comparison}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; WSL absolute paths):
+    %   Original export: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/theta_beta_mach_comparison.png
+    %   Python driver: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/analyze_sweep.py (model_plots).
+    %   Plot implementation: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/plot_theta_beta_mach_comparison.py (plot_comparison).
+    %   Per-case extraction: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k
+    %     Each analysis directory retains points.csv.gz, shock_diagnostics.txt, post_shock_samples.csv
+    %     and export_provenance.json with native-field/mesh hashes.
+    %   Native cases: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/{5deg,15deg}/kOmegaSST_Ma{2,4,6,8,10}_*deg_48k
+    %     Each native case retains 10000/{p,T,Ma} and constant/polyMesh.
+    %   Tabulated values: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/simulation_and_theory_values.csv
+    %   Match: processed copy with 130 top rows removed (2700 x 2400 to 2700 x 2270 pixels);
+    %     RGB comparison finds only 12 differing pixels, in a two-row patch at retained y=1172--1173.
+    %     This is a near-identical processed export, not a byte-identical original.
+    % End figure provenance.
+    \includegraphics[width=\linewidth,height=0.75\textheight,keepaspectratio]{04_OpenFOAM_HiSA_VnV/Figures/02_sst_theta_beta_mach_comparison.png}
+    \caption[SST shock angles compared with theory]{%
+        Shock angles with \(k\)--\(\omega\) SST and Sutherland viscosity on
+        the 48\,000-cell meshes for \(5^\circ\) and \(15^\circ\) wedges at
+        \(M_\infty=2,4,6,8,10\). Top: CFD fitted angles (crosses) and the
+        analytical \(\theta\)--\(\beta\)--\(M\) curves. Bottom: signed angular
+        difference \(\beta_{\mathrm{CFD}}-\beta_{\mathrm{ref}}\) in degrees,
+        using the weak-shock reference.}
+    \label{fig:shock-sst-theta-beta-mach}
+\end{figure}
+
+\subsection{Conclusion and findings}
+
+While there may be excess turbulent kinetic energy production associated with the turbulence models as found in \cite{tian2023correction}, this evaluation shows no major negative impact on the resolved oblique shock angle or recovered post-shock conditions. It can be confidentally concluded that the in Chapter~\ref{chap:numerical-framework} outlined numerics, especially regarding the flux scheme, and the Spalart--Allmaras and \(k\)--\(\omega\) SST turbulence model, is capable of solving oblique shock cases correctly.
+
+% Keep the wedge comparison figures within this section.
+\clearpage

@@ -1,0 +1,96 @@
+{
+  "original_simulation_root": "/home/mgnadlinger/Coles_TurbZPGFP",
+  "source_sha256": {
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\validation\\compare_nasa_figures.py": "163a455534dbd88e1b556aafe5a0db8722ad9c02ce343e48654a8ccd31cce37b",
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\validation\\replot_nasa_matched.py": "73e5b35c18b991340b90b7919a2c1a0b5d80622d9f3fd63219a93fed19b8a513",
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\validation\\outputs_nasa_matched_20000\\validation_summary.json": "a9bba0b402492b33f92b6aaad7d22c6008879abb64921eae53de3d765be3a9fc",
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\validation\\outputs_nasa_matched_20000\\data\\kwSST\\profile_x0p5461.csv": "7467e79f72c4d09d5d849f4f736f538dfe9f941961fe9cac31c5ff7ec8a347fa",
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\validation\\outputs_nasa_matched_20000\\data\\SA\\profile_x0p5461.csv": "f164e29c52edc542d0aa8fcbd8c05a6b644576a4aab8d4f22902f46c91f733cc",
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\NASA Downloads\\Cases\\Str-Uns_SST\\FP4p5.BL.dat": "611dfb7818e60e09696327abb7c7e3eab6222f8d5e3600b2f1a39eaba8b374f7",
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\NASA Downloads\\Cases\\Str-Uns_SST\\FP4p5.Cf.dat": "6f56ee8dc7962120534b8987b5d077835abcc438a52d0298f4ebcee9760536d0",
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\NASA Downloads\\Cases\\Str-Uns_SA\\FP4p5.BL.dat": "79bd81a2bc568576d9a04cc87034b41391a1c85da0dc436fc199a5b90821d90d",
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\NASA Downloads\\Cases\\Str-Uns_SA\\FP4p5.Cf.dat": "d5f2033a642001d623aab6d354aef45c092192fbf54cb5f0db737c0c6a20a035",
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\NASA Downloads\\Results\\FP4p5-BL.dat": "d16bd7a1e79c82ddff43353930253e1a3314d1df0330a8106e86281543c41932",
+    "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Files\\ValData\\Tunel\\03 TurbZPGFP\\01 Coles\\NASA Downloads\\Results\\FP4p5-Cf.dat": "f928a402db53a6ed23eccfd13a1a70686567fe39477aa44d1e58a8bb7007016b"
+  },
+  "U_inf_m_s": 703.2894492195271,
+  "figures": {
+    "06_Coles_velocity_profiles": {
+      "font_size_pt": 15.55,
+      "page_size_pdf_pt": [
+        751.68,
+        327.745
+      ],
+      "effective_font_size_pdf_pt": 9.968855763090678,
+      "plotted_state_unchanged": true,
+      "plotted_state": [
+        {
+          "xlim": [
+            -0.049920860833276945,
+            1.0483380774988158
+          ],
+          "ylim": [
+            0.0,
+            0.02875199499018
+          ],
+          "xscale": "linear",
+          "yscale": "linear",
+          "curves": [
+            "8d82b294489f78d1b71fa67770d5cf6a346378b01ce8f43971adbfdc1cd89f1b",
+            "4147d580b97b8781b7b1f7d5baeb4cbfed0a7c189fb312b6a8a4480e92f485e2",
+            "6c0ed5dc09da65443754d7bcb10a673dae2b0139fdb641bfd6d67738beb9ec1f",
+            "508220f0b57e8b09b035cc0055e6ec2004cde68292b891d42f2982fc9e30a095"
+          ]
+        },
+        {
+          "xlim": [
+            -0.00037606723594888316,
+            0.007897411954926546
+          ],
+          "ylim": [
+            0.0,
+            0.02875199499018
+          ],
+          "xscale": "linear",
+          "yscale": "linear",
+          "curves": [
+            "7c066f4e6cd60ecbabf83fff2964199bfe9ecdfbfed97f6438f6e9286ab06bb7",
+            "d35acc4776a8de4ff4799c090081fe71a15549eab37bb61dc608c82181901042",
+            "8640f417a22439ccd69ae289e7cea9eeb3a52d89e64bd8826496e537df31fc54",
+            "6d1ec5afcf4af015c10fa2fa6b09616101333c10dc70cdefc48199e54d3a9c18"
+          ]
+        }
+      ]
+    },
+    "06_Coles_velocity_experiment": {
+      "font_size_pt": 14.1,
+      "page_size_pdf_pt": [
+        578.88,
+        387.361
+      ],
+      "effective_font_size_pdf_pt": 9.976941075870645,
+      "plotted_state_unchanged": true,
+      "plotted_state": [
+        {
+          "xlim": [
+            1.523369552e-05,
+            2.2651355877558776
+          ],
+          "ylim": [
+            0.0,
+            1.08
+          ],
+          "xscale": "log",
+          "yscale": "linear",
+          "curves": [
+            "a7d839b8c427f287f4d764b75d6c04baaaa958e8481c2fef8dbac694a634d3a6",
+            "17b7537ea6229d02e81775f3e5905c4612f327559390701684ece224594aee02",
+            "6e351449f509a4df5b732747a0f13c6e9b98b26e68ce0a2efaf8635c3e8603b6",
+            "2b576d0392b834f608d0b63675a15b7ba00c9e1ee8461573bf593ba66762880d",
+            "06fbf634ecb500f115419d5bd213868d7e328fdb4902cab4db8c06faf66ead45"
+          ]
+        }
+      ]
+    }
+  }
+}

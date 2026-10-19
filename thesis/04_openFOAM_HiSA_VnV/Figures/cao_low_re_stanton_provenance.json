@@ -1,0 +1,27 @@
+{
+  "original_script": "\\\\wsl.localhost\\Ubuntu\\home\\mgnadlinger\\Cao_lamZPGFP\\validation\\validate_cao.py",
+  "script_sha256": "538e91cc2eb01eacdb50e63fac12197ef7ca86d6ff4002a7fbf3b611ad340bfb",
+  "matplotlib_version": "3.10.6",
+  "inputs": [
+    {
+      "path": "\\\\wsl.localhost\\Ubuntu\\home\\mgnadlinger\\Cao_lamZPGFP\\validation\\full_sweep_output\\760_pinf_dy1_1e-3_dx_1p5_wall.csv",
+      "sha256": "d7b9323b0e04efbeedfaac8bc66376f74d64bdd79b9722e8e1ed29d5f0f76da4"
+    },
+    {
+      "path": "\\\\wsl.localhost\\Ubuntu\\home\\mgnadlinger\\Cao_lamZPGFP\\validation\\full_sweep_output\\760_pinf_reference_stanton.csv",
+      "sha256": "66d1dd784eb7a74ace843b463349f787bfb482c02f2209c27dc18e61ea1d4ca1"
+    }
+  ],
+  "original_crop_pixels": [
+    0,
+    772,
+    1408,
+    1454
+  ],
+  "legend": [
+    "$\\Delta y_1=1\\times10^{-3}\\,\\mathrm{mm},\\quad\\Delta x=1.5\\,\\mathrm{mm}$",
+    "Cao et al. 2-D base flow (digitized)"
+  ],
+  "curve_and_band_sha256": "0b4f1b5ffe9528ce280456100de03022ecc34450c7b82c90b71703cd746b8d7f",
+  "numerical_geometry_unchanged": true
+}

@@ -1,0 +1,44 @@
+\section{Wall-flux delivery in OpenFOAM/HiSA}
+\label{sec:openFOAM_wall_function_implementation_general}
+
+The standard wall-load evaluation in Section~\ref{sec:openFOAM_qw_tauw} combines a wall-to-cell gradient with an effective transport coefficient. Encoding a wall-function target through that coefficient is convenient, but constrains which loads can be delivered. This section motivates the direct wall-flux interface used for the investigated closures.
+
+\subsection{Limitations of transport-coefficient boundary conditions}
+
+A conventional implementation adjusts wall \texttt{nut} and \texttt{alphat} until the discrete gradient produces the target stress or heat-flux. For example, inversion of the planar-wall shear relation gives
+\begin{equation}
+    \nu_{t,w}
+    =\frac{\tau_{w,\mathrm{target}}y_1}{\rho_w U_{1,t}}-\nu_w,
+    \label{eq:nut_BC}
+\end{equation}
+where \(U_{1,t}>0\) denotes the tangential velocity magnitude. An analogous inversion determines the thermal coefficient from the target heat-flux and the wall-to-cell energy difference.
+
+Requiring non-negative turbulent transport leaves the molecular contribution as the smallest representable flux magnitude for a given nonzero secant. It also fixes the flux direction to that of the secant. Neither condition is guaranteed to agree with a wall-function target. The thermal restriction is particularly relevant to non-monotonic temperature profiles: if a sample beyond the temperature maximum is colder than the wall while the physical wall remains cooled, a non-negative conductivity cannot deliver the required heat-flux through that wall-to-cell temperature difference. Even when the signs agree, the target can lie below the molecular secant contribution. These are limitations of the delivery mechanism, separate from closure accuracy.
+
+\subsection{Limitations of a prescribed-gradient temperature condition}
+
+A prescribed-gradient temperature condition can represent either heat-flux sign, but matching the target through the discrete gradient lets the patch temperature depart from the physical wall temperature used by the closure. On a coarse mesh, the resulting extrapolated face state can differ substantially from that physical state. Evaluating density and viscosity at this numerical face temperature then changes the wall transport properties and can make the molecular shear contribution exceed the target in Equation~\eqref{eq:nut_BC}. This approach therefore introduces an additional coupling between thermal flux delivery and momentum transport. Retaining the physical prescribed wall temperature while replacing the wall flux avoids this inconsistency.
+
+\subsection{Direct wall-flux substitution}
+\label{subsec:wall-functions:direct-flux-delivery}
+
+% Implementation evidence:
+% /home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/modules/hysa/src/modules/hisa/wallFluxSubstitution.H
+% /home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/DESIGN_AND_DEVIATIONS_LiFlux.md
+% /home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/DESIGN_AND_DEVIATIONS_GriffinFlux.md
+% Reporting verified against:
+% /home/mgnadlinger/WF_validation/LowH_M3/validation/scripts/plot_wall_flux_sweeps.py
+% /home/mgnadlinger/WF_validation/LowH_M3/validation/scripts/plot_opt_mesh_wall_flux_sweeps.py
+The implemented interface replaces the explicit viscous wall-face contributions in HiSA's momentum and total-energy residuals. Each wall function publishes its target traction, target heat-flux and an active-face mask. HiSA first assembles the standard wall contributions, then adds the difference between the targets and those contributions on active faces. In a common convention, with traction acting on the fluid and heat-flux \(q_w\) positive into the wall, the corrections per unit area are
+\begin{equation}
+    \Delta\boldsymbol{\tau}
+    =\boldsymbol{\tau}_{w,\mathrm{target}}-\boldsymbol{\tau}_{\mathrm{std}},
+    \qquad
+    \Delta q=-q_{w,\mathrm{target}}-q_{\mathrm{std}}.
+    \label{eq:wall-functions:flux-substitution}
+\end{equation}
+The standard terms are the actual terms assembled by HiSA, including the full viscous traction and \(q_{\mathrm{std}}\) is positive into the fluid, following OpenFOAM's convention. The target traction is tangential, as assumed by the boundary layer wall closures. The energy correction includes the corresponding viscous work, which vanishes at a stationary no-slip wall. Inactive faces retain the standard evaluation.
+
+For the isothermal cases, this interface keeps the physical fixed wall temperature and sets wall \texttt{nut} and \texttt{alphat} to zero; these fields no longer encode the target loads. The near-wall turbulence constraint remains a separate part of the RANS coupling. Direct substitution changes neither the wall-function closure nor the internal-face transport operators, and does not impose an exact off-wall profile. It removes the coefficient-inversion restriction while leaving closure error, turbulence-model error and spatial-discretization error to be assessed in Chapter~\ref{chap:comparative-evaluation}.
+
+The imposed loads are recorded in the wall-function diagnostics. Li's native heat-flux is positive into the wall, whereas Griffin's and Wang's are positive into the fluid; the interface and comparison scripts convert these signs consistently. Standard \texttt{wallHeatFlux} and \texttt{wallShearStress} function objects do not include the residual correction and therefore do not report the imposed targets. The coupled wall-function comparisons use the diagnostic targets on active faces; the wall-resolved comparisons use the standard function-object output. The source code and case configurations are identified in the \hyperref[chap:data-avail]{data-availability statement}.

@@ -1,0 +1,379 @@
+\section{Laminar heat-transfer along a flat-plate and compression corner}
+\label{sec:numerical-vv:laminar-heat-transfer-compression-corner}
+
+The compression-ramp cases of Cao et al. extend the previous laminar validation from
+attached boundary layer profiles to wall heat-transfer on an attached zero-pressure-gradient flat-plate as well as through a strong shock-wave/boundary layer interaction. The geometry combines a leading flat-plate with a subsequent compression corner. Upstream of the interaction, the attached layer provides a further check of nominally zero-pressure-gradient flat-plate
+flow. The adverse pressure gradient imposed by the ramp then causes separation ahead of the corner and reattachment on the ramp, with a pronounced redistribution of surface heating. This tests the coupled prediction of viscous flow and heat-flux calcualtion in attached and separated
+regions within the same configuration.
+\par\medskip
+
+The heat-transfer references are the two-dimensional laminar base flows in
+Cao et al.~\citep[Fig.~4(b)]{Cao2022TransitionIntrinsicInstability} and
+\citet[Fig.~8(a), sharp-edge case R0]{Cao2021LeadingEdgeBluntness}.
+These correspond to same geometry, just under different freestram pressures of \(1550\,\mathrm{Pa}\) and \(760\,\mathrm{Pa}\) respecitively, thus also higher and lower Reynolds numbers respectively.
+
+\paragraph{General case setup.}
+
+The sharp-edged flat-plate has length \(L=100\,\mathrm{mm}\) and is
+followed by a \(15^\circ\) compression ramp. The leading edge is at
+\(x=0\), the corner at \(x/L=1\), and the computational outlet at
+\(x=400\,\mathrm{mm}\). The upper boundary lies at
+\(y=150\,\mathrm{mm}\). Here \(x\) is the horizontal streamwise
+coordinate, including on the inclined ramp. One spanwise cell with
+\texttt{empty} side boundaries enforces two-dimensional flow, and the
+calculations use laminar molecular transport without a turbulence model.
+\par\medskip
+
+The uniform freestream defines the characteristic farfield conditions at
+the inlet and upper boundary. The downstream boundary uses characteristic
+pressure inlet/outlet conditions (Section~\ref{subsec:numerical-framework:hisa}). The plate and
+ramp form an impermeable, no-slip wall with prescribed uniform temperature
+and zero pressure gradient. Table~\ref{tab:cao-flow-conditions}
+summarizes the two flow conditions and the common thermal model.
+
+% Sources: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/;
+% saved U, T, p fields, 0.org/include/setup and constant/thermophysicalProperties.
+% Verified saved BCs: dy1_5e-4_dx1p5e-1/1550_pinf/100000/{U,p,T} and
+% legacy/dy1_1e-3_dx_1p5/760_pinf/50000/{U,p,T}: characteristic farfield
+% inlet/top, characteristic pressure inlet/outlet rear, zeroGradient wall p.
+% The supplied mesh illustration contains older generic BC callouts; these
+% are clipped below. The BCs described here are verified in the saved fields.
+\begin{table}[H]
+    \centering
+    \caption{Freestream conditions and thermal/transport models for the
+        two Cao compression-ramp cases. Unit Reynolds numbers are evaluated
+        from the OpenFOAM/HiSA freestream properties; the reference studies
+        report \(8.6\times10^6\) and \(4.2\times10^6\,\mathrm{m^{-1}}\).}
+    \label{tab:cao-flow-conditions}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.12}
+    \begin{tabular}{@{}p{0.46\linewidth}>{\centering\arraybackslash}p{0.24\linewidth} >{\centering\arraybackslash}p{0.24\linewidth}@{}}
+        \toprule
+        Quantity & {\shortstack[c]{Higher Reynolds\\number}} & {\shortstack[c]{Lower Reynolds\\number}} \\
+        \midrule
+        Heat-transfer reference
+            & \multicolumn{1}{>{\centering\arraybackslash}p{0.24\linewidth}}{{\centering Cao et al.\par\citep[Fig.~4(b)]{Cao2022TransitionIntrinsicInstability}\par}}
+            & \multicolumn{1}{>{\centering\arraybackslash}p{0.24\linewidth}}{{\centering Cao et al.\par\citep[Fig.~8(a), R0]{Cao2021LeadingEdgeBluntness}\par}} \\
+        Mach number \(M_\infty\) & \num{7.7} & \num{7.7} \\
+        Static pressure \(p_\infty\) [\(\mathrm{Pa}\)] & \num{1550} & \num{760} \\
+        Static temperature \(T_\infty\) [\(\mathrm{K}\)] & \num{125} & \num{125} \\
+        Unit Reynolds number \(Re_x/x\) [\(\mathrm{m^{-1}}\)]
+            & \num{8.620e6} & \num{4.227e6} \\
+        Wall temperature \(T_w\) [\(\mathrm{K}\)] & \num{293} & \num{293} \\
+        \midrule
+        Equation of state & \multicolumn{2}{c}{Calorically perfect ideal gas} \\
+        Gas constant \(R\) [\(\mathrm{J\,kg^{-1}\,K^{-1}}\)]
+            & \multicolumn{2}{c}{\num{287.05}} \\
+        Heat capacity \(c_p\) [\(\mathrm{J\,kg^{-1}\,K^{-1}}\)]
+            & \multicolumn{2}{c}{\num{1004.703}, constant} \\
+        Heat-capacity ratio \(\gamma\) & \multicolumn{2}{c}{\(\simeq\)\num{1.4}} \\
+        Dynamic viscosity \(\mu(T)\)
+            & \multicolumn{2}{c}{Polynomial fit to Sutherland's law} \\
+        Thermal conductivity \(\kappa(T)\)
+            & \multicolumn{2}{c}{\(c_p\mu(T)/Pr\)} \\
+        Molecular Prandtl number \(Pr\) & \multicolumn{2}{c}{\num{0.71}, constant} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The reference calculations use Sutherland viscosity and constant
+\(Pr=0.71\). In OpenFOAM/HiSA, the temperature-dependent viscosity is
+represented by a seventh-order polynomial fit to Sutherland's law over
+\(40\)--\(1000\,\mathrm{K}\). The conductivity polynomial is obtained
+by multiplication with \(c_p/Pr\). Thus the fitted transport laws retain
+the prescribed constant molecular Prandtl number that the reference case requires.
+
+\paragraph{Mesh families.}
+
+Figure~\ref{fig:cao-mesh} shows the geometry and the structured mesh. Refinement
+is concentrated near the wall, the leading edge, and in the region of the expected separated
+interaction. The higher-Reynolds-number case is used for the mesh study. Two distinct mesh convergence investigations need to be performed: once on the first-cell height, and second on the downstream spacing, especially in the separated interaction region.
+The wall-normal comparison holds the nominal downstream spacing at
+\(\Delta x=0.15\,\mathrm{mm}\) and varies the first-cell height through
+\(\Delta y_1=0.1\), \(0.01\), \(0.002\) and
+\(0.0005\,\mathrm{mm}\). The streamwise comparison holds
+\(\Delta y_1=0.002\,\mathrm{mm}\) and uses
+\(\Delta x=0.6\), \(0.3\) and \(0.15\,\mathrm{mm}\).
+The \(\Delta x\) values in the figures describe the local refinement in
+the separation region, rather than a uniform spacing over the full plate
+and ramp.
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; geometry/mesh family traced):
+    %   Windows mesh-source directory (absolute path through the WSL mount):
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Cao_laminar_CompCorner/00 mesh/
+    %   Retained ANSA models and matching Fluent meshes include
+    %   1e-3.{ansa,msh}, 1e-2.{ansa,msh}, 2e-3_downstream_fine2.{ansa,msh},
+    %   2e-3_dx1p5e-1.{ansa,msh} and 5e-4_dx1p5e-1.{ansa,msh}.
+    %   Associated WSL simulation meshes: /home/mgnadlinger/Cao_lamZPGFP/
+    %   Cao et al/<mesh variant>/<pressure>/constant/polyMesh/;
+    %   e.g. dy1_5e-4_dx1p5e-1/1550_pinf/constant/polyMesh/.
+    %   The illustration depicts the common 100 mm plate, 15-degree ramp,
+    %   400 mm domain and 150 mm upper boundary. These identify the geometry,
+    %   not a unique refinement variant. The exact ANSA model used for this
+    %   screenshot, original annotated export and camera settings were not
+    %   recovered; do not assign it a particular mesh-convergence case.
+    %   Generic boundary-condition callouts are historical artwork; use the
+    %   saved-field checks above for the actual simulation conditions.
+    % End figure provenance.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/05_mesh.png}
+    \caption{Compression-ramp geometry and mesh layout. The flat-plate
+        extends to \(x=100\,\mathrm{mm}\), followed by a
+        \(15^\circ\) ramp. Local streamwise
+        refinement around the corner interaction region (between the yellow lines).}
+    \label{fig:cao-mesh}
+\end{figure}
+
+\paragraph{Extraction and normalization.}
+
+The two surface quantity of interest and published is the Stanton Number\(St\), which are expressed as
+\begin{equation}
+    St=\frac{q_w}{\rho_\infty U_\infty c_p(T_r-T_w)},
+    \label{eq:cao-wall-coefficients}
+\end{equation}
+with \(q_w>0\) denoting heat transferred into the wall. The recovery
+temperature is \(T_r=T_\infty[1+r(\gamma-1)M_\infty^2/2]\), with the recovery factor
+\(r=\sqrt{Pr}\simeq0.8426\), giving \(T_r\simeq1374\,\mathrm{K}\). The attached, laminar velocity and temperature profiles are extracted at \(x=40\,\mathrm{mm}\), or \(x/L=0.4\). This station lies in the attached flat-plate region, far enough upstream of the corner-induced separation. The boundary layer profile figures use \(U_x/U_\infty\), \(T/T_\infty\) and \(\eta=(y/x)\sqrt{Re_x}\), equivalent to the wall coordinate introduced in the previous Section~\ref{sec:numerical-vv:laminar-boundary-layer-profiles} and it's Eq.~\eqref{eq:laminar-bl-similarity-coordinate}.
+\par\medskip
+
+Because such separation bubbles represent genuine physical unsteady phenomena, which the stationary RANS cannot capture \cite{chiapparino2023numerical}. The wall pressure and heat-flux are thus averaged over the final 15\,000 steady-solver pseudo-iterations. These are numerical iteration-window averages, not physical-time means. 
+
+% Figure provenance: validation/{full_sweep_output,full_sweep_output_1550,
+% mesh_sensitivity_output_1550}; profiles are saved-field samples, whereas
+% surface curves are pseudo-iteration-window means.
+% Historical finest-mesh 1550 Pa export (not the current plotted profile):
+% /home/mgnadlinger/Cao_lamZPGFP/validation/
+% finest_mesh_output_1550/1550_pinf_dy1_5e-4_dx_1p5e-1_profile_x040mm.csv.
+% Source case: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/
+% dy1_5e-4_dx1p5e-1/1550_pinf, saved pseudo-iteration 100000.
+% Extraction: validate_cao.py with explicit --case and --time 100000.
+% Thesis styling and provenance: tmp/compression_corner_review/finest_1550/
+% {extract_finest.py,regenerate_profiles.py,profile_figure_provenance.json}.
+% First-cell height 0.0005 mm; nominal separation-region spacing 0.15 mm.
+
+\paragraph{Results: attached flat-plate region.}
+
+Figure~\ref{fig:cao-attached-profiles} compares the upstream, attached laminar boundary layer profiles at both Reynolds numbers with the digitized profiles reported by Cao et al. Figure ~\citep[Fig.~7(a)]{Cao2022TransitionIntrinsicInstability} and \citet[Fig.~2(b)]{Cao2021UnsteadyEffects} respectively. The CFD simulation with fine enough leading edge refinement, is capable of reproducing both case's laminar boundary layer profiles well. These comparisons are supportive to the previous, arguably more thorough laminar-profile assessment in Section~\ref{sec:numerical-vv:laminar-boundary-layer-profiles}.
+
+% Typography update: Figures/plot_cao_profile_fonts.py; DejaVu Sans, fonts +25%.
+% Both currently retained profiles use the legacy dy1_1e-3_dx_1p5 cases at
+% saved pseudo-iteration 50000. The 1550 Pa PNG matched the title-cropped
+% selected_legacy_1550 export, not the historical finest-mesh export above.
+% Original CSVs: /home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/.
+% Exact source snapshots, original paths and plotted-value verification:
+% Figures/cao_profile_sources/{source_provenance,font_update_provenance}.json.
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; upper panel, 1550 Pa):
+    %   Source extraction/normalization script:
+    %     /home/mgnadlinger/Cao_lamZPGFP/validation/validate_cao.py
+    %   Exact plotted profile CSV (SHA-256 rechecked against retained audit):
+    %     /home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/1550_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv
+    %   Current source case: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/
+    %   legacy/dy1_1e-3_dx_1p5/1550_pinf/{constant/polyMesh,50000/U,50000/T}.
+    %   Reference digitizations: /home/mgnadlinger/Cao_lamZPGFP/Digitization/
+    %   Cao_Transition to turbulence/{U-BL_Figure7a,T-BL_Figure7a}.csv.
+    %   Current typography: Figures/plot_cao_profile_fonts.py. Source and
+    %   font-export audits: Figures/cao_profile_sources/
+    %   {source_provenance,font_update_provenance}.json, including original
+    %   crop verification and retained CSV snapshots. Paths here use the
+    %   current legacy case location, not the historical pre-move path.
+    % End figure provenance.
+    \includegraphics[width=0.86\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/05_1550_pinf_boundary_layer_profiles.png}
+    \par\medskip
+    % Figure provenance (audited 2026-10-19; lower panel, 760 Pa):
+    %   Extraction: /home/mgnadlinger/Cao_lamZPGFP/validation/validate_cao.py.
+    %   Exact plotted profile CSV (SHA-256 rechecked against retained audit):
+    %     /home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv
+    %   Current source case: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/
+    %   legacy/dy1_1e-3_dx_1p5/760_pinf/{constant/polyMesh,50000/U,50000/T}.
+    %   Reference digitizations: /home/mgnadlinger/Cao_lamZPGFP/Digitization/
+    %   Cao_Unsteady effects/{U-BL_Figure2b,T-BL_Figure2b}.csv.
+    %   Current typography and source snapshots: Figures/plot_cao_profile_fonts.py
+    %   and Figures/cao_profile_sources/
+    %   {source_provenance,font_update_provenance}.json.
+    % End figure provenance.
+    \includegraphics[width=0.86\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/05_760_pinf_boundary_layer_profiles.png}
+    \caption[Attached flat-plate profiles for the Cao cases]{%
+        Attached boundary layer profiles at \(x/L=0.4\):
+        \(p_\infty=1550\,\mathrm{Pa}\) above and
+        \(760\,\mathrm{Pa}\) below. Symbols are digitized from
+        Cao et al.~\citep[Fig.~7(a)]{Cao2022TransitionIntrinsicInstability}
+        and \citet[Fig.~2(b)]{Cao2021UnsteadyEffects}, respectively.
+        This sample station lies sufficiently upstream of the separation and transition as to represent a zero-pressure-gradient laminar boundary layer, also shown in the respective Cao et al. figures and stated in their captions, and far enough downstream of the leading edge to have weak viscous interaction.}
+    \label{fig:cao-attached-profiles}
+\end{figure}
+
+\paragraph{Mesh sensitivity across whole domain.}
+
+The Stanton-number windows in Figures~\ref{fig:cao-wall-normal-stanton} and ~\ref{fig:cao-streamwise-stanton} are separate the attached upstream region, the separation in the corner region, and reattachment with the downstream ramp. 
+\par\medskip
+
+The Stanton-number in the attached upstream region shows a significant sensitivity to the wall-normal spacing, with a fine enough mesh achieving good agreement to the reference (see Figure~\ref{fig:cao-wall-normal-stanton} (a)). As expected, virtually no downstream mesh requirement exists for this effectlvely zero-pressure-gradient flat-plate (see Figure~\ref{fig:cao-streamwise-stanton} (a)).
+\par\medskip
+
+The separated interaction is more demanding. The wall-normal coarser meshes underpredict the separation bubble with too late detachment and too early reattachment (see Figure~\ref{fig:cao-wall-normal-stanton} (b)). But pairing a fine enough wall-normal mesh, with too coarse downstream spacing results in unphysical oscillations (see Figure~\ref{fig:cao-streamwise-stanton} (b)) - it should be restated here, that the plotted results already represent averages over the last 15\,000, oscillating converged, pseudo iterations. So the oscialltory over and undershoot of visbile in Figure~\ref{fig:cao-streamwise-stanton} (b) and somewhat also visible in Figure~\ref{fig:cao-streamwise-stanton} (c) of the coarsest \(\Delta x=0.6\mathrm{mm}\) mesh does not represent unsteady oscillatory behaviour across the pseudo-iterations.
+\par\medskip
+
+Throughout all wall-normal and streamwise mesh refinement an overshoot in the heat-flux at the reattachment point remains, despite position of the reattachment being solved quite accuratly (see Figure~\ref{fig:cao-wall-normal-stanton} (c) and Figure~\ref{fig:cao-streamwise-stanton} (c)).
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; current stacked-panel export):
+    %   Current plot script, relative to the workspace root:
+    %     tmp/compression_corner_review/stack_stanton_figures.py
+    %   Plot/input audit: tmp/compression_corner_review/stacked_stanton/
+    %   figure_provenance.json. All four input CSV hashes and the companion
+    %   manuscript PDF hash were rechecked successfully; the currently included
+    %   PNG has a different hash and vertical dimensions from the recorded export.
+    %   The exact subsequent raster-edit operation was not recovered.
+    %   Input CSVs: /home/mgnadlinger/Cao_lamZPGFP/validation/
+    %   full_sweep_output_1550/1550_pinf_<label>_wall.csv, for labels
+    %   dy1_1e-1_dx_1p5e-1, dy1_1e-2_dx_1p5e-1 and dy1_2e-3_dx_1p5e-1.
+    %   Fourth input: tmp/compression_corner_review/stacked_stanton/
+    %   1550_pinf_dy1_5e-4_dx_1p5e-1_wall.csv; extracted by export_fine_wall.py
+    %   in that directory. fine_wall_export_provenance.json records all
+    %   16 source walls.vtp files per case; their hashes were rechecked.
+    %   Raw WSL cases: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/
+    %   {dy1_1e-1_dx1p5e-1,dy1_1e-2_dx1p5e-1,dy1_2e-3_dx1p5e-1,
+    %   dy1_5e-4_dx1p5e-1}/1550_pinf/postProcessing/surfaces1/<iteration>/walls.vtp.
+    %   Raw mesh-directory spelling differs from the exported CSV label.
+    %   Averaging windows: 35000--50000 for dy1=0.1 and 0.01 mm;
+    %   85000--100000 for dy1=0.002 and 0.0005 mm. Trapezoidal pseudo-iteration
+    %   means, with stored OpenFOAM wall heat flux negated for wall heating.
+    %   Reference: /home/mgnadlinger/Cao_lamZPGFP/Digitization/
+    %   Cao_Transition to turbulence/Stanton_Figure4b.csv (2-D base flow).
+    %   Original analysis/extraction: /home/mgnadlinger/Cao_lamZPGFP/validation/
+    %   {mesh_sensitivity_cao,validate_cao}.py. The retained stacked plot is
+    %   not the original three-column mesh_sensitivity_output_1550 PNG.
+    % End figure provenance.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/05_1550_dx_1p5e-1_wall_normal_stanton_windows.png}
+    \caption{Wall-normal mesh sensitivity at \(p_\infty=1550\,\mathrm{Pa}\)
+        and nominal separation-region spacing \(\Delta x=0.15\,\mathrm{mm}\).
+        The reference is the two-dimensional base flow of
+        Cao et al.~\citep[Fig.~4(b)]{Cao2022TransitionIntrinsicInstability}.
+        The two finest wall-normal meshes are visibly not distinguishable in this plot.}
+    \label{fig:cao-wall-normal-stanton}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; current stacked-panel export):
+    %   Plot script: tmp/compression_corner_review/stack_stanton_figures.py.
+    %   Audit: tmp/compression_corner_review/stacked_stanton/figure_provenance.json.
+    %   All three source CSV hashes and the companion manuscript PDF hash
+    %   match that audit; the included PNG has a different hash and vertical
+    %   dimensions from the recorded export. Subsequent raster editing is unrecorded.
+    %   Input CSVs: /home/mgnadlinger/Cao_lamZPGFP/validation/
+    %   full_sweep_output_1550/1550_pinf_<label>_wall.csv, for labels
+    %   dy1_2e-3_dx_6e-1, dy1_2e-3_dx_3e-1 and dy1_2e-3_dx_1p5e-1.
+    %   Raw cases: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/
+    %   {dy1_2e-3_dx6e-1,dy1_2e-3_dx3e-1,dy1_2e-3_dx1p5e-1}/1550_pinf/
+    %   postProcessing/surfaces1/<iteration>/walls.vtp; final windows
+    %   35000--50000, 35000--50000 and 85000--100000, respectively.
+    %   Source snapshot hashes and export checks:
+    %   tmp/compression_corner_review/stacked_stanton/fine_wall_export_provenance.json.
+    %   Reference: /home/mgnadlinger/Cao_lamZPGFP/Digitization/
+    %   Cao_Transition to turbulence/Stanton_Figure4b.csv.
+    %   Extraction/normalization: /home/mgnadlinger/Cao_lamZPGFP/validation/
+    %   {mesh_sensitivity_cao,validate_cao}.py; pseudo-iteration means with
+    %   OpenFOAM wallHeatFlux sign reversed for positive wall heating.
+    % End figure provenance.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/05_1550_dy1_2e-3_streamwise_stanton_windows.png}
+    \caption{Streamwise mesh sensitivity at \(p_\infty=1550\,\mathrm{Pa}\)
+        and \(\Delta y_1=0.002\,\mathrm{mm}\). The stated
+        \(\Delta x\) is the local spacing in the separation region.
+        Symbols denote the two-dimensional base-flow Stanton number from
+        Cao et al.~\citep[Fig.~4(b)]{Cao2022TransitionIntrinsicInstability};
+        computed curves are final pseudo-iteration-window means.}
+    \label{fig:cao-streamwise-stanton}
+\end{figure}
+
+To put the wall-normal spacing into context, the later in Section~\ref{sec:evaluation:mesh-families-yplus} more closly discussed first-cell acoustic Reynolds number,
+\begin{equation}
+    Re_{\mathrm{cell1}}=
+    \frac{\rho_w a_w\,\delta_n}{\mu_w},
+    \label{eq:cao-first-cell-acoustic-re}
+\end{equation}
+is investigated along the compression corner. As will be discussed in Section~\ref{sec:evaluation:mesh-families-yplus} and in that section shown through extensive mesh convergence study on fully turbulent zero-pressure-gradient flat-plates, \(Re_{\mathrm{cell1}}\) has been shown and promises a good assessment of the required wall-normal mesh spacing for aerothermal heating simulations. Given that only after the \(\Delta y_1 = 2\times10^{-3}\) mesh convergence of the Stanton-number along the whole domain was reached (see Figure~\ref{fig:cao-wall-normal-stanton} (a-c)), Figure \ref{fig:cao-acoustic-re} indicates a similar finding, that the \(Re_{\mathrm{cell1}}\) shall be kept around unity, with, in this case, a peak of \(Re_{\mathrm{cell1}}\approx3\) being acceptable. This finding can also be broken down into the different regions of this compression corner case: the attached flat-plate upstream region showed mesh convergence with the \(\Delta y_1 =10^{-2}\) wall-normal mesh already, which, in this region also sees no higher than a \(Re_{\mathrm{cell1}}\approx2\) (see Figure \ref{fig:cao-acoustic-re} \(x/L=0 \mathrm{to} 0.5\)). The study therefore supports that both first-cell height as well as streamwise spacing underly a certain minumim requirement to achive full mesh convergence, with the study indicating that the first-cell height requirement being well suited to be described using the first-cell acoustic Reynolds number.
+
+\begin{figure}[H]
+    \centering
+    % Notation-only regeneration (2026-10-19): R_cell1 -> Re_cell1.
+    % Source: /home/mgnadlinger/Cao_lamZPGFP/validation/plot_first_cell_acoustic_re.py
+    % Wrapper/audit: tmp/notation_figures_20261019/regenerate_cao.py and cao_audit.json.
+    % Numerical CSV unchanged; original manuscript crop and image dimensions retained.
+    % Font update (2026-10-19): 10% larger labels, ticks and legend, same canvas.
+    % Reproducer/data audit: Figures/plot_acoustic_re_fonts.py and Figures/acoustic_re_sources/.
+    % Figure provenance (audited 2026-10-19; original data traced):
+    %   Original script: /home/mgnadlinger/Cao_lamZPGFP/validation/
+    %   plot_first_cell_acoustic_re.py; native figure, CSV and per-case JSON:
+    %   /home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/
+    %   1550_dx_1p5e-1_wall_normal_first_cell_acoustic_re.{png,csv,json}.
+    %   CSV is byte-identical to Figures/acoustic_re_sources/data.csv.
+    %   The native JSON lists all 64 raw firstCellRe.dat snapshots; each is
+    %   present in /home/mgnadlinger/Cao_lamZPGFP/Cao et al/<mesh>/1550_pinf/
+    %   postProcessing/firstCellRe/<iteration>/firstCellRe.dat.
+    %   Meshes: dy1_1e-1_dx1p5e-1, dy1_1e-2_dx1p5e-1,
+    %   dy1_2e-3_dx1p5e-1 and dy1_5e-4_dx1p5e-1; windows 35000--50000
+    %   for the first two, 85000--100000 for the last two. The stored wall
+    %   distance is wall-to-cell-centre. Current notation/font/crop changes
+    %   are documented in the preceding notes and retained source audits.
+    % End figure provenance.
+    \includegraphics[width=0.95\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/05_first_cell_acoustic_re.png}
+    \caption{First-cell acoustic Reynolds number for the wall-normal
+        mesh family at nominal \(\Delta x=0.15\,\mathrm{mm}\), averaged
+        over the same final pseudo-iteration windows as the surface
+        comparison. The distance used is the wall-to-cell-centre distance
+        defined in Eq.~\eqref{eq:cao-first-cell-acoustic-re}.}
+    \label{fig:cao-acoustic-re}
+\end{figure}
+
+\paragraph{Lower-Reynolds-number case and scope of validation.}
+
+The \(760\,\mathrm{Pa}\) case in Figure~\ref{fig:cao-low-re-wall}
+provides a second comparison. Applying the findings of wall-normal and streamwise mesh spacing requirements, the Stanton number and detachment and reattachment points are predictable reasonably well. But the overshoot in the heat-flux at the reattachment point preveils for this case as well.
+
+\begin{figure}[H]
+    \centering
+    % Legend-only replot (2026-10-19): capital Delta y_1 and Delta x.
+    % Reproducer: Figures/plot_cao_low_re_stanton.py;
+    % data/source hashes: Figures/cao_low_re_stanton_provenance.json.
+    % Figure provenance (audited 2026-10-19; current single-panel replot):
+    %   Source script: /home/mgnadlinger/Cao_lamZPGFP/validation/validate_cao.py.
+    %   Exact input CSVs (both SHA-256 hashes rechecked):
+    %     /home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_dy1_1e-3_dx_1p5_wall.csv
+    %     /home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_reference_stanton.csv
+    %   Current raw case: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/
+    %   legacy/dy1_1e-3_dx_1p5/760_pinf/postProcessing/surfaces1/
+    %   <iteration>/walls.vtp; averaging window 35000--50000.
+    %   This plot uses dy1=0.001 mm, dx=1.5 mm, not the finer downstream
+    %   mesh family of the 1550 Pa sensitivity study.
+    %   Digitized reference: /home/mgnadlinger/Cao_lamZPGFP/Digitization/
+    %   Cao_Leading-edge bluntness effects/R0_Stanton_Figure8a.csv.
+    %   Current script: Figures/plot_cao_low_re_stanton.py; source hashes,
+    %   original crop, legend changes and curve/band audit:
+    %   Figures/cao_low_re_stanton_provenance.json.
+    % End figure provenance.
+    \includegraphics[width=0.83\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/05_760_pinf_wall_coefficients.png}
+    \caption{Stanton number of the Low-Reynolds, 
+        \(p_\infty=760\,\mathrm{Pa}\), case. The heat-transfer reference is
+        the sharp-edge R0 two-dimensional base flow in
+        Cao et al.~\citep[Fig.~8(a)]{Cao2021LeadingEdgeBluntness}.
+       }
+    \label{fig:cao-low-re-wall}
+\end{figure}
+
+The two cases support the qualitative prediction of attached laminar
+heating and its redistribution by separation and reattachment. The mesh
+study also identifies the corner interaction and peak heating as the
+remaining sensitive parts of the solution. Agreement in the upstream
+profiles and attached heat-transfer curve therefore complements, but does
+not replace, the separated-flow assessment. These results establish the
+scope of the laminar comparison without assigning a quantitative accuracy
+bound.
+
+% Keep the compression-ramp figures within this section.
+\clearpage

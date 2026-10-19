@@ -1,0 +1,143 @@
+{
+  "original_script": "/home/mgnadlinger/ZPG_FP_overview/STORT/recovery_temperature/plot_stort_recovery.py",
+  "original_workbook": "/home/mgnadlinger/ZPG_FP_overview/STORT/STORT_experiment_data.xlsx",
+  "script_snapshot": "stort_sources/plot_stort_recovery.py",
+  "script_sha256": "b5c81d2827c2d35f27f2d3e5ee4582ad9978f9794a2d940a6ffd7e70f2e4d2a6",
+  "workbook_snapshot": "stort_sources/STORT_experiment_data.xlsx",
+  "workbook_sha256": "c7e000d6523ac17c3f9b97dd939fd5170658f37033e0b40ca4ac6be70528c0a2",
+  "calculation_csv_sha256": "4d256a621c2d454720001061383d7d6cf9645dd73d4dc85afb5ba73e66362b92",
+  "calculation_csv_identical_to_original": true,
+  "matplotlib_version": "3.6.3",
+  "figure_width_mm": 170,
+  "figure_height_mm": 102.86999999999999,
+  "font_size_pt_at_manuscript_width": 10.0,
+  "curves_and_axes_unchanged": true,
+  "visible_text_inside_canvas": [
+    "$T_w=T_r$",
+    "Flight time [s]",
+    "0",
+    "20",
+    "40",
+    "60",
+    "80",
+    "100",
+    "120",
+    "140",
+    "160",
+    "180",
+    "200",
+    "$T_w/T_r$",
+    "0.0",
+    "0.2",
+    "0.4",
+    "0.6",
+    "0.8",
+    "1.0",
+    "1.2",
+    "1.4",
+    "1.6",
+    "Altitude [km]",
+    "0",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "Flight Mach number",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "TS002V  |  $x=40.0$ mm, $\\varphi=0^\\circ$",
+    "TS003V  |  $x=152.1$ mm, $\\varphi=315^\\circ$",
+    "TS004V  |  $x=150.5$ mm, $\\varphi=135^\\circ$",
+    "Altitude [km]",
+    "Flight Mach number"
+  ],
+  "plotted_state": [
+    {
+      "xlim": [
+        0.0,
+        215.0
+      ],
+      "ylim": [
+        0.0,
+        1.65
+      ],
+      "xscale": "linear",
+      "yscale": "linear",
+      "curves": [
+        {
+          "label": "TS002V  |  $x=40.0$ mm, $\\varphi=0^\\circ$",
+          "points": 2512,
+          "sha256": "080c0c48fb731b8a33cf2694bcf19658480e52a377fc0153c4e2654d58d36d75"
+        },
+        {
+          "label": "TS003V  |  $x=152.1$ mm, $\\varphi=315^\\circ$",
+          "points": 2512,
+          "sha256": "4df047fff3e618a0efb1d4e2f0524346e1a8cd5321fc79430f6fefc2002a2248"
+        },
+        {
+          "label": "TS004V  |  $x=150.5$ mm, $\\varphi=135^\\circ$",
+          "points": 2512,
+          "sha256": "5c0fef61f023c1b4a66be538aed17eb9516ee28f63a9a2385438a97a8af7a6f9"
+        },
+        {
+          "label": "_child3",
+          "points": 2,
+          "sha256": "124fc60dac41dc47baad781dd0007eeb48fafe636020e7aba99bb0ab9611bd9b"
+        }
+      ]
+    },
+    {
+      "xlim": [
+        0.0,
+        215.0
+      ],
+      "ylim": [
+        0.0,
+        45.0
+      ],
+      "xscale": "linear",
+      "yscale": "linear",
+      "curves": [
+        {
+          "label": "Altitude [km]",
+          "points": 215,
+          "sha256": "d9745cd6cd50d9461d930d85d4b744554f2066a27b481c84becd6bd3252bdfd5"
+        }
+      ]
+    },
+    {
+      "xlim": [
+        0.0,
+        215.0
+      ],
+      "ylim": [
+        0.0,
+        10.0
+      ],
+      "xscale": "linear",
+      "yscale": "linear",
+      "curves": [
+        {
+          "label": "Flight Mach number",
+          "points": 215,
+          "sha256": "f24a7fccc763c1d8930ee3e06820e17d7787190af0c8205fbc54947dff7cceee"
+        }
+      ]
+    }
+  ],
+  "display_changes": "10 pt labels, ticks, annotation and legend at 170 mm manuscript width; T_r notation retained; layout and line widths adjusted for the smaller physical canvas."
+}

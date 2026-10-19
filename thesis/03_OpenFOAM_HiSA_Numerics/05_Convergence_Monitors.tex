@@ -1,0 +1,64 @@
+\section{Convergence assessment and reproducibility}
+\label{sec:numerical-framework:convergence}
+
+Iterative convergence concerns changes in the solution on a fixed mesh, while
+mesh convergence concerns changes under spatial refinement. Both must be
+assessed before differences from a physical reference can be attributed to
+the flow model.
+
+\subsection{Iterative convergence}
+% Evidence (WSL):
+% /home/mgnadlinger/Zhang_DNS_ZPGFP/kwSST_Prt0p9/M6Tw025/log.hysa
+% /home/mgnadlinger/Zhang_DNS_ZPGFP/kwSST_Prt0p9/M6Tw025/M6Tw025_summary.md
+% Final-window check: 21 records over iterations 14000--15000 from
+% postProcessing/wallHeatFlux_areaAverage/0/surfaceFieldValue.dat and
+% postProcessing/wallShearStress_areaAverage/0/surfaceFieldValue.dat.
+% 100*(max-min)/abs(mean): heat flux 0.0012917%, shear 0.0013894%.
+% Shear operation is magnitude AFTER vector area averaging.
+% GMRES normalization source: modules/hysa/src/solvers/gmres/
+% gmresTemplates.C (normalized sums of absolute equation residuals).
+
+The assessment combines residual histories with the evolution of physical
+outputs. HiSA reports normalized sums of absolute residuals for continuity,
+momentum and total energy. These are inspected together with the
+turbulence-equation residuals. For flat-plates, the monitored physical outputs include the
+wall-averaged heat-flux and the magnitude of the wall-averaged shear vector. It is important to note that besides extrema and averages, it was seen to also be crucial to track the coefficient of variance of the tracked field to assess convergence, as extrema or averages can hide when adjacent cells are still balancing out.
+
+\subsection{Mesh convergence and numerical uncertainty}
+
+The mesh studies use the E\c{c}a--Hoekstra
+procedure~\citep{EcaHoekstra2014NumericalUncertainty}, which fits systematically
+refined solutions by least squares and accommodates scattered or
+non-monotonic refinement data. It shares the extrapolation basis of the
+Grid Convergence Index~\citep{Roache1994GridRefinement} and the procedure of
+Celik et al.~\citep{Celik2008DiscretizationUncertainty}.
+The fit estimates the zero-spacing result \(\phi_0\) and an uncertainty
+\(U_{\mathrm f}\) for the finest-grid result \(\phi_{\mathrm f}\), with a
+safety factor dependent on the observed convergence behaviour.
+\par\medskip
+
+Where an independent reference \(\phi_{\mathrm{ref}}\) is available, the
+signed errors and normalized finest-grid uncertainty are reported as
+\begin{equation}
+    e_j=100\frac{\phi_j-\phi_{\mathrm{ref}}}{\phi_{\mathrm{ref}}},
+    \quad j\in\{\mathrm f,0\},
+    \qquad
+    u_{\mathrm f}=100\frac{U_{\mathrm f}}{|\phi_{\mathrm f}|}.
+    \label{eq:numerical-framework:error-uncertainty}
+\end{equation}
+The uncertainty estimates spatial-discretization effects and presupposes
+that iterative and round-off errors are sufficiently small. It does not
+measure agreement with DNS or account for turbulence-model error.
+The wall-resolved mesh choices are justified in
+Section~\ref{sec:evaluation:mesh-families-yplus}, with the full convergence
+results in Appendix~\ref{app:zpg:mesh-convergence}.
+
+\subsection{Reproducibility}
+
+The \hyperref[chap:data-avail]{Data Availability statement} identifies the
+repository containing the simulation configurations and supporting data.
+The case dictionaries specify the numerical schemes, solution controls,
+physical properties and boundary conditions. The accompanying source
+modifications and processing scripts document how the reported wall loads
+and comparisons are obtained. Case-specific departures from the common
+setup are stated with the corresponding assessment.

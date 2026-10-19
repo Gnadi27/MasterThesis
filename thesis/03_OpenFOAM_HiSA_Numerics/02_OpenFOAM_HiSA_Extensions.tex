@@ -1,0 +1,60 @@
+\section{Extensions and corrections to the framework}
+\label{sec:numerical-framework:extensions}
+
+The framework was extended to support the chosen convective flux,
+reference-consistent molecular transport and additional convergence
+diagnostics. A separate correction addresses the variable-density SA
+formulation. The following descriptions identify the purpose and scope of
+each change. Their source is supplied through the
+\hyperref[chap:data-avail]{Data Availability statement}.
+
+\subsection{HiSA extension with \texorpdfstring{AUSMDV2\(^+\)}{AUSMDV2+}}
+\label{subsec:ext:AUSM}
+% Source provenance (WSL):
+% /home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/modules/hysa/src/finiteVolume/
+% fluxSchemes/ausmDV/ausmDVFluxScheme.{H,C}
+% TypeName("AUSMDV"); AUSMDV2+ blending with locally modified pressure flux.
+
+The in-house HiSA extension provides an AUSMDV2\(^+\)-based flux scheme,
+selected as \texttt{AUSMDV} in the case dictionaries. It blends AUSMD\(^+\)
+and AUSMV\(^+\) contributions following
+Phongthanapanich and Matthujak~\cite{PhongthanapanichMatthujak2021AUSMDV2Plus}.
+The scheme was selected for shock resolution and robustness. The
+stand-off-distance study in
+Section~\ref{sec:numerical-vv:shock-stand-off-carbuncle} assesses this
+implemented variant and documents its remaining carbuncle sensitivity.
+The later boundary layer assessment separately examines the viscous
+transport operations introduced in
+Section~\ref{sec:numerical-framework:discretization}.
+
+\subsection{Additional thermophysical-model combinations}
+\label{subsec:ext:thermo-physical-extension}
+% Source provenance (WSL):
+% /home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/myThermos/myThermos.C
+
+Matching the DNS references requires independent control of the molecular
+viscosity and conductivity laws. The user library \texttt{myThermos}
+registers OpenFOAM's existing polynomial transport model with the ideal-gas
+equation of state, sensible internal energy, and either constant or
+temperature-dependent specific heat. It enables these combinations without
+changing the underlying property models.
+\par\medskip
+
+For the calorically perfect benchmarks, seventh-order polynomials represent
+the prescribed viscosity laws, and proportional conductivity coefficients
+enforce the selected constant molecular Prandtl number. The fits are checked
+over the temperatures encountered in each simulation.
+Section~\ref{sec:evaluation:benchmark-cases} documents the reference laws
+and fit assessment.
+
+\subsection{Density-gradient correction to Spalart--Allmaras}
+\label{subsec:ext:spalart-allmaras-of-correction}
+
+The OpenFOAM v2412 SA implementation places density inside the diffusive
+flux of its transported working variable. For variable density, this
+introduces an additional density-gradient term relative to the
+material-form SA equation~\cite{SpalartAllmaras1994,AJS2012}.
+The custom \texttt{SpalartAllmarasDensityCorrected} model cancels that term
+while retaining the other components of the local implementation.
+Appendix~\ref{app:spalart-allmaras-density} gives the derivation and source
+audit. This correction restores the intended continuum diffusion structure and is subsequently used as the only SA model being assessed in Section~\ref{sec:comparative:zpg:wall-resolved-baselines}.

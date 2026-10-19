@@ -1,0 +1,13 @@
+{
+  "font_scale": 1.1,
+  "axis_label_pt": 14.3,
+  "tick_and_legend_pt": 12.100000000000001,
+  "canvas_pixels": [
+    2274,
+    1065
+  ],
+  "plotted_data_hashes_match_original": true,
+  "data_sha256": "dca2d7eefe13cf1f6e85491263a7de261629eb418b3c9ae80fa20c419bcc741a",
+  "source_script": "/home/mgnadlinger/Cao_lamZPGFP/validation/plot_first_cell_acoustic_re.py",
+  "matplotlib_version": "3.10.6"
+}

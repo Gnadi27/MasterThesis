@@ -1,0 +1,31 @@
+{
+  "purpose": "Exact plotted coordinates retained from the original curated comparison scripts for the two thesis profile figures; display/font changes only.",
+  "source_checks": "Unmodified source scripts rerendered byte-identical pixels to each source PNG. Each previous thesis PNG is pixel-identical to the recorded crop of that source PNG. Each cache holds the exact float64 coordinates of every retained plotted line.",
+  "data_sha256": "92b55150f47145c4d4fac50de6900fa4fdf740604934b0ee997e40bc0bfdee09",
+  "sources_sha256": {
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/Martin_Duan_Part4/Digitizations/ReferenceData.md": "ae8b1d692976ac917b7ed02e2fb54611ec6713347b81b885c38abf8e2ddabe05",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/Martin_Duan_Part4/Digitizations/T-U-Profile__Figure8/LowH_M3.csv": "0a96b23cbff73ddfee2107a14aa6293b7a4eb6f84a37e625fe932a164d37a8f2",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/Martin_Duan_Part4/Digitizations/uVD-y+-Profile__Figure7/LowH_M3.csv": "3087417ffe7ae6dbc7cbb5db8084331ac01c555bb7ab46c170e05d0b491bbe4a",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/Martin_Duan_Part4/SA_Prt0p9/LowH_M3/postProcessing/TM_ZPGFP/20000/profile_Re_delta2.csv": "11d47d2bdc6c2d948541a3c1b1dd17e0712dd94e69afbba1e5056b5913580eaf",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/Martin_Duan_Part4/SA_Prt0p9/LowH_M3/postProcessing/TM_ZPGFP/20000/results.json": "8d3a0aa5bace29e615abd1aac6b54b8d7c46099f226921b775f1fd9d29410958",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/Martin_Duan_Part4/kwSST_Prt0p9/LowH_M3/postProcessing/TM_ZPGFP/15000/profile_Re_delta2.csv": "5dc3100ed5d4e0c43bf445883e3ec7fe17e09ba8928f15b77e80af50295f03cb",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/Martin_Duan_Part4/kwSST_Prt0p9/LowH_M3/postProcessing/TM_ZPGFP/15000/results.json": "f2f4ff7dbbb73ae150f7c29c80d829f83dc2ec444d387e56aacd0e3d88d8cc86",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/compare_dns.py": "7f9045ae3ea82917856b8db53f8e3af7953a06c1649530d552864e0a9c701513",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/dns_comparison_SA/availability.csv": "8c077cf5b374a920f16a92fdb8ffc31e48b925457deb00b6b2e7dc7c120dffe9",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/dns_comparison_kwSST/availability.csv": "bc4559328d8d97c8b8f27501bfe9964f0b977ae83e348e4499733d77335c7ef1",
+    "/home/mgnadlinger/Duan_DNS_ZPGFP/plot_combined_dns_profiles.py": "f0848dbd7718c2cf3cba9867182f9db536d568ea754a1410d7f7e4bf42f554ad",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/References/Data/M6Tw025_Stat.dat": "29b132ba72b726777d7a7ef3fc8e27dfeab6b782553e530e8bb68280d4055be2",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/SA_Prt0p9/M6Tw025/postProcessing/TM_ZPGFP/15000/profile_Re_delta2.csv": "6b8997eb9d6485c374a984c13168bdcb688732c09e39909e40079b058e477e86",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/SA_Prt0p9/M6Tw025/postProcessing/TM_ZPGFP/15000/results.json": "5f1b3b2764f6c18adcbc4257c6f9389ad2777fdee706fc2290f575544404483f",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/compare_dns.py": "720cf3a0cb30376d27eeac8adc1516378c7eb68ca2a630703f35261b2efed5a5",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/dns_comparison_SA/dns_reference_profiles/M6Tw025_boundary_layer.csv": "28ad94b3f039ac6aca4d0b31e796e72e73c4126c6977e0613b0846416d6fbb89",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/dns_comparison_SA/run_manifest.json": "4a812c9e656e5d947eacd3f465cb66563837addd4aa13c076e43b4e1b776f98c",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/dns_comparison_kwSST/dns_reference_profiles/M6Tw025_boundary_layer.csv": "28ad94b3f039ac6aca4d0b31e796e72e73c4126c6977e0613b0846416d6fbb89",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/dns_comparison_kwSST/run_manifest.json": "c471a2a607fe8854cd39202f9584d34dca3865c1ba39cecfe31afd3cc37152e8",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/kwSST_Prt0p9/M6Tw025/postProcessing/TM_ZPGFP/15000/profile_Re_delta2.csv": "a2e02e418663b7d561f9afaf895d8dd4536d278469e951407483c029294640e9",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/kwSST_Prt0p9/M6Tw025/postProcessing/TM_ZPGFP/15000/results.json": "15b98a7322ae901a25ba59ca98a9e55b00a36a4413c2f7e17970664d7b807690",
+    "/home/mgnadlinger/Zhang_DNS_ZPGFP/plot_combined_dns_profiles.py": "925a04f2302dca901bfe925a9932a51602a1611463e54caca42184c390ebba67"
+  },
+  "original_scripts_unchanged": true,
+  "data_refresh": "The cache was captured from the recorded original plotting scripts with output writes intercepted. Source plots were rerendered in the local review directory and checked pixel-by-pixel against the original exports and manuscript crops. Ordinary regeneration needs only the retained JSON cache and matplotlib/numpy; refreshed scientific inputs require repeating these source checks."
+}

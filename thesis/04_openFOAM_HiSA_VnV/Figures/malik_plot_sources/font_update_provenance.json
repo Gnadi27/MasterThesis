@@ -1,0 +1,118 @@
+{
+  "font_family": "DejaVu Sans",
+  "math_font": "DejaVu Sans",
+  "figures": {
+    "ma15_perfect": {
+      "method": "replot from original CSVs and digitized reference arrays",
+      "script": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas/malik_anderson_plot.py",
+      "script_sha256": "8e0a2a4f53e9e22a8e8837e2400dcb1e0ebd29b9b004531922a3d0f6c3548d47",
+      "csvs": [
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas/x0p1.csv",
+          "sha256": "b42f7377bc2c1a24e11e5b8ddcd6a99385abeba9cc3af6c3e189aad0a48e1e43"
+        },
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas/x0p2.csv",
+          "sha256": "91bea61d09013bef23fb2cee4a41e2f46a6f2f98f30279ac1456e367d090f18b"
+        },
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas/x0p4.csv",
+          "sha256": "e008dc65921c518585dea427fad6a4136639b4040359c2a2dece6296cff36e98"
+        },
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas/x0p6.csv",
+          "sha256": "7f801079df20114fa8a0be79f4361f7d88b82f552a684ffec4875d1b03462d7a"
+        },
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas/x0p8.csv",
+          "sha256": "918cf1db5b13a15a515dfa371bd332dda00a0459fe9a7645b240a20b4a368916"
+        }
+      ],
+      "line_sha256": [
+        "453c8d0553a59d8d434717229d78969c7a02c60388660bee5175f5be4b7bb9c3",
+        "2830167d4a2f33e74723962e015d6994d101e1a34046fa6bb1a56ddcb45bb904",
+        "6bd365dadd15961e4025ea287f41d6548bd9b889c04db2720484f3bf469ec075",
+        "a7ae8f9be9c980c2bbbcf3a71ece56d11347cc4334888db14a24cafac9b0b97d",
+        "b7d1449b31f9a342c3ca9f3d353ec8457ba56438025105cdb88ccb2c19d4ff4f",
+        "4dd53a50abf89904ca8df183591c296e489b0cde514a753279c8efaef318cd32",
+        "514c0fb2556fc21605f9300a1cba0afe2dbf49a6128b2ae2131399fb9254d6b3",
+        "ad7c1e0eb353dbd956b94adba9626e3a160b42f34bd82fa9f7ab7c9c979d1e28",
+        "33a2cb7babbe4a26308202543f56e0c81a30da2ed618dd20771c519b9f43b1c7",
+        "37f3c6771db6b1a57ee389183a0a9d2a0934bcd6c5d398e7dffc381d1ed2199c",
+        "88e8d7f4906d0e92390f20dc023dfae141a89f1bf120bb234a5a3faa1bee51a1",
+        "e16570190893fe84f8ff3531844d5f490adab715db5dffb6783e74316329d4c3"
+      ],
+      "matches_previous_render_audit": true,
+      "font_scale": 1.25
+    },
+    "ma15_imperfect": {
+      "method": "replot from original CSVs and digitized reference arrays",
+      "script": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)/malik_anderson_plot.py",
+      "script_sha256": "61a36edec8b67eb7d815328d5cbeafed23bf35ef80fe948965bceeff74921cb7",
+      "csvs": [
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)/x0p1.csv",
+          "sha256": "f781b6658d32f0dc211e0eb7cc0cfe7be351ea0569c7fa668711cd20cba3e47c"
+        },
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)/x0p2.csv",
+          "sha256": "5e8495e4c3b2a4ca9afae7fcbe3d3ce28fb41c71c99c7040d73ed17eec08457a"
+        },
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)/x0p4.csv",
+          "sha256": "e5f0aac9413c47934d550da03da3cf843b6ac676d5ed4df791d998d0b9300680"
+        },
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)/x0p6.csv",
+          "sha256": "4bb66d34cea66c4d21b46d0d7ca1cbb003df02c7c5d330795f8c2579b1fb12fe"
+        },
+        {
+          "path": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)/x0p8.csv",
+          "sha256": "d2012c95f8f0213afd56b07322dff011f166e359be4b9a99548375f150160edf"
+        }
+      ],
+      "line_sha256": [
+        "5a7368c0d11482a3a13a4eb82dbde3aa4ad5bc7bea6769da80c60db1bcf55df8",
+        "3700c5666852d3e512ad1501b6f109c67d11bcdee6f93db73c277203e13c5ff4",
+        "55c34cffafbe5802ba22ce65b4252ac7c8edbd8c1258e2bdf7f39313160fb8bf",
+        "73082a6828a50dcee038ffddfd0497bc53c3efd53a6bbb8a24756bf1bb28371b",
+        "a0e37ff91caa824d8e33d569c331e164e1d5e7b1412d5690d9b2876fc53754bf",
+        "d53c55f98f75318d5bda97756cb4d55af9275315c5c625ea8cc283be0e4243fe",
+        "4ea4fd380c359d42284e70d0e790f994c8cf69c6487988e62dbaab0deaad75dc",
+        "e9eb3d0800afe82f8afc3b1e73d9b5da008ddb07a641f34fbc49ba63e68793e0",
+        "72f8a34deed766228e49c6a7b115a1a78d3d58d55d6dd9454cfb487a5ff9d2e7",
+        "7fc698566bd2b2d85a0f723fc504afa5c9a15f510d6b4b51d9394208d31b5f2e",
+        "35617239d4fc475aa6355bf4e40f726e0d126aa5f8ea8972a9606affc7d6538f",
+        "fdb6646d3b13c023061e06f3921bda13188d8197199c90480852ea483226bd8f"
+      ],
+      "matches_previous_render_audit": true,
+      "font_scale": 1.25
+    },
+    "ma10": {
+      "method": "typography only; retained original curve raster, no recovered numerical data",
+      "original": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/ma10_original.png",
+      "original_sha256": "67edd4759b26fe882ce71cbc2493d7f75658c5ab507ca791e8fa0b0ae4b590c4",
+      "original_data_status": "missing: x0p05m.csv, x0p1m.csv, x0p2m.csv, x0p4m.csv, x0_606m.csv",
+      "legend_background_rectangles_xyxy": [
+        [
+          426,
+          290,
+          630,
+          421
+        ],
+        [
+          1062,
+          32,
+          1265,
+          164
+        ]
+      ],
+      "pixels_outside_legend_rectangles_unchanged": true,
+      "original_panel_pixels": [
+        566,
+        397
+      ],
+      "font_scale_at_manuscript_width": 1.25
+    }
+  }
+}

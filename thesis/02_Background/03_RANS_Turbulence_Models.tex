@@ -1,0 +1,70 @@
+\section{RANS turbulence modelling}
+\label{sec:background:rans-turbulence-modelling}
+
+This section introduces the two RANS turbulence models used in this thesis, \(k\)--\(\omega\) SST and Spalart--Allmaras, and discusses their assumptions, limitations and previous assessments. The discussion focuses on aspects relevant to the present work. A comprehensive account of turbulence modelling and its rich historical development is beyond its scope. For a broader introduction, the reader is referred to David Wilcox's \emph{Turbulence Modeling for CFD}~\cite{wilcox1998turbulence}, which served as a valuable reference throughout this work.
+
+\subsection{Menter's \texorpdfstring{\(k\)--\(\omega\)}{k–omega} SST turbulence model}
+
+The \(k\)--\(\omega\) shear stress transport (SST) model is widely used in engineering RANS simulations. The OpenFOAM implementation follows the formulation of Menter et al.~\cite{menter2001elements}, with updated coefficients from Menter et al.~\cite{menter2003ten}. Its central feature is the blending of the Wilcox \(k\)--\(\omega\) model near the wall with a transformed standard high-Reynolds-number \(k\)-\(\varepsilon\) formulation away from the wall~\cite{menter1994two}.
+\par\medskip
+
+The validation presented in the principal SST development papers~\cite{menter1994two,menter2001elements,menter2003ten} does not include a dedicated supersonic-freestream case. Menter's original study~\cite{menter1994two} includes a transonic hump case, assessed through the surface-pressure distribution. Wilcox states that his \(k\)--\(\omega\) model can predict shock-separated flows across all Mach numbers without compressibility corrections~\cite[p.~128 and Section~5.4.7]{wilcox1998turbulence}. However, the compressible flat-plate comparisons in that discussion assess velocity profiles, leaving heat-transfer accuracy untested by those comparisons.
+\par\medskip
+
+Modifications of SST for compressible flows have since been proposed~\cite{kim2005modified,zeng2024multi,wang2024improved} and warrant further investigation. Nevertheless, SST remains widely used for hypersonic aerothermal predictions. The comparison by Hoste et al.~\cite{hoste2025review} includes NASA and DLR solvers, Ansys Fluent and STAR-CCM+ and highlights the strong reliance on the non-corrected turbulence models for aerothermal heating. Their hypersonic cone--flare results show substantial limitations in heat-transfer prediction, motivating careful assessment of the model for the flows considered here.
+\par\medskip
+
+Unless otherwise stated, the inflow turbulent-to-molecular viscosity ratio is set to\(\frac{\mu_T}{\mu}=0.001\), in accordance with the NASA Wind-US recommendation.\footnote{\url{https://www.grc.nasa.gov/WWW/winddocs/user/keywords/turbulence.html}} Preliminary sensitivity checks for the wall-resolved analysis in Section~\ref{sec:comparative:zpg:wall-resolved-baselines} found no significant changes in predicted heat-flux or boundary layer profiles when the freestream turbulence intensity \(I\) was varied. These checks are not documented in detail here and do not constitute a systematic sensitivity study.
+
+\paragraph*{The Eddy viscosity concept}
+\label{subsec:background:eddy-viscosity}
+
+The \(k\)--\(\omega\) SST model solves two transport equations: one for the turbulent kinetic energy \(k\) and one for the specific dissipation rate \(\omega\). Together, these quantities determine the eddy viscosity. In the basic \(k\)--\(\omega\) formulation, the kinematic eddy viscosity is
+\begin{equation}
+    \nu_T = \frac{k}{\omega}
+          = \sqrt{k}\,l_\nu,
+    \qquad
+    l_\nu = \frac{\sqrt{k}}{\omega}.
+\end{equation}
+Here, \(\sqrt{k}\) is a turbulent velocity scale and \(l_\nu\) the corresponding viscosity length scale. The SST model modifies this relation through a shear-stress limiter.
+\par\medskip
+
+Linear eddy-viscosity models use the Boussinesq hypothesis to relate the anisotropic part of the Reynolds-stress tensor to the mean strain rate through a scalar eddy viscosity. This assumption restricts the normal-stress anisotropy that the model can represent. The limitation is particularly relevant where differences in turbulent normal stresses drive secondary flows, as in three-dimensional corners.
+\par\medskip
+
+It also applies to zero-pressure-gradient flat-plate boundary layers. Under the locally parallel approximation, the Boussinesq hypothesis predicts equal turbulent normal stresses. By contrast, the flat-plate DNS of Zhang et al. used later in this work exhibit unequal normal stresses~\cite[Figure~13(a,c)]{zhang2018direct}. This discrepancy illustrates a limitation in the representation of the Reynolds-stress tensor with its consequences for mean velocity and wall shear must be assessed separately.
+\par\medskip
+
+Frahnert and Dallmann~\cite{frahnert2002examination} question the physical justification of the eddy-viscosity concept and discuss shortcomings of two-equation models even in flat-plate boundary layers. The \(k\)--\(\omega\) formulation likewise relies on modelling assumptions and dimensional reasoning~\cite[Section~4.3.1]{wilcox1998turbulence}. These limitations motivate assessing the resulting profiles and wall quantities directly, as done in Section~\ref{sec:comparative:zpg:wall-resolved-baselines}.
+
+\subsection{Spalart--Allmaras turbulence model}
+
+The Spalart--Allmaras (SA) model is a widely used one-equation linear eddy-viscosity model that transports a modified turbulent kinematic viscosity. Like SST, it uses the Boussinesq hypothesis and is therefore subject to the limitations of the linear eddy-viscosity assumption discussed above.
+\par\medskip
+
+The native OpenFOAM implementation cites Spalart and Allmaras~\cite{SpalartAllmaras1994}. During this work, comparison with the density-conservative formulation given by Allmaras, Johnson and Spalart~\cite{AJS2012} revealed a discrepancy in its diffusion term: placing density inside the diffusive flux introduces an additional density-gradient contribution for variable-density flow. The correction described in Section~\ref{subsec:ext:spalart-allmaras-of-correction} restores the intended continuum diffusion structure. For the investigated ZPG flat-plates, it produced no significant change in heat-flux or boundary layer profiles. Nevertheless, all SA results reported in this thesis use the corrected implementation. The discrepancy and proposed correction were also reported to the OpenFOAM developers.\footnote{\url{https://gitlab.com/openfoam/core/openfoam/-/work_items/3610}}
+
+\subsection{Previous assessments of RANS models for hypersonic boundary layers}
+
+The widespread use of SST and SA has prompted numerous assessments. The following selection provides context for their performance in attached hypersonic boundary layers, with particular attention to the distinction between skin-friction and heat-transfer accuracy. It is not a comprehensive review. Studies using the same ZPG flat-plate benchmarks as this thesis are discussed alongside the present results in Section~\ref{subsec:comparative:zpg:results-assessment}.
+\par\medskip
+
+Bardina et al.~\cite{bardina1997turbulence} assessed turbulence models for ten flows: seven relatively simple free-shear and ZPG boundary layer flows, and three more complex flows involving separation. Their assessment included grid-refinement studies and sensitivity to initial and boundary conditions. SST performed best overall, followed by SA, although the ranking depended on the case. For the Mach-5 adiabatic-wall ZPG flat-plate, SA gave the closest overall agreement with empirical skin-friction and velocity-profile correlations. The unmodified models performed poorly for the compressible mixing layer, while compressibility corrections improved the predictions, but the authors identified a need for further improvement in free-shear flows. They also noted difficulties in recovering flows downstream of reattachment. These findings illustrate the dependence of model performance on the flow and validation quantity. In particular, agreement for an adiabatic flat-plate does not establish heat-transfer accuracy under wall cooling.
+\par\medskip
+
+Roy and Blottner~\cite{roy2001assessment} considered a Mach-8 cold-wall ZPG flat-plate, for which SA and the Menter \(k\)--\(\omega\) model agreed well with the van Driest II skin-friction relation. This comparison tests consistency with an empirical relation and provides no direct assessment of wall heat-flux. In their Mach-20 re-entry comparison at an altitude of \(24.4\,\mathrm{km}\), SA overpredicted the turbulent wall heat-flux by approximately \(15\%\), while the Menter model predicted it to within \(40\%\) of the measurements. However, the flight measurements were taken on the leeward side at an angle of attack of \(0.14^\circ\), whereas the simulations assumed axisymmetric flow at \(0^\circ\). This difference limits how confidently the heating discrepancies can be attributed to turbulence modelling alone.
+\par\medskip
+
+The later review by Roy and Blottner~\cite{roy2006review} covers experimental validation of RANS models for two-dimensional and axisymmetric hypersonic flows within the calorically perfect-gas regime. Its recommended database spans seven geometries, including flat-plates and cylinders. The review considers 18 one- and two-equation models integrated to the wall, with detailed assessments of six extensively studied models. Across the reviewed cases, surface pressure is generally predicted more successfully than heat-transfer. This conclusion includes shock-interaction flows and should not be read as a finding restricted to attached flat-plates.
+
+\paragraph{Van Driest II as an assessment reference}
+% introduction to Van Driest II analytical skin friction and heat flux for zpg flat plates and it's limits on cold-wall cases
+
+Van Driest II theory~\cite{van1956problem} provides a skin-friction reference in some of the turbulence-model assessments discussed in Section~\ref{sec:background:rans-turbulence-modelling}, and in the primary paper of the Li et al. wall-function~\cite{li2025WF}, as discussed in Section~\ref{sec:wall-functions:gao-li}. Combined with a Reynolds analogy, it also provides heat-transfer estimates for flat-plates. However, these estimates have documented limitations under strong wall cooling. Hopkins and Inouye~\cite{hopkins1971evaluation} reported agreement generally within about 10\% for skin-friction and, with specified recovery and Reynolds analogy factors, heat-transfer for the investigated data at \(T_w/T_r>0.3\), but found that the evaluated theories failed to reproduce the data at lower wall-temperature ratios. More recent DNS comparisons likewise reveal deficiencies in van Driest II skin-friction predictions for highly cooled walls~\cite{zhao2025revisiting}. Agreement with these correlations alone therefore does not establish the accuracy of predicted wall shear stress or heat-flux and should be taken cautiously as a sole reference value.
+
+\subsection{Conclusions and implications for this thesis}
+
+The literature and the wall-resolved results in Section~\ref{sec:comparative:zpg:wall-resolved-baselines} show that SA and SST can struggle to predict wall shear and heat-transfer even in attached hypersonic cold-wall boundary layers. The reviewed studies do not establish a single explanation for these deficiencies or a generally accepted correction. Reliable aerothermal prediction therefore requires further assessment and development of the turbulence and thermal closures, even for these geometrically simple flows.
+\par\medskip
+
+For the present wall-function assessment, this means that errors in the underlying RANS field must be considered alongside those introduced by the wall closure and its numerical coupling. The thesis first establishes wall-resolved baselines, then evaluates the wall-function closures on prescribed profiles (Section~\ref{sec:comparative:zpg:cross-comparison}) and examines their coupled CFD behaviour on different meshes (Section~\ref{subsec:comparative:zpg:yplus-sensitivity}). These comparisons distinguish the influences of turbulence modelling, wall-function closure and mesh resolution, while allowing for interactions between them. Together, the results identify a need to improve turbulence models, wall-function closures and the associated mesh design.

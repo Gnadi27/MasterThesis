@@ -1,0 +1,34 @@
+\chapter{Isolation of errors in wall-function predictions}
+\label{chap:comparative-evaluation} 
+
+The motivation for using wall functions is to reduce the near-wall resolution required for aerothermal predictions without sacrificing the accuracy needed for thermal design. As outlined in Chapter~\ref{chap:introduction}, assessing that accuracy requires more than comparing a wall-function CFD result with a reference heat-flux. The result depends on the wall-function closure, the turbulence model supplying its off-wall state, and the discretization of the remaining boundary layer. A discrepancy in any one of these components can obscure the performance of the others.
+\par\medskip
+
+This chapter therefore examines the zero-pressure-gradient (ZPG) flat-plate benchmarks introduced in Chapter~\ref{chap:evaluation-methodology} through successive diagnostic comparisons. Section~\ref{sec:comparative:zpg:wall-resolved-baselines} first establishes the wall-resolved RANS results and distinguishes accuracy in wall shear and heat-transfer from agreement in boundary layer profiles. Section~\ref{sec:comparative:zpg:cross-comparison} then evaluates the wall-function closures on prescribed profiles, removing feedback from the coupled CFD calculation. Section~\ref{subsec:comparative:zpg:yplus-sensitivity} examines the additional sensitivity introduced by conventional wall-function meshes and develops a boundary layer-informed spacing criterion. Finally, Section~\ref{subsec:comparative:zpg:fitted-closure} combines controlled mesh resolution with reference-fitted closures to determine how closely the wall-function calculation can recover its wall-resolved baseline.
+\par\medskip
+
+Figure~\ref{fig:wall_function_error_overview} summarizes this diagnostic sequence and the influences examined at each step. The implemented Li and Griffin wall functions are coupled to Spalart--Allmaras (SA), as described in Sections~\ref{sec:wall-functions:gao-li} and~\ref{sec:wall-functions:griffin}. Their coupled results are consequently compared with the corresponding wall-resolved SA calculation. The wall-resolved assessment additionally includes the widely used \(k\)--\(\omega\) SST model to examine whether the observed limitations are specific to SA. The objective is to identify the dominant discrepancies and their interactions, rather than to assume that the total error can be separated into independent additive contributions.
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (WSL; absolute paths):
+    %   Figure: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/07_Error_Isolation_Results/Figures/07_error_overview.png
+    %   Source artwork: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Final_Maybe_Final.pptx
+    %   Python script: Not applicable: native PowerPoint artwork.
+    %   Data / simulation roots (high-level):
+    %     Not applicable: qualitative synthesis of this chapter; no numerical dataset.
+    %   Note: Conceptual diagram: matching native artwork is on slide 6 of Final_Maybe_Final.pptx (also slide 3
+    %     of Weekly 260910.pptx).
+    %   Note: No separate WSL export is recorded; the figure path above is the retained manuscript screenshot.
+    % End figure provenance.
+    % Replacement (2026-10-19): native LaTeX/TikZ roadmap below; the original
+    % PowerPoint screenshot and its provenance above are retained for context.
+    \input{07_Error_Isolation_Results/Figures/07_error_overview.tex}
+    \caption[Diagnostic sequence for the wall-function error assessment]{Diagnostic sequence for the attached ZPG flat-plate assessment. The comparisons distinguish interacting influences rather than independent additive error contributions. The final, reference-conditioned test assesses recovery of the resolved SA result for LowH\_M3; its discrepancy from DNS remains.}
+    \label{fig:wall_function_error_overview}
+\end{figure}
+
+\input{07_Error_Isolation_Results/01_Reference_Data}
+\input{07_Error_Isolation_Results/02_Wall_Resolved_Turbulence_Model}
+\input{07_Error_Isolation_Results/03_Wall_Function_Closure}
+\input{07_Error_Isolation_Results/04_WF_Mesh_Mesh_Sensitivity}

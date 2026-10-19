@@ -1,0 +1,212 @@
+{
+  "font_family": "DejaVu Sans",
+  "mathtext_fontset": "dejavusans",
+  "font_scale": 1.25,
+  "matplotlib_version": "3.6.3",
+  "records": [
+    {
+      "pressure_Pa": 1550,
+      "source_provenance": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/docs_and_presentations/thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/cao_profile_sources/source_provenance.json",
+      "profile_snapshot_pseudo_iteration": 50000,
+      "line_sha256": [
+        "c989568dc762e789871d149306d6fd23087e00ba4385c7d0cd75f48dfdc16080",
+        "023a3033d1d825c84546a829286b02e228f53bb7f2d6e761e7ede971e1fb725a",
+        "ae2cc60d29de85c7ed46adf5bb27e89a62bdafc75e3f8822473568055af8b86e",
+        "521c91b5225ba7a5a158811fefd021fbb445139b9532b1565a83f65ac08c9be6",
+        "83c53c0c1924e3babb5463aab917d304083ed8385afba76e189e2401a3f92239"
+      ],
+      "matches_original_plotted_values": true,
+      "axes": [
+        {
+          "xlim": [
+            -0.02,
+            1.05
+          ],
+          "ylim": [
+            0.0,
+            18.0
+          ],
+          "xlabel": "$U_x/U_\\infty$",
+          "ylabel": "$\\eta=(y/x)\\sqrt{Re_x}$",
+          "xticks": [
+            -0.2,
+            0.0,
+            0.2,
+            0.4000000000000001,
+            0.6000000000000001,
+            0.8,
+            1.0000000000000002,
+            1.2000000000000002
+          ],
+          "yticks": [
+            0.0,
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0,
+            12.0,
+            14.0,
+            16.0,
+            18.0
+          ]
+        },
+        {
+          "xlim": [
+            0.85,
+            4.1
+          ],
+          "ylim": [
+            0.0,
+            18.0
+          ],
+          "xlabel": "$T/T_\\infty$",
+          "ylabel": "",
+          "xticks": [
+            0.5,
+            1.0,
+            1.5,
+            2.0,
+            2.5,
+            3.0,
+            3.5,
+            4.0,
+            4.5
+          ],
+          "yticks": [
+            0.0,
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0,
+            12.0,
+            14.0,
+            16.0,
+            18.0
+          ]
+        }
+      ],
+      "title_visible": false,
+      "font_scale_at_manuscript_width": 1.25,
+      "output_pixels": [
+        1823,
+        1058
+      ],
+      "text_within_canvas": true,
+      "legends_clear_of_plotted_lines": true,
+      "outputs": [
+        {
+          "path": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/docs_and_presentations/thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/05_1550_pinf_boundary_layer_profiles.png",
+          "sha256": "829c020b205d9b3087c00ed187b4fb3215d3d1429f6cc42e4d21ba8c88e124e0"
+        },
+        {
+          "path": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/docs_and_presentations/thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/05_1550_pinf_boundary_layer_profiles.pdf",
+          "sha256": "4240c6cfdf71562596bc9fe411cac47e057267079e9049a8516d2265c4544d76"
+        }
+      ]
+    },
+    {
+      "pressure_Pa": 760,
+      "source_provenance": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/docs_and_presentations/thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/cao_profile_sources/source_provenance.json",
+      "profile_snapshot_pseudo_iteration": 50000,
+      "line_sha256": [
+        "c07cf5253c4be57c336dee22c05d69c7092abb4bcfeda51be9e63194a93cdfa1",
+        "b739cb7e9751680fac72cef499eb2f60bd0f77f72e1359bb44269a279fc6e082",
+        "ae2cc60d29de85c7ed46adf5bb27e89a62bdafc75e3f8822473568055af8b86e",
+        "e6ed8ccd72affc59b89b624dc0ea2fbdae47450fd79e49c4823c9e8017a36416",
+        "fefd7c6e89638e6ab1b165b4082e13d51ff9f2d8a474acb32fc6f6fca183392d"
+      ],
+      "matches_original_plotted_values": true,
+      "axes": [
+        {
+          "xlim": [
+            -0.02,
+            1.05
+          ],
+          "ylim": [
+            0.0,
+            18.0
+          ],
+          "xlabel": "$U_x/U_\\infty$",
+          "ylabel": "$\\eta=(y/x)\\sqrt{Re_x}$",
+          "xticks": [
+            -0.2,
+            0.0,
+            0.2,
+            0.4000000000000001,
+            0.6000000000000001,
+            0.8,
+            1.0000000000000002,
+            1.2000000000000002
+          ],
+          "yticks": [
+            0.0,
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0,
+            12.0,
+            14.0,
+            16.0,
+            18.0
+          ]
+        },
+        {
+          "xlim": [
+            0.85,
+            4.1
+          ],
+          "ylim": [
+            0.0,
+            18.0
+          ],
+          "xlabel": "$T/T_\\infty$",
+          "ylabel": "",
+          "xticks": [
+            0.5,
+            1.0,
+            1.5,
+            2.0,
+            2.5,
+            3.0,
+            3.5,
+            4.0,
+            4.5
+          ],
+          "yticks": [
+            0.0,
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0,
+            12.0,
+            14.0,
+            16.0,
+            18.0
+          ]
+        }
+      ],
+      "title_visible": true,
+      "font_scale_at_manuscript_width": 1.25,
+      "output_pixels": [
+        1823,
+        1215
+      ],
+      "text_within_canvas": true,
+      "legends_clear_of_plotted_lines": true,
+      "outputs": [
+        {
+          "path": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/docs_and_presentations/thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/05_760_pinf_boundary_layer_profiles.png",
+          "sha256": "c686daf01e8f18960ae0cad7243031ea9e25894b09c840d2716a3af45ecc0e1b"
+        },
+        {
+          "path": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/docs_and_presentations/thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/05_760_pinf_boundary_layer_profiles.pdf",
+          "sha256": "251a9a9cc882e8a9199163252afe0515973805ee37847833c4886aa37b2c0f28"
+        }
+      ]
+    }
+  ]
+}

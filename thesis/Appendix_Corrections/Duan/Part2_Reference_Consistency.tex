@@ -1,0 +1,46 @@
+% Concise source-based adaptation of the Martin--Duan consistency audit.
+\chapter{Reynolds-number inconsistencies in Martin--Duan Part 2}
+\label{app:duan-part2-consistency}
+
+This appendix examines the consistency of the Reynolds numbers reported for the Part~2 database~\cite{duan2010direct_part2}, using the published temperature data.
+
+\section{Reynolds-number inconsistency and matching ambiguity}
+\label{app:duan:reynolds}
+
+The definitions in Part~2, Section~2.1, use the same edge quantities and momentum thickness:
+\begin{equation}
+  Re_\theta=\frac{\rho_\delta u_\delta\theta}{\mu_\delta},
+  \qquad
+  Re_{\delta2}=\frac{\rho_\delta u_\delta\theta}{\mu_w},
+  \qquad
+  \boxed{\frac{Re_\theta}{Re_{\delta2}}=\frac{\mu_w}{\mu_\delta}}.
+  \label{app:duan:eq:ratio}
+\end{equation}
+For M5T1, the printed \(T_w=T_\delta\) therefore requires \(Re_\theta=Re_{\delta2}\) for any temperature-dependent viscosity law. Instead, Table~1 gives \(1279.1/1538.4=0.83145\ne1\), a \(16.86\%\) deficit relative to unity. This is an inconsistency of the printed row, independent of density, velocity, momentum thickness, or the chosen viscosity exponent.
+
+The other cases also fail a common power-law test. Part~2 inherits the power-law viscosity model stated in Part~1~\cite[Section~2]{martin2007direct_Part1}. Writing \(\mu=CT^\omega\), Equation~\eqref{app:duan:eq:ratio} requires \(Re_\theta/Re_{\delta2}=(T_w/T_\delta)^\omega\). The implied exponents \(\omega=\ln(Re_\theta/Re_{\delta2})/\ln(T_w/T_\delta)\) in Table~\ref{app:duan:tab:ratios} have no common intersection even after allowing for rounding of the printed entries.
+
+\begin{table}[H]
+  \centering
+  \caption{Part~2 Table~1 ratio test. Intervals allow half a unit in each last printed digit; endpoints are rounded outward.}
+  \label{app:duan:tab:ratios}
+  \small
+  \begin{tabular}{@{}l
+    S[table-format=1.2]
+    S[table-format=4.1]
+    S[table-format=4.1]
+    S[table-format={[}1.4]@{,\,}S[table-format=1.4{]}]@{}}
+    \toprule
+    Case & {\(T_w/T_\delta\)} & {\(Re_\theta\)} & {\(Re_{\delta2}\)} & \multicolumn{2}{c@{}}{Implied \(\omega\) interval} \\
+    \midrule
+    M5T2 & 1.90 & 2300.2 & 1521.5 & {[}0.6412 & 0.6467{]} \\
+    M5T3 & 2.89 & 3011.6 & 1524.7 & {[}0.6402 & 0.6425{]} \\
+    M5T4 & 3.74 & 3819.3 & 1526.4 & {[}0.6945 & 0.6961{]} \\
+    M5T5 & 5.40 & 4840.5 & 1536.8 & {[}0.6799 & 0.6808{]} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+A separate check illustrates the dimensional ambiguity. Part~1's M5~\cite[Table~2]{martin2007direct_Part1} and Part~2's M5T5~\cite[Table~1]{duan2010direct_part2} have effectively identical printed edge states, while \(\theta\) changes from \(0.657\) to \(0.655\,\mathrm{mm}\). With the same edge viscosity, \(Re_\theta\propto\theta\), giving \(6225(0.655/0.657)=6206.1\), whereas Part~2 prints \(4840.5\), approximately \(22.0\%\) lower. Temporal evolution alone cannot reconcile these columns while preserving the reported edge state and viscosity model.
+
+Accordingly, this thesis retains the published \(Re_{\delta2}\approx1530\) values as the authors' intended matching targets~\cite[Section~2.1]{duan2010direct_part2}. They are nominal reference labels, not independently verified dimensional reconstructions. The tables do not determine unique corrected Reynolds numbers or establish whether the mismatch reflects transport conventions, post-processing, or sampling. For M5T1, the accepted \(T_w=T_\delta\) requires equality of the two Reynolds numbers; additionally retaining \(Re_{\delta2}=1538.4\) would give \(Re_\theta=1538.4\). This is conditional on that matching target, rather than an independent reconstruction of both Reynolds numbers.

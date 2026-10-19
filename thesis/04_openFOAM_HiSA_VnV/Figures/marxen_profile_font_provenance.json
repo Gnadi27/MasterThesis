@@ -1,0 +1,79 @@
+{
+  "font_family": "DejaVu Sans",
+  "font_scale": 1.25,
+  "source_script": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/Files/ValData/DNS/Marxen/plot_marxen_profileinlet.py",
+  "source_script_sha256": "87938a3f6527693bce87ec7bd08cc86cd64a9c88e4a0a605740aab112ddae472",
+  "sources": [
+    {
+      "path": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/Files/ValData/DNS/Marxen/profile_inlet/Run1/x0p25713.csv",
+      "sha256": "16b169270590aae9f46397de389f72c4468908b3c047da417ee1c631c4020b67"
+    },
+    {
+      "path": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/Files/ValData/DNS/Marxen/profile_inlet/Run1/x0p32543.csv",
+      "sha256": "c57e8bfce535f0b239e6c1efe04d31651dead6d5f21002bfd477ac3db792bf53"
+    },
+    {
+      "path": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/Files/ValData/DNS/Marxen/profile_inlet/Run1/x0p40176.csv",
+      "sha256": "327b1de3c74f2917b211ae5a8b8dbb87344ed631b43daac149e8549bf2af867b"
+    },
+    {
+      "path": "/mnt/c/users/michaelgnadlinger/onedrive - hypersonica/hypersonica team - documents/02 technical/03 flight physics/16 theses/2026/01 gnadl/Files/ValData/DNS/Marxen/profile_inlet/Run1/x0p48613.csv",
+      "sha256": "bc733b62b53e993bc0ad83d91a1a5bcee2419401f9ce823c59534372d1ae6921"
+    }
+  ],
+  "lines": [
+    {
+      "label": "OpenFOAM, $x=0.257$ m, $\\sqrt{Re_x}=1600$",
+      "points": 119,
+      "sha256": "85e7228173db0a99af762d1e8259fe0d974923f2de4a7e3e86d5fd60e658adcc"
+    },
+    {
+      "label": "OpenFOAM, $x=0.325$ m, $\\sqrt{Re_x}=1800$",
+      "points": 202,
+      "sha256": "8aa903306b1d8ce745f30d0a463ebf26846352cdc3b12ae8d6697386971654bd"
+    },
+    {
+      "label": "OpenFOAM, $x=0.402$ m, $\\sqrt{Re_x}=2000$",
+      "points": 202,
+      "sha256": "efb8e104456eeb5b50cd066795b73ce87ef97e274a0ebf7f68de66f4129c190d"
+    },
+    {
+      "label": "OpenFOAM, $x=0.486$ m, $\\sqrt{Re_x}=2200$",
+      "points": 119,
+      "sha256": "f957d44e62a5cf9c21a683fa65e6359cb3a554115e6c21b054c12d8d084f34ac"
+    },
+    {
+      "label": "Marxen et al. Fig. 11",
+      "points": 19,
+      "sha256": "1524e2b2852e35f77f5fb21567b9d79e00c882a5d124c5d03a568857aa26be04"
+    },
+    {
+      "label": "OpenFOAM, $x=0.257$ m, $\\sqrt{Re_x}=1600$",
+      "points": 119,
+      "sha256": "2b5403cdbeeabc72b7b15395aa2da2e296273c339484fd918f500c23dce724a4"
+    },
+    {
+      "label": "OpenFOAM, $x=0.325$ m, $\\sqrt{Re_x}=1800$",
+      "points": 202,
+      "sha256": "29d66d0e7f97d4617f2d3d92695b8264045c380c30132700ad5fb363a0963a24"
+    },
+    {
+      "label": "OpenFOAM, $x=0.402$ m, $\\sqrt{Re_x}=2000$",
+      "points": 202,
+      "sha256": "7358c02a806d9a50316147750b0b390e765ce7162a8f4c6962da21439ae23999"
+    },
+    {
+      "label": "OpenFOAM, $x=0.486$ m, $\\sqrt{Re_x}=2200$",
+      "points": 119,
+      "sha256": "62c09ebcb8d49f8028c151573d43b8bbf6661a2c8189ab4267f6be3f4542e8d3"
+    },
+    {
+      "label": "Marxen et al. Fig. 11",
+      "points": 31,
+      "sha256": "ebd130f3bdb8926929224b7aa1aa73c082ba783da6db896c89259654122063e3"
+    }
+  ],
+  "matches_previous_render_audit": true,
+  "normalization": "original source load_and_normalize, unchanged",
+  "text_inside_figure": true
+}

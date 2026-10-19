@@ -1,0 +1,108 @@
+% Resolve the bundled TUM classes for direct pdflatex builds as well as latexmk.
+\makeatletter
+\def\input@path{{tum/}}
+\makeatother
+\documentclass[a4paper,thesis=student,english]{tumbook}
+
+\usepackage{thesis-support}
+\KOMAoptions{listof=totoc}
+% Allow three-digit page numbers in the contents and lists.
+\DeclareTOCStyleEntries[pagenumberwidth=2.5em,rightindent=3.5em]{tocline}
+  {chapter,section,subsection,subsubsection,figure,table}
+
+\setcounter{secnumdepth}{3}
+
+\RedeclareSectionCommand[runin=false,afterskip=.5\baselineskip]{paragraph}
+
+\usepackage{duckuments}
+\usepackage{epigraph}
+\usepackage{lipsum}
+\usepackage{scrhack}
+\usepackage{listings}
+\usepackage{xurl}
+\usepackage{enumitem,needspace}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{gray!10},
+  frame=single,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true
+}
+
+\usepackage{graphicx}
+\usepackage{pdflscape}
+\graphicspath{{./}{tum/}}
+\newcommand{\EigenName}[1]{\textit{#1}}  
+
+% Thesis metadata. Replace the existing title placeholder and draft date
+% with the final title and submission date when ready for submission.
+\title{Assessment of RANS Wall Functions for Predicting Aerothermal Heating in Hypersonic Cold-Wall Flows}
+\author{Michael Roman Gnadlinger}
+\subject{Master's thesis in Aerospace}
+\degree{Master of Science (M.Sc.)}
+\dateSubmitted{\today}
+\examiner{Prof. Dr.-Ing. Christian Stemmer}
+\supervisor{Dr. Friedrich Ulrich}
+\lowertitleback{\copyright\ 2026 Michael Roman Gnadlinger\\All rights reserved.}
+
+\begin{document}
+% Start every paragraph flush with the left text margin.
+\setlength{\parindent}{0pt}
+% Keep natural paragraph and heading spacing on pages with fixed-position
+% figures; do not stretch the intervening white space to fill the page.
+\raggedbottom
+
+\frontmatter
+\maketitle
+
+\chapter{Abstract}
+\input{00_Abstract_Motivation/abstract.tex}
+\addchap{Acknowledgements}
+\input{00_Abstract_Motivation/acknowledgements}
+\addchap{AI Transparency Statement}
+\input{00_Abstract_Motivation/ai_transperancy.tex}
+\addchap{Data Availability Statement}
+\input{00_Abstract_Motivation/data_availablity.tex}
+
+\tableofcontents
+
+\input{00_Abstract_Motivation/nomenclature}
+
+\mainmatter
+\include{01_Introduction/00_Introduction}
+\include{02_Background/00_Background}
+\include{03_OpenFOAM_HiSA_Numerics/00_Numerical_Framework}
+\include{04_OpenFOAM_HiSA_VnV/00_openFoam_HiSA_VnV}
+\include{05_WF_Idea_Implementation/00_Wall_Functions}
+\include{06_Eval_Methodology/00_Evaluation_Methodology}
+\include{07_Error_Isolation_Results/00_Comparative_Evaluation}
+\include{08_Conclusion_Outlook/00_Conclusions_Outlook}
+
+\appendix
+
+\include{Appendix_Corrections/Duan/Part2_Reference_Consistency}
+\include{Appendix_ZPG/01_Wall_Resolved_Mesh_Convergence}
+\include{Appendix_ZPG/02_Wall_Resolved_Profiles}
+\include{Appendix_ZPG/03_A_Priori_Wall_Functions}
+
+\include{Appendix_Corrections/MalikAnderson/Response_to_Cosimo_d1_cancellation}
+\include{Appendix_Corrections/Spalart-Allmaras/spalart_allmaras_density_term_appendix}
+
+\backmatter
+\bibliography{%
+    XXX_Bibliography/00_generally_necessary,%
+    XXX_Bibliography/02_Background,%
+    XXX_Bibliography/03_openFOAM_HiSA_Numerics,%
+    XXX_Bibliography/04_openFOAM_HiSA_VnV,%
+    XXX_Bibliography/06_EvalMethodology,%
+    XXX_Bibliography/Appendix_MalikAnderson,%
+    XXX_Bibliography/Appendix_SpalartAllmaras%
+}
+
+\listoffigures
+
+\listoftables
+
+\end{document}

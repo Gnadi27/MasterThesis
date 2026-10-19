@@ -1,0 +1,460 @@
+\section{Laminar boundary layer profiles}
+\label{sec:numerical-vv:laminar-boundary-layer-profiles}
+
+The zero-pressure-gradient flat-plate cases investigated in this section compare the predicted laminar velocity and temperature profiles with the reference solutions of Malik and
+Anderson~\citep{MalikAnderson1991RealGas} and Marxen et al.~\citep{Marxen2011HighOrder}. The Malik--Anderson cases comprise an adiabatic Mach-10 boundary layer with a calorically perfect air and an isothermal Mach-15 boundary layer with either calorically perfect or
+calorically imperfect air. The "case I" in Marxen et al is a isothermal wall with Mach-10, calorically imperfect gas. The aim is to assess the coupled treatment of viscous momentum transport, heat conduction and temperature-dependent gas properties in OpenFOAM/HiSA. The comparison
+uses profiles at several streamwise stations to examine both their agreement
+with the published solutions and their correct downstream development of the boundary layer.
+
+\paragraph{General case setup.}
+
+All configurations represent two-dimensional flow over a flat, impermeable,
+no-slip wall, with the freestream parallel to the plate and no externally
+imposed streamwise pressure gradient. A single cell in the spanwise direction
+and \texttt{empty} side boundaries reduce the computational problem to two
+dimensions. The mesh is refined from the wall outwards, a downstream spacing sensitivity study exposed no sensitivity. Only the leading edge region was more finely downstream refined. The edge conditions and wall thermal conditions are summarized in Table~\ref{tab:laminar-bl-reference-conditions}, where the subscript \(e\) denotes
+the freestream state used to normalize the profiles. The Mach-10
+Malik--Anderson wall is adiabatic, the remaining cases prescribe a uniform wall temperature as per the respective publication.
+
+% Sources: Malik & Anderson (1991), Figs. 1 and 3; Marxen et al. (2011),
+% Table II and Fig. 11. The Marxen unit Reynolds number is computed from
+% the freestream values used in plot_marxen_profileinlet.py; it is not the
+% reference Reynolds number Re_infinity = 10^4 in the paper's Table II.
+\begin{table}[H]
+    \centering
+    \caption{Reference flow conditions and prescribed wall thermal conditions
+        for the three Malik--Anderson cases and Marxen case I.}
+    \label{tab:laminar-bl-reference-conditions}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}p{0.28\linewidth}>{\centering\arraybackslash}p{0.155\linewidth} >{\centering\arraybackslash}p{0.155\linewidth} >{\centering\arraybackslash}p{0.16\linewidth} >{\centering\arraybackslash}p{0.16\linewidth}@{}}
+        \toprule
+        Quantity & \multicolumn{3}{c}{Malik--Anderson~\citep{MalikAnderson1991RealGas}} & \multicolumn{1}{>{\centering\arraybackslash}p{0.16\linewidth}}{Marxen~\citep{Marxen2011HighOrder}} \\
+        \cmidrule(lr){2-4}
+            & {\shortstack[c]{Mach 10\\perfect gas}}
+            & {\shortstack[c]{Mach 15\\perfect gas}}
+            & {\shortstack[c]{Mach 15\\imperfect gas}}
+            & {Case I} \\
+        \midrule
+        Mach number \(M_e\) & \num{10} & \num{15} & \num{15} & \num{10} \\
+        Edge temperature \(T_e\) [\(\mathrm{K}\)]
+            & \num{350} & \num{700} & \num{700} & \num{278} \\
+        \raggedright Unit Reynolds number \(Re_x/x\) [\(\mathrm{m^{-1}}\)]
+            & \num{6.6e6} & \num{3.4e6} & \num{3.4e6}
+            & \num{9.956e6} \\
+        Thermal wall condition
+            & {Adiabatic} & {Isothermal} & {Isothermal} & {Isothermal} \\
+        Wall temperature \(T_w\) [\(\mathrm{K}\)]
+            & {Computed} & \num{1225} & \num{1225} & \num{1198.18} \\
+        Prescribed ratio \(T_w/T_e\)
+            & {---} & \num{1.75} & \num{1.75} & \num{4.31} \\
+        Caloric model
+            & {Perfect} & {Perfect} & {Imperfect} & {Imperfect} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The Malik--Anderson calculations considered here prescribe a uniform
+freestream at the inlet and allow the boundary layer to develop from the
+plate leading edge. This retains the leading-edge viscous interaction, whose
+influence on the downstream profiles can be assessed against the
+self-similar reference solutions. For the Mach-15 calorically imperfect
+case, the computational domain extends from \(x=0\) to
+\(0.8\,\mathrm{m}\), with a wall-normal height of \(0.05\,\mathrm{m}\)
+and \(1000\times200\) in-plane cells. Its inlet and upper boundary use
+characteristic farfield conditions (Section~\ref{subsec:numerical-framework:hisa}).
+\par\medskip
+
+% Run-specific geometry and BC source:
+% FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)/
+% constant/polyMesh, 0.org/{U,T,p}, and the saved 5000 fields.
+% Do not substitute the later numbered *_x0p1/FritzFortran cases here.
+In the Marxen case, a pre-developed laminar boundary layer profile is
+prescribed at the inlet, following the arrangement described by Marxen
+et al.~\citep[Section II.B]{Marxen2011HighOrder}. The computational domain
+begins at \(x_{\mathrm{in}}=0.116576\,\mathrm{m}\), extends to
+\(x=0.690288\,\mathrm{m}\), and has a wall-normal height of
+\(0.07\,\mathrm{m}\). The mesh contains \(1000\times200\) in-plane cells.
+At the inlet the velocity and temperature is asigned as a pre-developed laminar boundary layer, alongside with uniform pressure \(p_e=4135.6\,\mathrm{Pa}\). Streamwise positions are measured from the nominal virtual leading edge at \(x=0\), so the inlet represents approximately \(0.1166\,\mathrm{m}\) of prior boundary layer development set as the inlet conditions as a non-uniform list.
+\par\medskip
+
+% Sources: DNS/Marxen/profile_inlet/Run1/constant/{polyMesh,C},
+% saved 3000/{U,T,p}, and profile_inlet/create_inlet_imperfect.py.
+% The inlet coordinate is verified from the mesh. Its interpretation as
+% the pre-development length is the nominal setup convention; the original
+% generating settings of the imported Ma10_case_I_rk4.dat are not archived here.
+All cases use an ideal-gas equation of state with fixed composition.
+The calorically perfect cases retain constant heat capacities and
+\(\gamma\simeq1.4\), with temperature-dependent Sutherland viscosity.
+For calorically imperfect cases, \(c_p\) varies with temperature, while the
+specific gas constant remains fixed. Malik--Anderson denote \emph{perfect gas} for thermally and calorically perfect gas models and \emph{imperfect gas} for thermally perfect, i.e. non-reacting, but calorically imperfect gas. Marxen designates Case I as
+\emph{thermally perfect}: it is the non-reacting, calorically imperfect model
+described in Sections III.B.1 and IV.A of the
+paper~\citep{Marxen2011HighOrder}.
+The thermodynamic and molecular-transport models specified in the reference
+papers are summarized separately for each case in
+Table~\ref{tab:laminar-bl-thermal-models}.
+
+% Paper sources: Malik & Anderson, Eq. (15a) and accompanying text (p. 805),
+% Sec. IV.A (p. 810), and Eqs. (56), (58), (59) (pp. 810--811);
+% Marxen et al., Eqs. (19), (22), (32)--(34), Sec. III.B.1 and Table II.
+% This table describes the reference closures, not an independently verified
+% statement that native OpenFOAM Sutherland transport imposes Pr = 0.7.
+\begin{table}[H]
+    \centering
+    \caption{Thermodynamic and molecular-transport models in the reference
+        studies for the four laminar boundary layer cases. Equation numbers
+        refer to the paper cited in the corresponding column heading.}
+    \label{tab:laminar-bl-thermal-models}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{@{}p{0.23\linewidth}p{0.165\linewidth}p{0.165\linewidth}p{0.17\linewidth}p{0.18\linewidth}@{}}
+        \toprule
+        Property or model
+            & \multicolumn{3}{c}{Malik--Anderson~\citep{MalikAnderson1991RealGas}}
+            & Marxen~\citep{Marxen2011HighOrder} \\
+        \cmidrule(lr){2-4}
+            & \shortstack[l]{Mach 10\\perfect gas}
+            & \shortstack[l]{Mach 15\\perfect gas}
+            & \shortstack[l]{Mach 15\\imperfect gas}
+            & Case I \\
+        \midrule
+        \raggedright Specific heat \(c_p(T)\)
+            & {\raggedright Constant}
+            & {\raggedright Constant}
+            & {\raggedright Eggers,\par Eq.~(59)\par}
+            & {\raggedright Eggers-type,\par Eq.~(32)\par} \\
+        \addlinespace
+        \raggedright Dynamic viscosity \(\mu(T)\)
+            & {\raggedright Sutherland,\par Eq.~(56)\par}
+            & {\raggedright Sutherland,\par Eq.~(56)\par}
+            & {\raggedright Sutherland,\par Eq.~(56)\textsuperscript{*}\par}
+            & {\raggedright Sutherland,\par Eq.~(22)\par} \\
+        \addlinespace
+        \raggedright Thermal conductivity \(\kappa(T)\)
+            & {\raggedright Constant-\(Pr\) closure,\par \(\kappa=c_p\mu/0.7\)\par}
+            & {\raggedright Constant-\(Pr\) closure,\par \(\kappa=c_p\mu/0.7\)\par}
+            & {\raggedright Keyes,\par Eq.~(58)\par}
+            & {\raggedright Keyes,\par Eq.~(33)\par} \\
+        \addlinespace
+        \raggedright Molecular Prandtl number \(Pr\)
+            & \(0.7\), constant
+            & \(0.7\), constant
+            & {\raggedright Variable,\par \(Pr=c_p\mu/\kappa\)\par}
+            & {\raggedright Variable,\par \(Pr=c_p\mu/\kappa\)\par} \\
+        \bottomrule
+    \end{tabular}
+    \par\smallskip
+    {\footnotesize\raggedright \textsuperscript{*}The Sutherland viscosity constant \(d_1\) for the Malik--Anderson Mach-15 imperfect-gas case may contain a typographical error (see Appendix~\ref{app:malik-anderson-sutherland}).\par}
+\end{table}
+
+In the calorically imperfect simulations the heat-capacity \(c_p(T)\), viscosity \(\mu(T)\) and thermal conductivity \(\kappa(T)\) were described using polynomials fitted to the analytical property laws listed in Table~\ref{tab:laminar-bl-thermal-models}, utilizing the extension to OpenFOAM's thermophysical model structure described in
+Section~\ref{subsec:thermophysical-properties-OF}.
+
+\paragraph{Extraction and normalization.}
+
+For the profile comparisons, the dimensional wall distance \(y\) is scaled
+with the local boundary layer length $L_r = \sqrt{1/Re_x}$ into the nondimensional
+\begin{equation}
+    Y=\frac{y}{L_r(x)},
+    \qquad
+    L_r(x)=\sqrt{\frac{\nu_e x}{U_e}},
+    \qquad
+    Re_x=\frac{U_e x}{\nu_e},
+    \label{eq:laminar-bl-similarity-coordinate}
+\end{equation}
+where \(\nu_e=\mu_e/\rho_e\). Velocity and temperature are normalized by
+\(U_e\) and \(T_e\), respectively. This normalization follows
+Malik--Anderson definition and allows the self-similar boundary layers to collapse onto the same
+velocity and temperature curves independant of the streamwise sampling stations. Departures
+from this collapse reveal changes in profile shape beyond the expected
+\(\sqrt{x}\) growth of the layer.
+
+\clearpage
+\subsection{Malik--Anderson cases}
+\label{subsec:laminar-bl-malik-anderson}
+
+In the follwing, first, the implication and quantification are discussed of the viscous interaction of the leading edge shock that the CFD is resolving, because no inlet profile is being prescribed. Then the results of the three Malik--Anderson cases are discussed in the following order: calorically perfect Mach-10, calorically perfect Mach-15, calorically imperfect Mach-15.
+
+\paragraph{Leading-edge shock and viscous interaction.}
+The uniform-inlet calculations of the Malik--Anderson case, in contrast to the Marxen cases which are setup with an inlet profile, include the development of the boundary layer
+from the plate leading edge. The displacement of the boundary layer this leading edge turns and compresses the external flow, producing a leading-edge shock and a streamwise variation in
+pressure. This pressure field in turn affects the boundary layer development,
+even though the plate itself imposes no turning angle. Such viscous--inviscid
+interaction is a physical difference between the present fulldomain CFD and a zero-pressure-gradient similarity solution
+\citep{Bertram1966ViscousInteraction}.
+\par\medskip
+
+For more information on this effect of vicsous interaction and shocks on leading edges of flat-plates the reader is referred to Chapter 7 in Anderson's \textit{Hypersonic and high temperature gas dynamics} \cite{anderson1989hypersonic}. In there Anderson also introduces the parameter \(\bar{\chi}\) that governs laminar viscous interaction and is defined as
+\begin{equation}
+    \bar{\chi}(x)=\frac{M_e^3}{\sqrt{Re_x}}\sqrt{C},
+    \qquad
+    C=\frac{\rho_w\mu_w}{\rho_e\mu_e},
+    \label{eq:laminar-bl-interaction-parameter}
+\end{equation}
+where for an adiabatic-wall, zero-pressure-gradient flat-plate \(C=0\). For a non-adiabatic-wall zero-pressure-gradient flat-plate this is not the case, but for all zero-pressure-gradient flat-plates edge quantities can be estimated with the nominal freestream quantities as reported in Table~\ref{tab:laminar-bl-reference-conditions}. For the Mach-10 stations, \(\bar{\chi}\) falls from \(1.74\) at \(x=0.050\,\mathrm{m}\) to \(0.50\) at \(x=0.606\,\mathrm{m}\). For both Mach-15 cases it falls from \(5.79\) at \(x=0.100\,\mathrm{m}\)
+to \(2.05\) at \(x=0.800\,\mathrm{m}\). The slow \(x^{-1/2}\) decay and strong Mach-number dependence explain why the leading-edge influence can remain relevant futher downstream, particularly for the Mach-15 cases, and thus why the boundary layer profiles close to the leading edge may not perfectly collpse to their self-similiarity profile. Hence, for each plotted boundary layer profile extracted from the CFD results, the associated \(\bar{\chi}(x)\) is provided with it, alongside the physical station.
+
+\paragraph{Calorically perfect gas.}
+Figure~\ref{fig:laminar-bl-malik-ma10-perfect} shows the adiabatic Mach-10
+case. The velocity and temperature profiles approach the reference with further downstream sampling, to a good degree. The adiabatic wall temperature is ever so slightly
+underpredicted, with \(T_w/T_e\) approximately \(17\) compared to the references \(\approx 17.4\). Thus the principal profile shapes are reproduced by the CFD simulation.
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (Windows-hosted files; absolute paths via WSL):
+    %   Figure:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma10_perfGas_lamBL_profiles.png
+    %   Python script (current typography-only export, ma10()):
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_malik_profiles.py
+    %   Data / simulation archive:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/MalikAnderson_FirstShenanigans.7z
+    %   Archive member root: MnA_ZPGFP_Ma10_coarse/Run3/
+    %   Station CSVs in that member root:
+    %     x0p05m.csv, x0p1m.csv, x0p2m.csv, x0p4m.csv, x0p606m.csv
+    %     (x = 0.050, 0.100, 0.200, 0.400, 0.606 m; 102 rows per CSV).
+    %   Normalization: U_e = 3750.74 m/s, T_e = 350 K,
+    %     Re_unit = 6.6e6 1/m; Y = Points_2 / sqrt(x / Re_unit).
+    %   Related archived Python script: MnA_ZPGFP_Ma10_coarse/Run3/plot_profile_x606.py
+    %     contains digitized Malik--Anderson Fig. 1 reference arrays and plots one
+    %     profile only; the original five-station collapse script was not located.
+    %   Raw simulation fields and mesh are also retained in the archive, including
+    %     MnA_ZPGFP_Ma10_coarse/Run3/4000/{T,U} and constant/polyMesh/.
+    %   Retained original curve raster:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/ma10_original.png
+    %   Note: The five station CSVs were recovered from the archive on 2026-10-19;
+    %     their stations and normalized profiles were checked against this raster.
+    %     The current manuscript export still uses the raster with re-typeset
+    %     labels/legends and approximately 25% larger fonts; it has not been
+    %     replotted from the recovered CSVs. The earlier missing-data status in
+    %     the export audit describes the state before archive recovery:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/font_update_provenance.json
+    %   Note: OLDMalikAnderson/Ma10/perfectGas/ contains different stations
+    %     (0.1, 0.2, 0.4, 0.6, 0.8 m) and is not the data source for this figure.
+    % End figure provenance.
+    % Provenance audit 2026-10-19: the archive listing independently confirms all
+    % five CSV members above, plot_profile_x606.py, 4000/{T,U} and the mesh.
+    % CSV member CRC32 values in station order: 82B5BAE6, D1AAFCC7, 98E6E4CF,
+    % AD8D681B, E9F97F6C. This audit listed the archive without re-extracting it.
+    % The retained ma10_original.png SHA-256 matches font_update_provenance.json.
+    % The original five-station plotting script remains unlocated; plot_collapse.py
+    % in ValData/Tunel/00 LamZPGFP/ contains Mach-15 constants and reference arrays
+    % and cannot establish the original Mach-10 rendering settings.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma10_perfGas_lamBL_profiles.png}
+    \caption[Malik--Anderson Mach-10 perfect-gas boundary layer profiles]{%
+        Velocity and temperature profiles for the adiabatic Mach-10
+        perfect-gas case. Coloured curves show successive OpenFOAM/HiSA extracted
+        stations; symbols denote the digitized reference from
+        Malik and Anderson~\citep[Fig.~1]{MalikAnderson1991RealGas}.
+        Each station uses its local similarity length \(L_r(x)\) (see Eq.~\eqref{eq:laminar-bl-similarity-coordinate}) for normalization. Each profile is named by it's physical downstream extraction station \(x\) alongside it's viscous interaction parameter \(\bar{\chi}\) (see Eq.~\eqref{eq:laminar-bl-interaction-parameter}). The downstream stations approach the reference as the estimated interaction parameter decreases.}
+    \label{fig:laminar-bl-malik-ma10-perfect}
+\end{figure}
+
+The isothermal Mach-15 perfect-gas case in
+Figure~\ref{fig:laminar-bl-malik-ma15-perfect} exhibits a qualititively good agreement to the reference. The imposed cold-wall produces an interior temperature maximum, which is captured at approximately \(T/T_e=10\) and \(Y=7\). The profile similarity also improves with the weakening leading-edge interaction \(\bar{\chi}\).
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (Windows-hosted files; absolute paths via WSL):
+    %   Figure:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma15_perfGas_lamBL_profiles.png
+    %   Python scripts:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas/malik_anderson_plot.py
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_malik_profiles.py
+    %   Data / simulation root:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas
+    %   Station CSVs in that root: x0p1.csv, x0p2.csv, x0p4.csv, x0p6.csv, x0p8.csv
+    %     (x = 0.1, 0.2, 0.4, 0.6, 0.8 m; 102 rows per CSV).
+    %   Reference data: digitized Malik--Anderson Fig. 3 arrays embedded in
+    %     malik_anderson_plot.py; its load_and_normalize() supplies the original
+    %     normalization. Saved raw simulation fields are retained in 5000/.
+    %   Note: The manuscript export uses plot_malik_profiles.py to read these CSVs
+    %     through the original reader, with DejaVu Sans and 25% larger fonts.
+    %     All five input CSVs and the original Python script match the SHA-256
+    %     checksums in the export audit; plotted-value hashes match the preceding
+    %     export. Audit:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/font_update_provenance.json
+    % End figure provenance.
+    % Provenance audit 2026-10-19: all five CSVs and the original plotting script
+    % were found at the paths above and their SHA-256 values independently
+    % match font_update_provenance.json; the saved 5000/ fields are accessible.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma15_perfGas_lamBL_profiles.png}
+    \caption[Malik--Anderson Mach-15 perfect-gas boundary layer profiles]{%
+        Velocity and temperature profiles for the isothermal Mach-15
+        perfect-gas case, compared with the digitized profiles from
+        Malik and Anderson~\citep[Fig.~3]{MalikAnderson1991RealGas}. Coloured curves show successive OpenFOAM/HiSA extracted
+        stations; symbols denote the digitized reference from
+        Malik and Anderson~\citep[Fig.~1]{MalikAnderson1991RealGas}.
+        Each station uses its local similarity length \(L_r(x)\) (see Eq.~\eqref{eq:laminar-bl-similarity-coordinate}) for normalization. Each profile is named by it's physical downstream extraction station \(x\) alongside it's viscous interaction parameter \(\bar{\chi}\) (see Eq.~\eqref{eq:laminar-bl-interaction-parameter}).
+        The downstream stations approach the reference as the estimated interaction parameter decreases.}
+    \label{fig:laminar-bl-malik-ma15-perfect}
+\end{figure}
+
+% Keep both perfect-gas figures ahead of the imperfect-gas discussion.
+\clearpage
+\paragraph{Calorically imperfect gas and reference uncertainty.}
+For the Mach-15 imperfect-gas case
+(Figure~\ref{fig:laminar-bl-malik-ma15-imperfect}), the reduced temperature
+maximum relative to the perfect-gas case is recovered qualitatively.
+However, the predicted peak is approximately \(T/T_e=8.4\), compared with
+about \(9.0\) in the reference, and the outer velocity and temperature
+profiles are broader in \(Y\). This discrepancy persists downstream, although the viscous interaction even at the most downstream station \(x=0.8\mathrm{m}\) is still substantial at \(\bar{\chi}=2.05\), where Anderson describes \(\bar{\chi}\ge3\) as strong interaction \cite[p. 388]{anderson1989hypersonic}. But this was a non-issue for the Mach-15 perfect-gas cases. A reduction in
+\(\bar{\chi}\) alone therefore does not explain the observed differences. Rather the remaining temperature-peak and profile-shape discrepancies must be interpreted alongside the transport-coefficient uncertainty and potential under-convergence of the reference examined in Appendix~\ref{app:malik-anderson-sutherland}. Hence in the following another hypersonic, calorically imperfect laminar boundary layer case is investigated, with the Marxen Case I.
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (Windows-hosted files; absolute paths via WSL):
+    %   Figure:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma15_imperfGas_lamBL_profiles.png
+    %   Python scripts:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)/malik_anderson_plot.py
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_malik_profiles.py
+    %   Data / simulation root:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)
+    %   Station CSVs in that root: x0p1.csv, x0p2.csv, x0p4.csv, x0p6.csv, x0p8.csv
+    %     (x = 0.1, 0.2, 0.4, 0.6, 0.8 m; 102 rows per CSV).
+    %   Reference data: digitized Malik--Anderson Fig. 3 arrays embedded in
+    %     malik_anderson_plot.py; its load_and_normalize() supplies the original
+    %     normalization. Saved raw simulation fields are retained in 5000/.
+    %   Note: The manuscript export uses plot_malik_profiles.py to read these CSVs
+    %     through the original reader, with DejaVu Sans and 25% larger fonts.
+    %     All five input CSVs and the original Python script match the SHA-256
+    %     checksums in the export audit; plotted-value hashes match the preceding
+    %     export. Audit:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/font_update_provenance.json
+    % End figure provenance.
+    % Provenance audit 2026-10-19: all five CSVs and the original plotting script
+    % were found at the paths above and their SHA-256 values independently
+    % match font_update_provenance.json; the saved 5000/ fields are accessible.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma15_imperfGas_lamBL_profiles.png}
+    \caption[Malik--Anderson Mach-15 imperfect-gas boundary layer profiles]{%
+        Velocity and temperature profiles for the isothermal Mach-15
+        calorically imperfect case. The reference is digitized from
+        Malik and Anderson~\citep[Fig.~3]{MalikAnderson1991RealGas}.
+        The remaining temperature-peak and profile-shape discrepancies
+        must be interpreted alongside the transport-coefficient uncertainty and potential under-convergence of the reference examined in Appendix~\ref{app:malik-anderson-sutherland}.}
+    \label{fig:laminar-bl-malik-ma15-imperfect}
+\end{figure}
+
+\clearpage
+\subsection{Marxen case}
+\label{subsec:laminar-bl-marxen}
+
+The uncertainty associated with the former investigated Malik--Anderson Mach-15 imperfect-gas reference makes an additional benchmark necessary to assess the temperature-dependent
+thermophysical implementation. Marxen Case I was selected for this purpose:
+it also combines temperature-dependent heat capacity, Sutherland viscosity
+and Keyes conductivity, with the viscosity coefficients explicitly
+specified in Eq.~(22) of the paper~\citep{Marxen2011HighOrder}.
+It therefore provides a separate reference unaffected by the disputed
+Malik--Anderson coefficient and convergence discussed in
+Appendix~\ref{app:malik-anderson-sutherland}. Prescribing a developed
+inlet profile also allows the downstream laminar development to be assessed
+without including the plate's leading edge shock in the computational domain.
+
+\paragraph{Inlet-profile comparison.}
+Figure~\ref{fig:laminar-bl-marxen-inlet} compares the Fortran similarity
+solution used to construct the inlet profile for the CFD simulation with the digitized profiles in
+Fig.~11 of Marxen et al.~\citep{Marxen2011HighOrder}. The velocity closely
+follows the reference symbols. The temperature distribution reproduces the
+wall value, the interior maximum near \(Y=5\), and the return to the
+freestream temperature, with a small overprediction of the peak.
+This comparison checks the profile supplied to the inlet of \(x=0.1166\,\mathrm{m}\) is accurate, leaving the subsequent downstream development to the CFD simulation.
+
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; Windows-hosted source copy and WSL original):
+    %   Included figure: 04_Marxen_inlet_profile.png in this Figures directory.
+    %   Original export:
+    %     /home/mgnadlinger/fortran_BL/Marxen/marxen_fig11_overlay.png
+    %   Windows retained copy:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/profile_inlet/marxen_fig11_overlay.png
+    %   Processing verified by pixel comparison: the included 1260 x 765 RGBA
+    %     image is exactly original.crop((0, 75, 1260, 840)); only the title strip
+    %     was removed. The two retained originals have matching SHA-256:
+    %     5c2a19b03c2af47f4476e88625cb9d5cedd5fc23d256caa933072f7cb020feb9.
+    %   Underlying Fortran similarity table:
+    %     /home/mgnadlinger/fortran_BL/Marxen/Ma10_case_I_rk4.dat
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/profile_inlet/Ma10_case_I_rk4.dat
+    %     (identical SHA-256 ccd7d76ad54f60241d85c6b37b288162a531399d2cc195fd28c4d3d4049578b9).
+    %   Related Fortran sources in the WSL directory:
+    %     Ma10_varprops_rk4.f and chris_Ma10_varprops_newnumerics.f both write
+    %     Ma10_case_I_rk4.dat; the precise source revision/run settings that
+    %     produced the retained table are not recorded by the table itself.
+    %   Reference symbols: Marxen et al. Fig. 11; digitized arrays are retained in
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/plot_marxen_profileinlet.py
+    %     (ref_eta_u/ref_u and ref_eta_t/ref_t; also used in the downstream figure).
+    %   The original two-axis overlay plotting script was not located in the
+    %     accessible WSL/Marxen or ValData/Marxen sources. The downstream plotting
+    %     scripts do not generate this inlet comparison. No figure was regenerated.
+    % End figure provenance.
+    \includegraphics[width=0.8\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/04_Marxen_inlet_profile.png}
+    \caption[Similarity solution used for the Marxen inlet profile]{%
+        Similarity solution used to construct the Marxen Case-I inlet.
+        Solid curves denote the Fortran solution obtained with fourth-order
+        Runge--Kutta integration; symbols denote digitized data from
+        Marxen et al.~\citep[Fig.~11]{Marxen2011HighOrder}.
+        Velocity and temperature use the left and right ordinates,
+        respectively. The abscissa retains the paper's nondimensional
+        notation and corresponds to the scaled wall distance \(Y\) in
+        Eq.~\eqref{eq:laminar-bl-similarity-coordinate}.}
+    \label{fig:laminar-bl-marxen-inlet}
+\end{figure}
+
+\paragraph{Downstream profiles.}
+Figure~\ref{fig:laminar-bl-marxen-downstream} shows the boundary layer profiles at the four extracted downstream stations of \(x=0.257\), \(0.325\), \(0.402\) and \(0.486\,\mathrm{m}\).
+They correspond, to the plotted precision, to \(\sqrt{Re_x}=1600\), \(1800\), \(2000\) and \(2200\).
+The stations thus have equal increments in \(\sqrt{Re_x}\), following
+the streamwise scaling used by Marxen et al. \citep[Section II.B]{Marxen2011HighOrder}; this explains their non-round dimensional positions and increasing physical spacing. Here \(Re_x\)
+has the conventional definition in Eq.~\eqref{eq:laminar-bl-similarity-coordinate}. The positions are measured from the nominal virtual origin and include the inlet's approximately
+\(0.1166\,\mathrm{m}\) of prior development, rather than representing
+distances travelled since entering the mesh.
+\par\medskip
+
+The four velocity and temperature profiles collapse closely to the reference.
+The temperature maximum is approximately \(T/T_e=6.3\) and remains ever so slightly above the reference, as already seen in the inlet comparison. There is little additional streamwise spread
+over the sampled interval. These results support the consistent downstream
+development of the prescribed laminar profile with temperature-dependent
+properties. Since the reference comparisons use digitized curves and the
+inlet already approximates that reference, the evidence concerns profile
+preservation and development under the stated setup.
+
+% Typography update: Figures/plot_marxen_profiles.py, DejaVu Sans, fonts +25%.
+% Original data/normalization: ValData/DNS/Marxen/plot_marxen_profileinlet.py
+% and profile_inlet/Run1/{x0p25713,x0p32543,x0p40176,x0p48613}.csv.
+% All plotted-value hashes match the preceding export; see
+% Figures/marxen_profile_font_provenance.json.
+\begin{figure}[H]
+    \centering
+    % Figure provenance (audited 2026-10-19; Windows-hosted files):
+    %   Included figure: 04_Marxen_lamBL_profiles.png in this Figures directory.
+    %   Current typography export script:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_marxen_profiles.py
+    %   Original scientific plotting script and digitized Marxen Fig. 11 arrays:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/plot_marxen_profileinlet.py
+    %   Data / simulation root:
+    %     /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/profile_inlet/Run1
+    %   Inputs relative to that root:
+    %     x0p25713.csv, x0p32543.csv, x0p40176.csv, x0p48613.csv.
+    %   Normalization: the original load_and_normalize() uses Points_2 for wall
+    %     distance and Points_0 for station x, with U_e = 3342.16 m/s, T_e = 278 K,
+    %     mu_e = 1.73998e-5 Pa s and rho_e = 0.0518337 kg/m^3.
+    %   Raw fields / mesh: 3000/{U,T,p}, constant/{C,polyMesh} in the Run1 root.
+    %   Processing: the included PNG and sibling PDF use the current typography
+    %     script (DejaVu Sans, fonts +25%); they are not copies of the old raster.
+    %   Audit: marxen_profile_font_provenance.json in this Figures directory
+    %     records plotted-value hashes and preceding-export agreement. The four
+    %     CSV hashes and source-script hash were independently rechecked and match.
+    % End figure provenance.
+    \includegraphics[width=\linewidth]{04_OpenFOAM_HiSA_VnV/Figures/04_Marxen_lamBL_profiles.png}
+    \caption[Downstream laminar boundary layer profiles for Marxen case I]{%
+        OpenFOAM/HiSA velocity and temperature profiles downstream of the
+        prescribed inlet, compared with Marxen
+        et al.~\citep[Fig.~11]{Marxen2011HighOrder}.
+        The four stations are ordered by increasing \(x\), with
+        \(\sqrt{Re_x}\) included in the legends. The ordinate labelled
+        \(\eta=y/L_r(x)\) in this plot is the coordinate denoted by
+        \(Y\) in Eq.~\eqref{eq:laminar-bl-similarity-coordinate}.}
+    \label{fig:laminar-bl-marxen-downstream}
+\end{figure}

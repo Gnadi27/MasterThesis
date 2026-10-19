@@ -1,0 +1,1349 @@
+{
+  "audit_date": "2026-10-19",
+  "scope": "Data traceability for numerical plots. Per the user clarification, artwork, mesh illustrations, screenshots, rendering settings and original artwork exports are excluded as completion requirements. Their already collected notes are retained for context.",
+  "roots": {
+    "workspace": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex",
+    "valdata_windows_hosted_wsl_mount": "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData",
+    "wsl_home": "/home/mgnadlinger",
+    "wsl_home_windows_unc": "\\\\wsl.localhost\\Ubuntu\\home\\mgnadlinger"
+  },
+  "path_conventions": {
+    "ValData": "The absolute Windows-hosted ValData root above.",
+    "Figures": "The chapter Figures directory, unless a note explicitly says otherwise.",
+    "tmp": "Relative to the thesis workspace root.",
+    "archive_members": "Paths inside the named archive; archive listing does not imply uncompressed files are present outside it."
+  },
+  "summary": {
+    "active_figure_environments": 37,
+    "included_graphics": 42,
+    "unused_top_level_graphics": 27,
+    "retained_source_rasters": 1,
+    "total_png_pdf_assets": 70,
+    "included_graphics_in_data_scope": 30,
+    "unused_graphics_in_data_scope": 26,
+    "plotted_datasets_with_untraced_sources": 0
+  },
+  "validation": {
+    "all_included_graphics_have_adjacent_provenance_comments": true,
+    "manuscript_noncomment_content_unchanged": true,
+    "tex_line_endings_preserved": true,
+    "all_existing_png_pdf_assets_byte_unchanged": true,
+    "thesis_rebuild": "Not run: manuscript changes consist solely of LaTeX comments.",
+    "git_diff_whitespace_check_passed": true
+  },
+  "active_figures": [
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock.tex",
+      "figure_line": 102,
+      "labels": [
+        "fig:mesh-coarse-3000-15-deg-wedge"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_mesh_coarse_3000_wedge_15.png",
+          "include_line": 115,
+          "sha256": "2609f76c1e04c1a400ac990e48113a677ef2acf82c9d14468ed5a6b286f849c7",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; Windows-hosted paths):\nRetained figure: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/02_mesh_coarse_3000_wedge_15.png\nUnderlying ANSA mesh: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/00 mesh/wedge_15deg_3k.ansa\nExported OpenFOAM mesh: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/00 mesh/wedge_15deg_3k/constant/polyMesh\nCorresponding Euler case: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/Ma10_15deg_3k\nRelated editable artwork: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Wedge_Shock.pptx (slide 1; ppt/media/image1.png).\nMatch: the presentation contains the same 3k mesh/domain and boundary annotations,\nbut an older screenshot and different wording; it is not the exact retained export.\nGap: the final annotated-image export/editing source was not located; no plotting script\nwas found for this mesh illustration. The ANSA and OpenFOAM mesh sources are retained.\nEnd figure provenance.",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "ANSA/OpenFOAM mesh found; related presentation differs from final annotated artwork."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock.tex",
+      "figure_line": 127,
+      "labels": [
+        "fig:shock-extraction-example"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_Ma4_15deg_example_pressure_map.png",
+          "include_line": 139,
+          "sha256": "c531270e5e20143af5996befca34d41db82834e1a2eb6d3b6ea3ca108ecdb778",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; Windows-hosted paths):\nOriginal export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/pressure_map.png\nPython script: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/plot_pressure_field.py\nNative field: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/2500/p\nNative mesh: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/constant/polyMesh\nColour-map state: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/shock_detection.pvsm\nRecorded source hashes: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/pressure_map_provenance.json\nMatch: byte-identical PNG (SHA-256 c531270e5e20143af5996befca34d41db82834e1a2eb6d3b6ea3ca108ecdb778).\nNative pressure SHA-256 also matches the retained provenance record (iteration 2500).\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        },
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_Ma4_15deg_example_shock_fit_script.png",
+          "include_line": 152,
+          "sha256": "e3dfbc8b33e713cfaee45ca0ce1f8e719dbc41c3716d6d30fda6139c94d61268",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; Windows-hosted paths):\nOriginal export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/shock_fit.png\nPython script: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/postprocess_wedge_shock_csv_prfG.py\nInput point-field export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/Ma4_15deg.csv\nDiagnostics: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k/shock_diagnostics.txt\nNative fields/mesh: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/15deg/Ma4_15deg_48k\nRetained ParaView extraction state: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/shock_detection.pvsm\nMatch: byte-identical PNG (SHA-256 e3dfbc8b33e713cfaee45ca0ce1f8e719dbc41c3716d6d30fda6139c94d61268).\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock.tex",
+      "figure_line": 209,
+      "labels": [
+        "fig:04_02_shock_mesh convergence"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_euler_shock_mesh_conv.png",
+          "include_line": 222,
+          "sha256": "f6f2f64a337408fd86d6c67c2bf865d2c5b0822a06cd36ed5a768290ca7b379f",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; Windows-hosted paths):\nOriginal export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/euler_shock_mesh_conv.png\nPython script: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/plot_wedge_convergence.py\nPlot inputs: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/eca_hoekstra_analysis/input_values.csv\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/eca_hoekstra_analysis/fit_results.json\nInput-table/extraction audit: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/eca_hoekstra_analysis/analyze_wedge.py\nNative cases and original CSVs/diagnostics: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/mesh_sensitivity/Ma10_15deg_{3k,12k,48k,192k}\nNative retained iterations: 5000 (3k,12k,192k) and 2668 (48k).\nMatch: retained image is an exact RGB crop of the original export, removing 87 top rows\n(2382 x 1392 to 2382 x 1305 pixels); PNG encoding/metadata differ.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock.tex",
+      "figure_line": 279,
+      "labels": [
+        "fig:04_02_comparison_post_shock"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_euler_post_shock_conditions_comparison.png",
+          "include_line": 290,
+          "sha256": "4670c76bff4d8c8e1352a2feb09c404a96f65ccfb47c453cb32160effcf7d1ea",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; Windows-hosted paths):\nOriginal export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/post_shock_conditions_comparison.png\nPython script: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/plot_theta_beta_mach_comparison.py (plot_post_shock_comparison).\nPer-case inputs: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k/shock_diagnostics.txt\nCorresponding point CSVs/native cases: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/{5deg,15deg}\nTabulated values: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/simulation_and_theory_values.csv\nMatch: exact RGB crop removing 75 top rows (3150 x 2400 to 3150 x 2325 pixels);\nPNG encoding/metadata differ. Braced path sets denote the ten individual cases.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock.tex",
+      "figure_line": 298,
+      "labels": [
+        "fig:04_02_comparison_shock_angle"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_euler_theta_beta_mach_comparison.png",
+          "include_line": 310,
+          "sha256": "3f502be3604e201a86bb07006bdee5d3d42000aab5a98432cafaca6446d1e5cd",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; Windows-hosted paths):\nOriginal export: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/theta_beta_mach_comparison.png\nPython script: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/plot_theta_beta_mach_comparison.py (plot_comparison).\nPer-case inputs: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k/shock_diagnostics.txt\nCorresponding point CSVs/native cases: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/{5deg,15deg}\nTabulated comparison: /mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Analytical/wedge/Ma_angle_sweep/theta_beta_mach_comparison.csv\nMatch: processed copy with 64 top rows removed (2700 x 2400 to 2700 x 2336 pixels);\nRGB comparison finds only 11 differing pixels, in a two-row patch at retained y=1238--1239.\nThis is a near-identical processed export, not a byte-identical original.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock.tex",
+      "figure_line": 359,
+      "labels": [
+        "fig:shock-tm-mesh-convergence"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_tm_shock_mesh_conv.png",
+          "include_line": 372,
+          "sha256": "cd873022cf63b24fb19bed653418ee742b77efb5c50565c43688fff585de531f",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; WSL absolute paths):\nOriginal export: /home/mgnadlinger/wedge_with_TM/analysis/tm_shock_mesh_conv.png\nPython script: /home/mgnadlinger/wedge_with_TM/analysis/analyze_tm_convergence.py\nPlot data: /home/mgnadlinger/wedge_with_TM/analysis/convergence_values.csv\nNative cases: /home/mgnadlinger/wedge_with_TM/{SA_DensityCorrected,kOmegaSST}_Ma10_15deg_{3k,12k,48k,192k}\nEach case retains 10000/{p,T,Ma} and constant/polyMesh.\nExtracted point CSVs, samples and source hashes:\n/home/mgnadlinger/wedge_with_TM/analysis/{SA_DensityCorrected,kOmegaSST}_Ma10_15deg_{3k,12k,48k,192k}\nMatch: exact RGB crop removing 93 top rows (2310 x 850 to 2310 x 757 pixels);\nPNG encoding/metadata differ. Braced path sets denote the eight individual cases.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock.tex",
+      "figure_line": 425,
+      "labels": [
+        "fig:shock-sa-post-shock-comparison"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_sa_post_shock_conditions_comparison.png",
+          "include_line": 440,
+          "sha256": "59f457227b410e6e46cdbb2649fc6514fe091a74b3dd57dabadaf40845634c88",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; WSL absolute paths):\nOriginal export: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/post_shock_conditions_comparison.png\nPython driver: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/analyze_sweep.py (model_plots).\nPlot implementation: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/plot_theta_beta_mach_comparison.py (plot_post_shock_comparison).\nPer-case extraction: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k\nEach analysis directory retains points.csv.gz, shock_diagnostics.txt, post_shock_samples.csv\nand export_provenance.json with native-field/mesh hashes.\nNative cases: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/{5deg,15deg}/SA_DensityCorrected_Ma{2,4,6,8,10}_*deg_48k\nEach native case retains 10000/{p,T,Ma} and constant/polyMesh.\nTabulated values: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/simulation_and_theory_values.csv\nMatch: exact RGB crop removing 147 top rows (3150 x 2400 to 3150 x 2253 pixels);\nPNG encoding/metadata differ. Braced path sets denote the ten individual cases.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock.tex",
+      "figure_line": 451,
+      "labels": [
+        "fig:shock-sa-theta-beta-mach"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_sa_theta_beta_mach_comparison.png",
+          "include_line": 467,
+          "sha256": "4693b55199bb27b57e067ba7a460fba364244a89300315e0b3160eb775593832",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; WSL absolute paths):\nOriginal export: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/theta_beta_mach_comparison.png\nPython driver: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/analyze_sweep.py (model_plots).\nPlot implementation: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/plot_theta_beta_mach_comparison.py (plot_comparison).\nPer-case extraction: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k\nEach analysis directory retains points.csv.gz, shock_diagnostics.txt, post_shock_samples.csv\nand export_provenance.json with native-field/mesh hashes.\nNative cases: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/{5deg,15deg}/SA_DensityCorrected_Ma{2,4,6,8,10}_*deg_48k\nEach native case retains 10000/{p,T,Ma} and constant/polyMesh.\nTabulated values: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/SA_DensityCorrected/simulation_and_theory_values.csv\nMatch: processed copy with 127 top rows removed (2700 x 2400 to 2700 x 2273 pixels);\nRGB comparison finds only 12 differing pixels, in a two-row patch at retained y=1175--1176.\nThis is a near-identical processed export, not a byte-identical original.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock.tex",
+      "figure_line": 478,
+      "labels": [
+        "fig:shock-sst-post-shock-comparison"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_sst_post_shock_conditions_comparison.png",
+          "include_line": 493,
+          "sha256": "4f938b9274dd23e3e5236f90760d1344dfe9fc665995ab49a34e994e515d42c6",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; WSL absolute paths):\nOriginal export: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/post_shock_conditions_comparison.png\nPython driver: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/analyze_sweep.py (model_plots).\nPlot implementation: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/plot_theta_beta_mach_comparison.py (plot_post_shock_comparison).\nPer-case extraction: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k\nEach analysis directory retains points.csv.gz, shock_diagnostics.txt, post_shock_samples.csv\nand export_provenance.json with native-field/mesh hashes.\nNative cases: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/{5deg,15deg}/kOmegaSST_Ma{2,4,6,8,10}_*deg_48k\nEach native case retains 10000/{p,T,Ma} and constant/polyMesh.\nTabulated values: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/simulation_and_theory_values.csv\nMatch: exact RGB crop removing 137 top rows (3150 x 2400 to 3150 x 2263 pixels);\nPNG encoding/metadata differ. Braced path sets denote the ten individual cases.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/02_Shock_Angle_Post_Shock.tex",
+      "figure_line": 504,
+      "labels": [
+        "fig:shock-sst-theta-beta-mach"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/02_sst_theta_beta_mach_comparison.png",
+          "include_line": 520,
+          "sha256": "cdad77b4bbcae86dd9f20396c18af905e93d4f57a012561da7740da79c2818e2",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; WSL absolute paths):\nOriginal export: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/theta_beta_mach_comparison.png\nPython driver: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/analyze_sweep.py (model_plots).\nPlot implementation: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/plot_theta_beta_mach_comparison.py (plot_comparison).\nPer-case extraction: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/{5deg,15deg}/Ma{2,4,6,8,10}_*deg_48k\nEach analysis directory retains points.csv.gz, shock_diagnostics.txt, post_shock_samples.csv\nand export_provenance.json with native-field/mesh hashes.\nNative cases: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/{5deg,15deg}/kOmegaSST_Ma{2,4,6,8,10}_*deg_48k\nEach native case retains 10000/{p,T,Ma} and constant/polyMesh.\nTabulated values: /home/mgnadlinger/wedge_with_TM/Ma_angle_sweep/analysis/kOmegaSST/simulation_and_theory_values.csv\nMatch: processed copy with 130 top rows removed (2700 x 2400 to 2700 x 2270 pixels);\nRGB comparison finds only 12 differing pixels, in a two-row patch at retained y=1172--1173.\nThis is a near-identical processed export, not a byte-identical original.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 71,
+      "labels": [
+        "fig:Kim-mesh-coarse-6k"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Kim_mesh_coarse_6k.png",
+          "include_line": 79,
+          "sha256": "252941566cdcd5d1335c4b6c18b8282b31fc6e1823305b61cd403082cff5ea81",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): underlying mesh retained at\nValData/FIN/Kim/00 mesh/6K/Kim_6k.ansa and Kim_6k.msh;\nOpenFOAM mesh: ValData/FIN/Kim/01 mesh_sens/6k/constant/polyMesh/.\nBoundary inputs: that case's 0.org/include/{setup,boundaries}, 0.org/{p,U,T}.\nThe annotated raster is retained here; the editable annotation/export source\nand original rendering settings were not recovered.",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "Mesh and case inputs retained; editable annotations/export settings not recovered."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 83,
+      "labels": [
+        "fig:Hornung-mesh-coarse-16k"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_mesh_coarse_16k.png",
+          "include_line": 91,
+          "sha256": "02e7a4a21bb796b4606b86082955f1640885486ce48dbe9c1124bd2b6a52c690",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): underlying mesh retained at\nValData/Tunel/01 ShockStandOff/Hornung/00 mesh/46p2/16k/Hornung_16k.ansa\nand Hornung_16k.msh; OpenFOAM mesh and boundary inputs are under\nValData/FIN/Hornung/mesh_sens/16k/{constant/polyMesh,0.org,system}/.\nThe annotated raster is retained here; the editable annotation/export source\nand original rendering settings were not recovered.",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "Mesh and case inputs retained; editable annotations/export settings not recovered."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 110,
+      "labels": [
+        "fig:shock-stand-off-extraction"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Kim_pressure_field_coarse.png",
+          "include_line": 124,
+          "sha256": "933cc329ef3834a6c5cbd2bc0e582864d1f899dafa86b458d1ba76ee0fa3d080",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): processed image match found in\nValData/FIN/Kim_1/ShockStandoff.pptx, slide 5, ppt/media/image6.png.\nBicubic resize from 658 x 767 to the included 384 x 448 pixels reproduces\nRGB values to mean absolute difference 0.00096 on the 0--255 scale.\nThe slide pairs it with an older 6k/25k-iteration profile; retained candidate\nraw cases are FIN/Kim_1/01 Ma6 mesh sens/Ma6_6k_impG/ and\nTunel/01 ShockStandOff/Kim/mesh_sens/old_AUSMDV/Ma6_6k_impG/ under ValData\n(each has 25000/p and constant/polyMesh). This establishes the earlier image\nexport, but does not establish which raw case was rendered or equivalence to\nthe current FIN/Kim/01 mesh_sens/6k/25k.csv used in panel (c).",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "Resize match to older FIN/Kim_1 presentation established; exact native case and equivalence to current pressure profile unverified."
+        },
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Kim_pressure_field_fine.png",
+          "include_line": 136,
+          "sha256": "f9d2828576d7236c6ae3b050be0855f375e3cb5fdd357a7deec8250305ea2f02",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): corresponding manuscript case data\nare retained in ValData/FIN/Kim/01 mesh_sens/2p3M/{45000/p,constant/polyMesh}/;\nthe pressure-line export used in panel (d) is 2p3M/45k.csv.\nValData/FIN/Hornung/mesh_sens/overview.pvsm also retains a reader for this\n2p3M case. Exact source export and rendered iteration/camera were not recovered;\nthe older 400k screenshot in FIN/Kim_1/ShockStandoff.pptx is a different image.",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "Current 2p3M fields and line data retained; exact screenshot export, camera and iteration unverified."
+        },
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Kim_stag_line_shock_identified_coarse_wide.pdf",
+          "include_line": 148,
+          "sha256": "96e4b4914e15ad3d3b99e414dd3f762c5c9bcc7eb370cb882038cce257ba8ce8",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): exact generator identified by PDF\nCreator metadata: thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_kim_shock_extraction.py.\nInput: ValData/FIN/Kim/01 mesh_sens/6k/25k.csv; helpers loaded from that\nmesh_sens/plot_stagline_pressure_iters.py. Raw case: 6k/{25000/p,constant/polyMesh}/.\nThe generator changes layout/fonts only; it retains native samples and detection.",
+          "in_data_audit_scope": true
+        },
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Kim_stag_line_shock_identified_fine_wide.pdf",
+          "include_line": 160,
+          "sha256": "d08c7a7c4d1ce01744a28746111a4dedf4772ff5b132158ff06aa53875980121",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): exact generator identified by PDF\nCreator metadata: thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_kim_shock_extraction.py.\nInput: ValData/FIN/Kim/01 mesh_sens/2p3M/45k.csv; helpers loaded from that\nmesh_sens/plot_stagline_pressure_iters.py. Raw case: 2p3M/{45000/p,constant/polyMesh}/.\nThe generator changes layout/fonts only; it retains native samples and detection.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 206,
+      "labels": [
+        "fig:Kim-mesh-convergence"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Kim_mesh_convergence.pdf",
+          "include_line": 215,
+          "sha256": "a45be0c6d4e74d81f4117b9dfbfa734b6036d271bc6605ffa461e30cae75dc5c",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): PDF Creator identifies\nthesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py.\nData root: ValData/FIN/Kim/01 mesh_sens/; native final profiles:\n{6k,16k,38k,90k,250k}/25k.csv, 750k/20k.csv and 2p3M/45k.csv.\nEach corresponding case retains its pressure field and constant/polyMesh.\nExtraction helpers: plot_stagline_pressure_iters.py in the same source root.\nEarlier export: mesh_convergence_kim.{png,pdf}; the included PDF is a replot.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 224,
+      "labels": [
+        "fig:Hornung-mesh-convergence"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_mesh_convergence.pdf",
+          "include_line": 236,
+          "sha256": "41b7fbeaea1b97b63838aabffa2acb6cf1b4f054c2a6ae5ac78de3e7ad136a87",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): PDF Creator identifies\nthesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py.\nData root: ValData/FIN/Hornung/mesh_sens/; imported generator:\nplot_hornung_convergence.py; inputs: 16k/25k.csv, 65k/50k.csv, 260k/100k.csv,\n1M_eq_260ksym/280k.csv, 4M_eq_920ksym/141k.csv, and\n8M_eq_3M/hpc_results_18996/{shock_standoff.csv,shock_history/provenance.csv}.\nSource manifest: hornung_mesh_convergence_data.csv; HPC import details and\nits distinct midpoint-gradient detector are in hpc_results_18996/IMPORT_NOTES.md.\nFull 8M fields/mesh: /home/mgnadlinger/Hornung_8M_restart_242276_128cores_20260924/results/18996/.\nThe included PDF is a replot; unavailable intermediate HPC fields are not reconstructed.",
+          "in_data_audit_scope": true,
+          "data_retention_note": "All plotted Hornung 8M history observations and their extraction provenance are retained, together with final raw fields. Some intermediate raw HPC pressure fields are unavailable."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 270,
+      "labels": [
+        "fig:Kim-carbuncles-overview"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Kim_pressure_map_overview.png",
+          "include_line": 280,
+          "sha256": "ef67ea0825a0fce537dd874af7bbba241889f64233f70ef0d188c9a1867f473d",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): underlying six case families retained\nunder ValData/FIN/Kim/01 mesh_sens/{16k,38k,90k,250k,750k,2p3M}/,\nincluding constant/polyMesh and pressure fields at their last saved iterations\n25000, 25000, 25000, 25000, 20000 and 45000, respectively.\nRelated retained export: mesh_sens/Screenshot 2026-06-18 161824.png, which shows\na different, earlier eight-view layout. It is not the included six-view raster.\nExact screenshot/export state, rendered iterations and crop were not recovered;\nthe last saved fields identify available data, not a verified image match.",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "Corresponding case fields retained; exact screenshot and rendered iterations not established."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 290,
+      "labels": [
+        "fig:Kim-250k-carbuncles-close-up"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Kim_250k_carbuncles_close-up.png",
+          "include_line": 297,
+          "sha256": "2e3b77053489281730f54219ef3187c8b883414a796c12ce8b9abcc81de92222",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): corresponding case family retained at\nValData/FIN/Kim/01 mesh_sens/250k/; raw fields include 25000/p and\nconstant/polyMesh, and final stagnation-line data are in 25k.csv.\nExact screenshot export, rendered iteration and close-up camera were not recovered;\n25000 is the available final field, not an independently verified image timestamp.",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "Case fields retained; exact close-up export, camera and iteration unverified."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 304,
+      "labels": [
+        "fig:Hornung-carbuncles-overview"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_pressure_map_overview.png",
+          "include_line": 315,
+          "sha256": "988073aac99aab6e6f7ed9ef5d99d4862d732f88cd06c431d020ac32d28b7848",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): case readers/reflection filters and\nview settings retained in ValData/FIN/Hornung/mesh_sens/overview.pvsm.\nThis state identifies {16k,65k,260k,1M_eq_260ksym,4M_eq_920ksym,8M_eq_3M}/\nunder that root. Their current final fields are at 25000, 50000, 100000,\n280000, 141000 and 300000, respectively; meshes are retained in constant/polyMesh.\nThe saved state has ViewTime=45000 and lists only 35000/37500 for 8M;\nit therefore does not establish that this raster shows the final 300000 HPC field.\nRelated Screenshot 2026-06-09 195200.png has a different layout/camera.\nExact included screenshot export and per-panel rendered iterations remain unverified.",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "Saved overview.pvsm has ViewTime=45000 and older 8M time entries; it cannot establish the caption claim of final evaluated iterations. Final 300000 fields exist separately."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 325,
+      "labels": [
+        "fig:Hornung-1M-carbuncles-close-up"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_1M_carbuncles_close-up.png",
+          "include_line": 333,
+          "sha256": "bfa31b24e92f79bc751523b687f84cad677667fd5ea0a2f1c037646d7fe1ca8a",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): corresponding reduced-domain case\nValData/FIN/Hornung/mesh_sens/1M_eq_260ksym/ retains constant/polyMesh and\npressure snapshots through 280000/p. The associated reader and reflection\nfilters are recorded in mesh_sens/overview.pvsm.\nExact close-up export, rendered iteration and camera were not recovered;\n280000 identifies available final data, not a verified screenshot timestamp.",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "Case fields and reader/reflection state retained; exact close-up export, camera and iteration unverified."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 356,
+      "labels": [
+        "fig:Kim-iteration-convergence"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Kim_iteration_convergence.pdf",
+          "include_line": 366,
+          "sha256": "0770f6cb0cddc29985362a884223173948c1d9685ee62992d49ba21a70c6e820",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): PDF Creator identifies\nthesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py;\nloads ValData/FIN/Kim/01 mesh_sens/plot_kim_iteration_convergence.py.\nPlotted inputs: iteration_convergence/profiles/{250k,2p3M}/*k.csv under that\nsource root. Raw fields and sampling details are enumerated in\niteration_convergence/extraction_provenance.json; extractor:\niteration_convergence/extract_kim_iteration_profiles.py. All retained snapshots\nare used; the PDF is a layout/font replot of the original history analysis.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 375,
+      "labels": [
+        "fig:Hornung-iteration-convergence"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_iteration_convergence.pdf",
+          "include_line": 387,
+          "sha256": "163a1af6bd85b9b0e694c29fcb80ed2be6b2bf87f4766960a8a6faf20f0b0c65",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): PDF Creator identifies\nthesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py;\nloads ValData/FIN/Hornung/mesh_sens/plot_hornung_iteration_convergence.py.\nLocal profiles: iteration_convergence/profiles/{65k,260k,1M_eq_260ksym}/*k.csv;\nraw fields, sample lines and extractor are documented in\niteration_convergence/{extraction_provenance.json,extract_hornung_iteration_profiles.py}.\n8M inputs: 8M_eq_3M/hpc_results_18996/{shock_standoff.csv,shock_history/provenance.csv};\noriginal WSL case: /home/mgnadlinger/Hornung_8M_restart_242276_128cores_20260924/results/18996/.\nSome intermediate HPC pressure fields are missing; all plotted history observations\nand their extraction provenance are retained. Marker thinning preserves the curves.",
+          "in_data_audit_scope": true,
+          "data_retention_note": "All plotted Hornung 8M history observations and their extraction provenance are retained, together with final raw fields. Some intermediate raw HPC pressure fields are unavailable."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/03_Shock_Stand_Off_Carbuncle.tex",
+      "figure_line": 396,
+      "labels": [
+        "fig:Hornung-proof-convergence"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/03_Hornung_example_for_proof_of_stationary.png",
+          "include_line": 404,
+          "sha256": "e43037a641e8bb706c949b76e0b01c47dac196d02074e16d093ffd3052c4ed87",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19): underlying pressure pair verified at\nValData/FIN/Hornung/mesh_sens/1M_eq_260ksym/{200000/p,250000/p}, with\nconstant/polyMesh retained. The raster's colour-bar expression explicitly reads\n(p-200k-p-250k)/p-250k*100 (%), consistent with the caption.\nExact ParaView calculator/export state and camera were not recovered;\nmesh_sens/overview.pvsm retains the case reader, but no difference calculator.",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "Both 200000/p and 250000/p retained; exact calculator/export state and camera not recovered."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/04_Laminar_Boundary_Layer_Profiles.tex",
+      "figure_line": 205,
+      "labels": [
+        "fig:laminar-bl-malik-ma10-perfect"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma10_perfGas_lamBL_profiles.png",
+          "include_line": 245,
+          "sha256": "578d444230df1c259bcc01bd37e4b6bda4b6737a7bb802f7f80e0b8274002c69",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (Windows-hosted files; absolute paths via WSL):\nFigure:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma10_perfGas_lamBL_profiles.png\nPython script (current typography-only export, ma10()):\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_malik_profiles.py\nData / simulation archive:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/MalikAnderson_FirstShenanigans.7z\nArchive member root: MnA_ZPGFP_Ma10_coarse/Run3/\nStation CSVs in that member root:\nx0p05m.csv, x0p1m.csv, x0p2m.csv, x0p4m.csv, x0p606m.csv\n(x = 0.050, 0.100, 0.200, 0.400, 0.606 m; 102 rows per CSV).\nNormalization: U_e = 3750.74 m/s, T_e = 350 K,\nRe_unit = 6.6e6 1/m; Y = Points_2 / sqrt(x / Re_unit).\nRelated archived Python script: MnA_ZPGFP_Ma10_coarse/Run3/plot_profile_x606.py\ncontains digitized Malik--Anderson Fig. 1 reference arrays and plots one\nprofile only; the original five-station collapse script was not located.\nRaw simulation fields and mesh are also retained in the archive, including\nMnA_ZPGFP_Ma10_coarse/Run3/4000/{T,U} and constant/polyMesh/.\nRetained original curve raster:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/ma10_original.png\nNote: The five station CSVs were recovered from the archive on 2026-10-19;\ntheir stations and normalized profiles were checked against this raster.\nThe current manuscript export still uses the raster with re-typeset\nlabels/legends and approximately 25% larger fonts; it has not been\nreplotted from the recovered CSVs. The earlier missing-data status in\nthe export audit describes the state before archive recovery:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/font_update_provenance.json\nNote: OLDMalikAnderson/Ma10/perfectGas/ contains different stations\n(0.1, 0.2, 0.4, 0.6, 0.8 m) and is not the data source for this figure.\nEnd figure provenance.\nProvenance audit 2026-10-19: the archive listing independently confirms all\nfive CSV members above, plot_profile_x606.py, 4000/{T,U} and the mesh.\nCSV member CRC32 values in station order: 82B5BAE6, D1AAFCC7, 98E6E4CF,\nAD8D681B, E9F97F6C. This audit listed the archive without re-extracting it.\nThe retained ma10_original.png SHA-256 matches font_update_provenance.json.\nThe original five-station plotting script remains unlocated; plot_collapse.py\nin ValData/Tunel/00 LamZPGFP/ contains Mach-15 constants and reference arrays\nand cannot establish the original Mach-10 rendering settings.",
+          "in_data_audit_scope": true,
+          "artwork_or_render_note_outside_scope": "Five station CSVs, related script, raw fields and mesh confirmed in archive; original five-station renderer unlocated. Current typography wrapper retains source curve raster."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/04_Laminar_Boundary_Layer_Profiles.tex",
+      "figure_line": 258,
+      "labels": [
+        "fig:laminar-bl-malik-ma15-perfect"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma15_perfGas_lamBL_profiles.png",
+          "include_line": 283,
+          "sha256": "f79a678fb3ded2c6bb4517b4aa75aa8cc935f25961a8804fcb156eab9e2f9c92",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (Windows-hosted files; absolute paths via WSL):\nFigure:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma15_perfGas_lamBL_profiles.png\nPython scripts:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas/malik_anderson_plot.py\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_malik_profiles.py\nData / simulation root:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas\nStation CSVs in that root: x0p1.csv, x0p2.csv, x0p4.csv, x0p6.csv, x0p8.csv\n(x = 0.1, 0.2, 0.4, 0.6, 0.8 m; 102 rows per CSV).\nReference data: digitized Malik--Anderson Fig. 3 arrays embedded in\nmalik_anderson_plot.py; its load_and_normalize() supplies the original\nnormalization. Saved raw simulation fields are retained in 5000/.\nNote: The manuscript export uses plot_malik_profiles.py to read these CSVs\nthrough the original reader, with DejaVu Sans and 25% larger fonts.\nAll five input CSVs and the original Python script match the SHA-256\nchecksums in the export audit; plotted-value hashes match the preceding\nexport. Audit:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/font_update_provenance.json\nEnd figure provenance.\nProvenance audit 2026-10-19: all five CSVs and the original plotting script\nwere found at the paths above and their SHA-256 values independently\nmatch font_update_provenance.json; the saved 5000/ fields are accessible.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/04_Laminar_Boundary_Layer_Profiles.tex",
+      "figure_line": 306,
+      "labels": [
+        "fig:laminar-bl-malik-ma15-imperfect"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma15_imperfGas_lamBL_profiles.png",
+          "include_line": 331,
+          "sha256": "71ce08755637d98e80f81456f005c808a18ab266dacbfd78e38bf15841de267e",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (Windows-hosted files; absolute paths via WSL):\nFigure:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/04_MalikAnderson_Ma15_imperfGas_lamBL_profiles.png\nPython scripts:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)/malik_anderson_plot.py\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_malik_profiles.py\nData / simulation root:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)\nStation CSVs in that root: x0p1.csv, x0p2.csv, x0p4.csv, x0p6.csv, x0p8.csv\n(x = 0.1, 0.2, 0.4, 0.6, 0.8 m; 102 rows per CSV).\nReference data: digitized Malik--Anderson Fig. 3 arrays embedded in\nmalik_anderson_plot.py; its load_and_normalize() supplies the original\nnormalization. Saved raw simulation fields are retained in 5000/.\nNote: The manuscript export uses plot_malik_profiles.py to read these CSVs\nthrough the original reader, with DejaVu Sans and 25% larger fonts.\nAll five input CSVs and the original Python script match the SHA-256\nchecksums in the export audit; plotted-value hashes match the preceding\nexport. Audit:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/font_update_provenance.json\nEnd figure provenance.\nProvenance audit 2026-10-19: all five CSVs and the original plotting script\nwere found at the paths above and their SHA-256 values independently\nmatch font_update_provenance.json; the saved 5000/ fields are accessible.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/04_Laminar_Boundary_Layer_Profiles.tex",
+      "figure_line": 365,
+      "labels": [
+        "fig:laminar-bl-marxen-inlet"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/04_Marxen_inlet_profile.png",
+          "include_line": 392,
+          "sha256": "6203e4082e18e7c42d082c13dba01e7b6aa68d99e0d3559c8eb3d2ab23e30c65",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; Windows-hosted source copy and WSL original):\nIncluded figure: 04_Marxen_inlet_profile.png in this Figures directory.\nOriginal export:\n/home/mgnadlinger/fortran_BL/Marxen/marxen_fig11_overlay.png\nWindows retained copy:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/profile_inlet/marxen_fig11_overlay.png\nProcessing verified by pixel comparison: the included 1260 x 765 RGBA\nimage is exactly original.crop((0, 75, 1260, 840)); only the title strip\nwas removed. The two retained originals have matching SHA-256:\n5c2a19b03c2af47f4476e88625cb9d5cedd5fc23d256caa933072f7cb020feb9.\nUnderlying Fortran similarity table:\n/home/mgnadlinger/fortran_BL/Marxen/Ma10_case_I_rk4.dat\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/profile_inlet/Ma10_case_I_rk4.dat\n(identical SHA-256 ccd7d76ad54f60241d85c6b37b288162a531399d2cc195fd28c4d3d4049578b9).\nRelated Fortran sources in the WSL directory:\nMa10_varprops_rk4.f and chris_Ma10_varprops_newnumerics.f both write\nMa10_case_I_rk4.dat; the precise source revision/run settings that\nproduced the retained table are not recorded by the table itself.\nReference symbols: Marxen et al. Fig. 11; digitized arrays are retained in\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/plot_marxen_profileinlet.py\n(ref_eta_u/ref_u and ref_eta_t/ref_t; also used in the downstream figure).\nThe original two-axis overlay plotting script was not located in the\naccessible WSL/Marxen or ValData/Marxen sources. The downstream plotting\nscripts do not generate this inlet comparison. No figure was regenerated.\nEnd figure provenance.",
+          "in_data_audit_scope": true,
+          "artwork_or_render_note_outside_scope": "Exact source PNG crop and numerical .dat retained; original overlay script and precise Fortran run revision unverified."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/04_Laminar_Boundary_Layer_Profiles.tex",
+      "figure_line": 428,
+      "labels": [
+        "fig:laminar-bl-marxen-downstream"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/04_Marxen_lamBL_profiles.png",
+          "include_line": 450,
+          "sha256": "6acda19f4cd27419952d452c844516c1d9bc8e362eaffaf6d99d661f704edd32",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; Windows-hosted files):\nIncluded figure: 04_Marxen_lamBL_profiles.png in this Figures directory.\nCurrent typography export script:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_marxen_profiles.py\nOriginal scientific plotting script and digitized Marxen Fig. 11 arrays:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/plot_marxen_profileinlet.py\nData / simulation root:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/profile_inlet/Run1\nInputs relative to that root:\nx0p25713.csv, x0p32543.csv, x0p40176.csv, x0p48613.csv.\nNormalization: the original load_and_normalize() uses Points_2 for wall\ndistance and Points_0 for station x, with U_e = 3342.16 m/s, T_e = 278 K,\nmu_e = 1.73998e-5 Pa s and rho_e = 0.0518337 kg/m^3.\nRaw fields / mesh: 3000/{U,T,p}, constant/{C,polyMesh} in the Run1 root.\nProcessing: the included PNG and sibling PDF use the current typography\nscript (DejaVu Sans, fonts +25%); they are not copies of the old raster.\nAudit: marxen_profile_font_provenance.json in this Figures directory\nrecords plotted-value hashes and preceding-export agreement. The four\nCSV hashes and source-script hash were independently rechecked and match.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/05_Laminar_Heat_Transfer_Compression_Corner.tex",
+      "figure_line": 102,
+      "labels": [
+        "fig:cao-mesh"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/05_mesh.png",
+          "include_line": 121,
+          "sha256": "dbb394ddf18bdae1dc7d9228c86d0459b7c7baf5025339858f79009931e2412e",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; geometry/mesh family traced):\nWindows mesh-source directory (absolute path through the WSL mount):\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Cao_laminar_CompCorner/00 mesh/\nRetained ANSA models and matching Fluent meshes include\n1e-3.{ansa,msh}, 1e-2.{ansa,msh}, 2e-3_downstream_fine2.{ansa,msh},\n2e-3_dx1p5e-1.{ansa,msh} and 5e-4_dx1p5e-1.{ansa,msh}.\nAssociated WSL simulation meshes: /home/mgnadlinger/Cao_lamZPGFP/\nCao et al/<mesh variant>/<pressure>/constant/polyMesh/;\ne.g. dy1_5e-4_dx1p5e-1/1550_pinf/constant/polyMesh/.\nThe illustration depicts the common 100 mm plate, 15-degree ramp,\n400 mm domain and 150 mm upper boundary. These identify the geometry,\nnot a unique refinement variant. The exact ANSA model used for this\nscreenshot, original annotated export and camera settings were not\nrecovered; do not assign it a particular mesh-convergence case.\nGeneric boundary-condition callouts are historical artwork; use the\nsaved-field checks above for the actual simulation conditions.\nEnd figure provenance.",
+          "in_data_audit_scope": false,
+          "artwork_or_render_note_outside_scope": "Geometry and several ANSA/Fluent/OpenFOAM mesh sources retained; exact refinement variant and annotated screenshot export not established."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/05_Laminar_Heat_Transfer_Compression_Corner.tex",
+      "figure_line": 167,
+      "labels": [
+        "fig:cao-attached-profiles"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/05_1550_pinf_boundary_layer_profiles.png",
+          "include_line": 184,
+          "sha256": "829c020b205d9b3087c00ed187b4fb3215d3d1429f6cc42e4d21ba8c88e124e0",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; upper panel, 1550 Pa):\nSource extraction/normalization script:\n/home/mgnadlinger/Cao_lamZPGFP/validation/validate_cao.py\nExact plotted profile CSV (SHA-256 rechecked against retained audit):\n/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/1550_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv\nCurrent source case: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/\nlegacy/dy1_1e-3_dx_1p5/1550_pinf/{constant/polyMesh,50000/U,50000/T}.\nReference digitizations: /home/mgnadlinger/Cao_lamZPGFP/Digitization/\nCao_Transition to turbulence/{U-BL_Figure7a,T-BL_Figure7a}.csv.\nCurrent typography: Figures/plot_cao_profile_fonts.py. Source and\nfont-export audits: Figures/cao_profile_sources/\n{source_provenance,font_update_provenance}.json, including original\ncrop verification and retained CSV snapshots. Paths here use the\ncurrent legacy case location, not the historical pre-move path.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        },
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/05_760_pinf_boundary_layer_profiles.png",
+          "include_line": 198,
+          "sha256": "c686daf01e8f18960ae0cad7243031ea9e25894b09c840d2716a3af45ecc0e1b",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; lower panel, 760 Pa):\nExtraction: /home/mgnadlinger/Cao_lamZPGFP/validation/validate_cao.py.\nExact plotted profile CSV (SHA-256 rechecked against retained audit):\n/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv\nCurrent source case: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/\nlegacy/dy1_1e-3_dx_1p5/760_pinf/{constant/polyMesh,50000/U,50000/T}.\nReference digitizations: /home/mgnadlinger/Cao_lamZPGFP/Digitization/\nCao_Unsteady effects/{U-BL_Figure2b,T-BL_Figure2b}.csv.\nCurrent typography and source snapshots: Figures/plot_cao_profile_fonts.py\nand Figures/cao_profile_sources/\n{source_provenance,font_update_provenance}.json.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/05_Laminar_Heat_Transfer_Compression_Corner.tex",
+      "figure_line": 222,
+      "labels": [
+        "fig:cao-wall-normal-stanton"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/05_1550_dx_1p5e-1_wall_normal_stanton_windows.png",
+          "include_line": 252,
+          "sha256": "0d88ec497ee3f030d5109f2a98b43dcc548d9c9e9a9e1f117020e9e12671a132",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; current stacked-panel export):\nCurrent plot script, relative to the workspace root:\ntmp/compression_corner_review/stack_stanton_figures.py\nPlot/input audit: tmp/compression_corner_review/stacked_stanton/\nfigure_provenance.json. All four input CSV hashes and the companion\nmanuscript PDF hash were rechecked successfully; the currently included\nPNG has a different hash and vertical dimensions from the recorded export.\nThe exact subsequent raster-edit operation was not recovered.\nInput CSVs: /home/mgnadlinger/Cao_lamZPGFP/validation/\nfull_sweep_output_1550/1550_pinf_<label>_wall.csv, for labels\ndy1_1e-1_dx_1p5e-1, dy1_1e-2_dx_1p5e-1 and dy1_2e-3_dx_1p5e-1.\nFourth input: tmp/compression_corner_review/stacked_stanton/\n1550_pinf_dy1_5e-4_dx_1p5e-1_wall.csv; extracted by export_fine_wall.py\nin that directory. fine_wall_export_provenance.json records all\n16 source walls.vtp files per case; their hashes were rechecked.\nRaw WSL cases: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/\n{dy1_1e-1_dx1p5e-1,dy1_1e-2_dx1p5e-1,dy1_2e-3_dx1p5e-1,\ndy1_5e-4_dx1p5e-1}/1550_pinf/postProcessing/surfaces1/<iteration>/walls.vtp.\nRaw mesh-directory spelling differs from the exported CSV label.\nAveraging windows: 35000--50000 for dy1=0.1 and 0.01 mm;\n85000--100000 for dy1=0.002 and 0.0005 mm. Trapezoidal pseudo-iteration\nmeans, with stored OpenFOAM wall heat flux negated for wall heating.\nReference: /home/mgnadlinger/Cao_lamZPGFP/Digitization/\nCao_Transition to turbulence/Stanton_Figure4b.csv (2-D base flow).\nOriginal analysis/extraction: /home/mgnadlinger/Cao_lamZPGFP/validation/\n{mesh_sensitivity_cao,validate_cao}.py. The retained stacked plot is\nnot the original three-column mesh_sensitivity_output_1550 PNG.\nEnd figure provenance.",
+          "in_data_audit_scope": true,
+          "artwork_or_render_note_outside_scope": "Input CSV and companion PDF hashes match retained audit; included PNG hash and vertical dimensions differ from recorded export. Subsequent raster editing unrecorded."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/05_Laminar_Heat_Transfer_Compression_Corner.tex",
+      "figure_line": 261,
+      "labels": [
+        "fig:cao-streamwise-stanton"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/05_1550_dy1_2e-3_streamwise_stanton_windows.png",
+          "include_line": 284,
+          "sha256": "bd2e112a7e61ddceaee5b0777faf8c8f0754cb850baec2468c565d212ffeb0e5",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; current stacked-panel export):\nPlot script: tmp/compression_corner_review/stack_stanton_figures.py.\nAudit: tmp/compression_corner_review/stacked_stanton/figure_provenance.json.\nAll three source CSV hashes and the companion manuscript PDF hash\nmatch that audit; the included PNG has a different hash and vertical\ndimensions from the recorded export. Subsequent raster editing is unrecorded.\nInput CSVs: /home/mgnadlinger/Cao_lamZPGFP/validation/\nfull_sweep_output_1550/1550_pinf_<label>_wall.csv, for labels\ndy1_2e-3_dx_6e-1, dy1_2e-3_dx_3e-1 and dy1_2e-3_dx_1p5e-1.\nRaw cases: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/\n{dy1_2e-3_dx6e-1,dy1_2e-3_dx3e-1,dy1_2e-3_dx1p5e-1}/1550_pinf/\npostProcessing/surfaces1/<iteration>/walls.vtp; final windows\n35000--50000, 35000--50000 and 85000--100000, respectively.\nSource snapshot hashes and export checks:\ntmp/compression_corner_review/stacked_stanton/fine_wall_export_provenance.json.\nReference: /home/mgnadlinger/Cao_lamZPGFP/Digitization/\nCao_Transition to turbulence/Stanton_Figure4b.csv.\nExtraction/normalization: /home/mgnadlinger/Cao_lamZPGFP/validation/\n{mesh_sensitivity_cao,validate_cao}.py; pseudo-iteration means with\nOpenFOAM wallHeatFlux sign reversed for positive wall heating.\nEnd figure provenance.",
+          "in_data_audit_scope": true,
+          "artwork_or_render_note_outside_scope": "Input CSV and companion PDF hashes match retained audit; included PNG hash and vertical dimensions differ from recorded export. Subsequent raster editing unrecorded."
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/05_Laminar_Heat_Transfer_Compression_Corner.tex",
+      "figure_line": 302,
+      "labels": [
+        "fig:cao-acoustic-re"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/05_first_cell_acoustic_re.png",
+          "include_line": 325,
+          "sha256": "23a402f4b856c4ffbed72f7994d2e226ca3dabb87d7b8204c324d9b6bf211053",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Notation-only regeneration (2026-10-19): R_cell1 -> Re_cell1.\nSource: /home/mgnadlinger/Cao_lamZPGFP/validation/plot_first_cell_acoustic_re.py\nWrapper/audit: tmp/notation_figures_20261019/regenerate_cao.py and cao_audit.json.\nNumerical CSV unchanged; original manuscript crop and image dimensions retained.\nFont update (2026-10-19): 10% larger labels, ticks and legend, same canvas.\nReproducer/data audit: Figures/plot_acoustic_re_fonts.py and Figures/acoustic_re_sources/.\nFigure provenance (audited 2026-10-19; original data traced):\nOriginal script: /home/mgnadlinger/Cao_lamZPGFP/validation/\nplot_first_cell_acoustic_re.py; native figure, CSV and per-case JSON:\n/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/\n1550_dx_1p5e-1_wall_normal_first_cell_acoustic_re.{png,csv,json}.\nCSV is byte-identical to Figures/acoustic_re_sources/data.csv.\nThe native JSON lists all 64 raw firstCellRe.dat snapshots; each is\npresent in /home/mgnadlinger/Cao_lamZPGFP/Cao et al/<mesh>/1550_pinf/\npostProcessing/firstCellRe/<iteration>/firstCellRe.dat.\nMeshes: dy1_1e-1_dx1p5e-1, dy1_1e-2_dx1p5e-1,\ndy1_2e-3_dx1p5e-1 and dy1_5e-4_dx1p5e-1; windows 35000--50000\nfor the first two, 85000--100000 for the last two. The stored wall\ndistance is wall-to-cell-centre. Current notation/font/crop changes\nare documented in the preceding notes and retained source audits.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/05_Laminar_Heat_Transfer_Compression_Corner.tex",
+      "figure_line": 339,
+      "labels": [
+        "fig:cao-low-re-wall"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/05_760_pinf_wall_coefficients.png",
+          "include_line": 360,
+          "sha256": "18cc278de7d6304666a9964d7994a23093778ffc2b2ea2c6e5ebc6fb205bb638",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Legend-only replot (2026-10-19): capital Delta y_1 and Delta x.\nReproducer: Figures/plot_cao_low_re_stanton.py;\ndata/source hashes: Figures/cao_low_re_stanton_provenance.json.\nFigure provenance (audited 2026-10-19; current single-panel replot):\nSource script: /home/mgnadlinger/Cao_lamZPGFP/validation/validate_cao.py.\nExact input CSVs (both SHA-256 hashes rechecked):\n/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_dy1_1e-3_dx_1p5_wall.csv\n/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_reference_stanton.csv\nCurrent raw case: /home/mgnadlinger/Cao_lamZPGFP/Cao et al/\nlegacy/dy1_1e-3_dx_1p5/760_pinf/postProcessing/surfaces1/\n<iteration>/walls.vtp; averaging window 35000--50000.\nThis plot uses dy1=0.001 mm, dx=1.5 mm, not the finer downstream\nmesh family of the 1550 Pa sensitivity study.\nDigitized reference: /home/mgnadlinger/Cao_lamZPGFP/Digitization/\nCao_Leading-edge bluntness effects/R0_Stanton_Figure8a.csv.\nCurrent script: Figures/plot_cao_low_re_stanton.py; source hashes,\noriginal crop, legend changes and curve/band audit:\nFigures/cao_low_re_stanton_provenance.json.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/06_Adiabatic_Turbulent_Boundary_Layer_Profiles.tex",
+      "figure_line": 98,
+      "labels": [
+        "fig:coles-nasa-mesh"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/06_mesh_NASA_archive_Figure_5.png",
+          "include_line": 120,
+          "sha256": "92a10e2bfb0b25e6f9ff27f5061e63401c68f50ea98bb2d80f04658fde032d01",
+          "status": "illustration_or_screenshot_outside_requested_scope",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; supplied NASA illustration):\nIncluded figure: 06_mesh_NASA_archive_Figure_5.png in this Figures directory.\nRetained NASA source image:\n/home/mgnadlinger/Coles_TurbZPGFP/NASA Downloads/Grids/Str-Str/FP4p5_BCs.png\nWindows copy:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/NASA Downloads/Grids/Str-Str/FP4p5_BCs.png\nThe included and WSL source images are pixel-identical RGB 488 x 379.\nFile hashes differ because the manuscript copy omits PNG metadata.\nSource SHA-256: 4cb241bda0aa47ca6a5063887f359de35687f1c7c584b889ed38bcdf6f2b0765.\nThis is the NASA boundary-condition schematic stored under Str-Str,\nnot the separate oblique Str-Uns grid overview FP4p5_StrUns.png.\nActual simulation grid provenance: NASA Downloads/Grids/Str-Uns/\nFP4p5_StrUns.{cgd,gg}, with OpenFOAM conversion retained in\nopenfoam_FP4p5_StrUns/{convert.py,conversion_metadata.json}; these\nfiles are present under the WSL Coles_TurbZPGFP root.\nNASA Tecplot source: Grids/Str-Str/FP4p5_BCs.lay in the same NASA\nDownloads root; it loads FP4p5_StrStr.cgd and contains the displayed\nboundary-condition annotations. Both files are retained locally.\nThis supplied illustration has no thesis Python plotting script.\nEnd figure provenance.",
+          "in_data_audit_scope": false
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/06_Adiabatic_Turbulent_Boundary_Layer_Profiles.tex",
+      "figure_line": 201,
+      "labels": [
+        "fig:coles-velocity-profiles"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/06_Coles_velocity_profiles.pdf",
+          "include_line": 231,
+          "sha256": "0fc48e6acd41b658b7b0686721f1be851eca1955dd8c5796707db9771ae3fad7",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; WSL simulations, Windows plotting inputs):\nIncluded figure: 06_Coles_velocity_profiles.pdf in this Figures directory.\nCurrent typography script:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_coles_profile_fonts.py\nOriginal simulation root (WSL): /home/mgnadlinger/Coles_TurbZPGFP\nCases: {kwSST,SA}/20000/U and constant/polyMesh; the extraction in\nvalidation/replot_nasa_matched.py interpolates cell-centre values in x\nto x = 0.5461 m and adds the no-slip wall point.\nWindows analysis / retained-data root:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles\nInputs relative to that root:\nvalidation/outputs_nasa_matched_20000/data/{kwSST,SA}/profile_x0p5461.csv\nNASA Downloads/Cases/Str-Uns_{SST,SA}/FP4p5.BL.dat\nvalidation/outputs_nasa_matched_20000/validation_summary.json.\nScientific plotting functions: validation/compare_nasa_figures.py;\nmatching/extraction and preceding exports: validation/replot_nasa_matched.py.\nThe current export changes typography/layout; curve coordinates and axis\nlimits are checked against the original plotting functions by the script.\nAudit: coles_profile_font_provenance.json in this Figures directory.\nAll 11 source hashes were independently rechecked and match. The raw\nWSL iteration-20000 U and wallShearStress hashes for both cases also\nmatch the accepted validation_summary.json. Normalization uses its\nU_inf = 703.2894492195271 m/s; NASA feet/ft/s are converted to SI.\nPlotting entry point: compare_nasa_figures.plot_fig6() (u and v).\nPreceding export: validation/outputs_nasa_matched_20000/fig6_velocity_profiles.pdf\nunder either the Windows or WSL Coles root. The current manuscript file\nwas subsequently re-exported by plot_coles_profile_fonts.py.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/06_Adiabatic_Turbulent_Boundary_Layer_Profiles.tex",
+      "figure_line": 240,
+      "labels": [
+        "fig:coles-velocity-experiment"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/06_Coles_velocity_experiment.pdf",
+          "include_line": 272,
+          "sha256": "40bec8ef0dc8aa45614d96c0add7627057937b9e4f8ebdcb5a639d3e8934bf99",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; WSL simulations, Windows plotting inputs):\nIncluded figure: 06_Coles_velocity_experiment.pdf in this Figures directory.\nCurrent typography script:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_coles_profile_fonts.py\nOriginal simulation root (WSL): /home/mgnadlinger/Coles_TurbZPGFP\nCases: {kwSST,SA}/20000/U and constant/polyMesh; the extraction in\nvalidation/replot_nasa_matched.py interpolates cell-centre values in x\nto x = 0.5461 m and adds the no-slip wall point.\nWindows analysis / retained-data root:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles\nInputs relative to that root:\nvalidation/outputs_nasa_matched_20000/data/{kwSST,SA}/profile_x0p5461.csv\nNASA Downloads/Cases/Str-Uns_{SST,SA}/FP4p5.BL.dat\nvalidation/outputs_nasa_matched_20000/validation_summary.json.\nScientific plotting functions: validation/compare_nasa_figures.py;\nmatching/extraction and preceding exports: validation/replot_nasa_matched.py.\nThe current export changes typography/layout; curve coordinates and axis\nlimits are checked against the original plotting functions by the script.\nAudit: coles_profile_font_provenance.json in this Figures directory.\nAll 11 source hashes were independently rechecked and match. The raw\nWSL iteration-20000 U and wallShearStress hashes for both cases also\nmatch the accepted validation_summary.json. Normalization uses its\nU_inf = 703.2894492195271 m/s; NASA feet/ft/s are converted to SI.\nExperimental input: NASA Downloads/Results/FP4p5-BL.dat, Experiment zone,\nrelative to the Windows analysis root above; supplied Coles profile.\nPlotting entry point: compare_nasa_figures.plot_fig7() (u vs log wall distance).\nPreceding export: validation/outputs_nasa_matched_20000/fig7_u_vs_experiment.pdf\nunder either the Windows or WSL Coles root. The current manuscript file\nwas subsequently re-exported by plot_coles_profile_fonts.py.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    },
+    {
+      "source_tex": "thesis/04_OpenFOAM_HiSA_VnV/06_Adiabatic_Turbulent_Boundary_Layer_Profiles.tex",
+      "figure_line": 285,
+      "labels": [
+        "fig:coles-skin-friction"
+      ],
+      "graphics": [
+        {
+          "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/06_Coles_skin_friction.pdf",
+          "include_line": 310,
+          "sha256": "fcbb0236d08c1ea329bcde05cf49880c32cce933a705ea6be865cce79b0498a1",
+          "status": "plotted_data_traced",
+          "provenance_notes": "Figure provenance (audited 2026-10-19; WSL original, retained Windows copy):\nIncluded figure: 06_Coles_skin_friction.pdf in this Figures directory.\nExact original export (SHA-256 matched):\n/home/mgnadlinger/Coles_TurbZPGFP/validation/outputs_nasa_matched_20000/fig8_cfx.pdf\nfcbb0236d08c1ea329bcde05cf49880c32cce933a705ea6be865cce79b0498a1.\nExport / extraction script:\n/home/mgnadlinger/Coles_TurbZPGFP/validation/replot_nasa_matched.py\n(iteration 20000, accepted convergence; plot_fig8 from compare_nasa_figures.py).\nWindows copy of scripts, exported data and NASA reference tables:\n/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles\nData relative to that Windows root:\nvalidation/outputs_nasa_matched_20000/data/{kwSST,SA}/skin_friction.csv\nNASA Downloads/Cases/Str-Uns_{SST,SA}/FP4p5.Cf.dat\nNASA Downloads/Results/FP4p5-Cf.dat (three Coles fence-trip zones).\nRaw WSL cases: /home/mgnadlinger/Coles_TurbZPGFP/{kwSST,SA}/\n20000/wallShearStress and constant/polyMesh, wallViscous patch.\nCfx = abs(tau_x)/q_inf; q_inf = 9572.46608287679 Pa.\nExperimental Rex is converted to x with Re/m = 6983542.88149546.\nRaw iteration-20000 U and wallShearStress hashes were rechecked against\nvalidation/outputs_nasa_matched_20000/validation_summary.json for both\ncases and match. The manuscript PDF is an exact copy of the original\nexport; the two velocity plots underwent a later typography update.\nEnd figure provenance.",
+          "in_data_audit_scope": true
+        }
+      ]
+    }
+  ],
+  "retained_source_rasters": [
+    {
+      "image": "thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/ma10_original.png",
+      "sha256": "67edd4759b26fe882ce71cbc2493d7f75658c5ab507ca791e8fa0b0ae4b590c4",
+      "used_by": "04_MalikAnderson_Ma10_perfGas_lamBL_profiles.png through plot_malik_profiles.py",
+      "provenance": "Detailed archive/data/raster notes accompany fig:laminar-bl-malik-ma10-perfect in 04_Laminar_Boundary_Layer_Profiles.tex."
+    }
+  ],
+  "unreferenced_top_level_assets": {
+    "audited_date": "2026-10-19",
+    "scope": "Unused top-level PNG/PDF assets under thesis/04_OpenFOAM_HiSA_VnV/Figures; chapter-wide *.tex reference scan, ignoring comments; extensionless graphics resolve PDF before PNG.",
+    "top_level_binary_asset_count": 69,
+    "referenced_graphic_count": 42,
+    "unused_top_level_asset_count": 27,
+    "entries": [
+      {
+        "image_filename": "02_sa_shock_mesh_conv.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/home/mgnadlinger/wedge_with_TM/analysis/sa_shock_mesh_conv.png",
+          "/home/mgnadlinger/wedge_with_TM/analysis/analyze_tm_convergence.py",
+          "/home/mgnadlinger/wedge_with_TM/analysis/convergence_values.csv",
+          "/home/mgnadlinger/wedge_with_TM/SA_DensityCorrected_Ma10_15deg_3k",
+          "/home/mgnadlinger/wedge_with_TM/SA_DensityCorrected_Ma10_15deg_192k"
+        ],
+        "evidence": [
+          "Exact RGB crop of the retained original PNG with 86 top rows removed; all remaining pixels match.",
+          "Same eight-case convergence analysis used for the active combined panel; native final fields at iteration 10000 and all four meshes are retained."
+        ],
+        "active_sibling_or_replacement": "02_tm_shock_mesh_conv.png",
+        "asset_sha256": "9c8516fa568895600751f1563bdb3376ae420f726ac25234b3fba4adc4bc3d92",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "02_sst_shock_mesh_conv.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/home/mgnadlinger/wedge_with_TM/analysis/sst_shock_mesh_conv.png",
+          "/home/mgnadlinger/wedge_with_TM/analysis/analyze_tm_convergence.py",
+          "/home/mgnadlinger/wedge_with_TM/analysis/convergence_values.csv",
+          "/home/mgnadlinger/wedge_with_TM/kOmegaSST_Ma10_15deg_3k",
+          "/home/mgnadlinger/wedge_with_TM/kOmegaSST_Ma10_15deg_192k"
+        ],
+        "evidence": [
+          "Exact RGB crop of the retained original PNG with 87 top rows removed; all remaining pixels match.",
+          "Same eight-case convergence analysis used for the active combined panel; native final fields at iteration 10000 and all four meshes are retained."
+        ],
+        "active_sibling_or_replacement": "02_tm_shock_mesh_conv.png",
+        "asset_sha256": "c649f9296c06e475133414edc23582188d9729010a5634137667ff3589f88227",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "03_Hornung_iteration_convergence.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Hornung/mesh_sens/hornung_iteration_convergence.png",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Hornung/mesh_sens/plot_hornung_iteration_convergence.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Hornung/mesh_sens/iteration_convergence",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py"
+        ],
+        "evidence": [
+          "Unused earlier raster of the same source analysis as the active PDF. Original plot/script and pressure-profile data are retained.",
+          "The retained original PNG and chapter PNG differ in dimensions/RGB; exact subsequent raster editing has not been established."
+        ],
+        "active_sibling_or_replacement": "03_Hornung_iteration_convergence.pdf",
+        "verified_source_family_note": "Figure provenance (audited 2026-10-19): PDF Creator identifies\nthesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py;\nloads ValData/FIN/Hornung/mesh_sens/plot_hornung_iteration_convergence.py.\nLocal profiles: iteration_convergence/profiles/{65k,260k,1M_eq_260ksym}/*k.csv;\nraw fields, sample lines and extractor are documented in\niteration_convergence/{extraction_provenance.json,extract_hornung_iteration_profiles.py}.\n8M inputs: 8M_eq_3M/hpc_results_18996/{shock_standoff.csv,shock_history/provenance.csv};\noriginal WSL case: /home/mgnadlinger/Hornung_8M_restart_242276_128cores_20260924/results/18996/.\nSome intermediate HPC pressure fields are missing; all plotted history observations\nand their extraction provenance are retained. Marker thinning preserves the curves.",
+        "asset_sha256": "52b861119850236befe58c9bdacbf76975d174762418a691d966c26fac5e7564",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_retention_notes": [
+          "Some intermediate Hornung 8M HPC pressure fields are missing; the sampled history observations and extraction provenance are retained."
+        ],
+        "artwork_or_render_notes_outside_scope": [
+          "Exact crop/export processing of this older raster remains unverified."
+        ],
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "03_Hornung_mesh_convergence.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Hornung/mesh_sens/hornung_mesh_convergence.png",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Hornung/mesh_sens/plot_hornung_convergence.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Hornung/mesh_sens",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py"
+        ],
+        "evidence": [
+          "Unused earlier raster of the same source analysis as the active PDF. Original plot/script and pressure-profile data are retained.",
+          "The retained original PNG and chapter PNG differ in dimensions/RGB; exact subsequent raster editing has not been established."
+        ],
+        "active_sibling_or_replacement": "03_Hornung_mesh_convergence.pdf",
+        "verified_source_family_note": "Figure provenance (audited 2026-10-19): PDF Creator identifies\nthesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py.\nData root: ValData/FIN/Hornung/mesh_sens/; imported generator:\nplot_hornung_convergence.py; inputs: 16k/25k.csv, 65k/50k.csv, 260k/100k.csv,\n1M_eq_260ksym/280k.csv, 4M_eq_920ksym/141k.csv, and\n8M_eq_3M/hpc_results_18996/{shock_standoff.csv,shock_history/provenance.csv}.\nSource manifest: hornung_mesh_convergence_data.csv; HPC import details and\nits distinct midpoint-gradient detector are in hpc_results_18996/IMPORT_NOTES.md.\nFull 8M fields/mesh: /home/mgnadlinger/Hornung_8M_restart_242276_128cores_20260924/results/18996/.\nThe included PDF is a replot; unavailable intermediate HPC fields are not reconstructed.",
+        "asset_sha256": "59c9a87fb1e3f8c7614916168135da2742b7debde802f8ba9ead4702f5bff1f8",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_retention_notes": [
+          "Some intermediate Hornung 8M HPC pressure fields are missing; the sampled history observations and extraction provenance are retained."
+        ],
+        "artwork_or_render_notes_outside_scope": [
+          "Exact crop/export processing of this older raster remains unverified."
+        ],
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "03_Kim_iteration_convergence.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/kim_iteration_convergence.png",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/plot_kim_iteration_convergence.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/iteration_convergence",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py"
+        ],
+        "evidence": [
+          "Unused earlier raster of the same source analysis as the active PDF. Original plot/script and pressure-profile data are retained.",
+          "The retained original PNG and chapter PNG differ in dimensions/RGB; exact subsequent raster editing has not been established."
+        ],
+        "active_sibling_or_replacement": "03_Kim_iteration_convergence.pdf",
+        "verified_source_family_note": "Figure provenance (audited 2026-10-19): PDF Creator identifies\nthesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py;\nloads ValData/FIN/Kim/01 mesh_sens/plot_kim_iteration_convergence.py.\nPlotted inputs: iteration_convergence/profiles/{250k,2p3M}/*k.csv under that\nsource root. Raw fields and sampling details are enumerated in\niteration_convergence/extraction_provenance.json; extractor:\niteration_convergence/extract_kim_iteration_profiles.py. All retained snapshots\nare used; the PDF is a layout/font replot of the original history analysis.",
+        "asset_sha256": "997cd46ab0ad695fb05d1a4eff1272e0ab8e3a82cc95c009715e916b8dfa28fe",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "artwork_or_render_notes_outside_scope": [
+          "Exact crop/export processing of this older raster remains unverified."
+        ],
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "03_Kim_mesh_convergence.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/mesh_convergence_kim.png",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/plot_kim_convergence.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py"
+        ],
+        "evidence": [
+          "Unused earlier raster of the same source analysis as the active PDF. Original plot/script and pressure-profile data are retained.",
+          "The retained original PNG and chapter PNG differ in dimensions/RGB; exact subsequent raster editing has not been established."
+        ],
+        "active_sibling_or_replacement": "03_Kim_mesh_convergence.pdf",
+        "verified_source_family_note": "Figure provenance (audited 2026-10-19): PDF Creator identifies\nthesis/04_OpenFOAM_HiSA_VnV/Figures/plot_shock_convergence.py.\nData root: ValData/FIN/Kim/01 mesh_sens/; native final profiles:\n{6k,16k,38k,90k,250k}/25k.csv, 750k/20k.csv and 2p3M/45k.csv.\nEach corresponding case retains its pressure field and constant/polyMesh.\nExtraction helpers: plot_stagline_pressure_iters.py in the same source root.\nEarlier export: mesh_convergence_kim.{png,pdf}; the included PDF is a replot.",
+        "asset_sha256": "afd989daaed2db3ef127fdc7b87e321a3debdb5da7370a6609f615860adcb6ec",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "artwork_or_render_notes_outside_scope": [
+          "Exact crop/export processing of this older raster remains unverified."
+        ],
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "03_Kim_stag_line_shock_identified_coarse.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/6k/stagline_pressure_profiles.png",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/plot_stagline_pressure_iters.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/6k/25k.csv",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/6k/25000/p",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/6k/constant/polyMesh"
+        ],
+        "evidence": [
+          "Earlier PNG alternative to the active wider PDF; original stagnation-line samples and raw pressure field/mesh are retained.",
+          "PNG differs from the retained source raster; it is associated with the source family, without asserting an exact export match."
+        ],
+        "active_sibling_or_replacement": "03_Kim_stag_line_shock_identified_coarse_wide.pdf",
+        "asset_sha256": "38efb575621bd1c30008a71ed672e5e0f2ab7feb4282fa23dbff4ff89ec27431",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "artwork_or_render_notes_outside_scope": [
+          "Exact old PNG crop/export operation remains unverified."
+        ],
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "03_Kim_stag_line_shock_identified_fine.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/2p3M/stagline_pressure_profiles.png",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/plot_stagline_pressure_iters.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/2p3M/45k.csv",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/2p3M/45000/p",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/Kim/01 mesh_sens/2p3M/constant/polyMesh"
+        ],
+        "evidence": [
+          "Earlier PNG alternative to the active wider PDF; original stagnation-line samples and raw pressure field/mesh are retained.",
+          "PNG differs from the retained source raster; it is associated with the source family, without asserting an exact export match."
+        ],
+        "active_sibling_or_replacement": "03_Kim_stag_line_shock_identified_fine_wide.pdf",
+        "asset_sha256": "66815537da0df15d2d99d0401ec068e3381a0a50fe18b63e5dec8bb4f5121e13",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "artwork_or_render_notes_outside_scope": [
+          "Exact old PNG crop/export operation remains unverified."
+        ],
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "04_MalikAnderson_Ma10_perfGas_lamBL_profiles.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_malik_profiles.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/MalikAnderson_FirstShenanigans.7z",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/font_update_provenance.json"
+        ],
+        "evidence": [
+          "PDF sibling emitted by the same current typography export as the active PNG; uses its same verified underlying station profiles/reference data."
+        ],
+        "active_sibling_or_replacement": "04_MalikAnderson_Ma10_perfGas_lamBL_profiles.png",
+        "archive_members": {
+          "data_root": "MnA_ZPGFP_Ma10_coarse/Run3/",
+          "station_CSVs": [
+            "x0p05m.csv",
+            "x0p1m.csv",
+            "x0p2m.csv",
+            "x0p4m.csv",
+            "x0p606m.csv"
+          ],
+          "raw_fields": "4000/{U,T} and constant/polyMesh"
+        },
+        "asset_sha256": "8d6931d2e0165397a4e641b5ce101f1e7d1c48cbd93377e2ac07474ceccbe3cc",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "artwork_or_render_notes_outside_scope": [
+          "Original five-station Ma10 plotting script remains unlocated; the current typography export retains the original curve raster. Five raw station CSVs and native fields were recovered from the 7z archive."
+        ],
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "04_MalikAnderson_Ma15_imperfGas_lamBL_profiles.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_malik_profiles.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/Ma15_impG/03 imperfectGas(newSuth,LEshock)/malik_anderson_plot.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/font_update_provenance.json"
+        ],
+        "evidence": [
+          "PDF sibling emitted by the same current typography export as the active PNG; uses its same verified underlying station profiles/reference data."
+        ],
+        "active_sibling_or_replacement": "04_MalikAnderson_Ma15_imperfGas_lamBL_profiles.png",
+        "archive_members": null,
+        "asset_sha256": "4755ccfe43089c1d123df0aae9800bec1b04818c918e028e20c3462702faf0f4",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "04_MalikAnderson_Ma15_perfGas_lamBL_profiles.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_malik_profiles.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma15/01 perfectGas/malik_anderson_plot.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/malik_plot_sources/font_update_provenance.json"
+        ],
+        "evidence": [
+          "PDF sibling emitted by the same current typography export as the active PNG; uses its same verified underlying station profiles/reference data."
+        ],
+        "active_sibling_or_replacement": "04_MalikAnderson_Ma15_perfGas_lamBL_profiles.png",
+        "archive_members": null,
+        "asset_sha256": "c8ca046488d065b42fbe7b81cb3280611715eadf8433badc393020edb3ab85cc",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "04_Marxen_lamBL_profiles.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_marxen_profiles.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/plot_marxen_profileinlet.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/DNS/Marxen/profile_inlet/Run1",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/marxen_profile_font_provenance.json"
+        ],
+        "evidence": [
+          "PDF sibling emitted from the same current plot as the active PNG; four station CSVs and original reader/reference arrays are retained."
+        ],
+        "active_sibling_or_replacement": "04_Marxen_lamBL_profiles.png",
+        "asset_sha256": "db46896e0b507baff043b7b8546ac9458932e167d55a9a5077ff692bbc2321a6",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "04_TypicalMesh_zoomed_LE.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/04_TypicalMesh_zoomed_LE.png",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/MalikAnderson_FirstShenanigans.7z",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/00 LamZPGFP/OLDMalikAnderson/Ma10/00 mesh/MalikAnderson_ZPGFP_coarse.ansa",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/FIN/MalikAnderson/00 mesh"
+        ],
+        "evidence": [
+          "Unused annotated flat-plate mesh illustration, visually showing 1000 mm streamwise extent and 110 mm height.",
+          "Retained Malik--Anderson ANSA/OpenFOAM mesh families are available; no unique model or screenshot match was established. Archive Run3/constant/polyMesh is a family-level candidate only."
+        ],
+        "traceability": "mesh-family-candidates-only",
+        "asset_sha256": "f52872c694e6bc28d2581d7ea34fa91902d02e08c8768cf503cfb3f7c61d5de5",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": false,
+        "artwork_or_render_notes_outside_scope": [
+          "Exact underlying mesh variant, editable annotated artwork, screenshot/camera and final export have not been recovered. Do not assign this illustration to a unique simulation mesh."
+        ],
+        "data_traceability_status": "outside_requested_scope"
+      },
+      {
+        "image_filename": "05_1550_dx_1p5e-1_wall_normal_first_cell_acoustic_re.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/1550_dx_1p5e-1_wall_normal_first_cell_acoustic_re.png",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/plot_first_cell_acoustic_re.py",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/1550_dx_1p5e-1_wall_normal_first_cell_acoustic_re.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/1550_dx_1p5e-1_wall_normal_first_cell_acoustic_re.json",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/mesh_metrics.csv"
+        ],
+        "evidence": [
+          "Exact RGB crop of the retained original PNG: remove 110 top rows and 83 bottom rows.",
+          "All 64 raw snapshot paths enumerated in the source JSON exist; four cases use the recorded trapezoidal pseudo-iteration-window averages."
+        ],
+        "raw_snapshot_count": 64,
+        "existing_raw_snapshot_count": 64,
+        "raw_case_roots": [
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/dy1_1e-1_dx1p5e-1/1550_pinf",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/dy1_1e-2_dx1p5e-1/1550_pinf",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/dy1_2e-3_dx1p5e-1/1550_pinf",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/dy1_5e-4_dx1p5e-1/1550_pinf"
+        ],
+        "asset_sha256": "9cc8d55f39f1886c522472c36d194caf0eb714531e35bd729a73c430c250ed54",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "05_1550_dx_1p5e-1_wall_normal_first_cell_yplus.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/1550_dx_1p5e-1_wall_normal_first_cell_yplus.png",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/plot_first_cell_yplus.py",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/1550_dx_1p5e-1_wall_normal_first_cell_yplus.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/1550_dx_1p5e-1_wall_normal_first_cell_yplus.json",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/mesh_metrics.csv"
+        ],
+        "evidence": [
+          "Exact RGB crop of the retained original PNG: remove 113 top rows and 0 bottom rows.",
+          "All 64 raw snapshot paths enumerated in the source JSON exist; four cases use the recorded trapezoidal pseudo-iteration-window averages."
+        ],
+        "raw_snapshot_count": 64,
+        "existing_raw_snapshot_count": 64,
+        "raw_case_roots": [
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/dy1_1e-1_dx1p5e-1/1550_pinf",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/dy1_1e-2_dx1p5e-1/1550_pinf",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/dy1_2e-3_dx1p5e-1/1550_pinf",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/dy1_5e-4_dx1p5e-1/1550_pinf"
+        ],
+        "asset_sha256": "b88cb38d18f7442802388f8b35f04a7bd8b87bb352dcb1c8fd32e4b51f0d624e",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "05_1550_dx_1p5e-1_wall_normal_stanton_windows.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/stack_stanton_figures.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/stacked_stanton/figure_provenance.json",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output_1550/1550_pinf_dy1_1e-1_dx_1p5e-1_wall.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output_1550/1550_pinf_dy1_1e-2_dx_1p5e-1_wall.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output_1550/1550_pinf_dy1_2e-3_dx_1p5e-1_wall.csv",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/stacked_stanton/1550_pinf_dy1_5e-4_dx_1p5e-1_wall.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/Digitization/Cao_Transition to turbulence/Stanton_Figure4b.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_cao.py",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/validate_cao.py"
+        ],
+        "evidence": [
+          "Unused PDF sibling of the active stacked PNG. PDF SHA-256 matches the retained figure-provenance audit.",
+          "Raw surface snapshot paths/windows are described in the active sibling provenance."
+        ],
+        "active_sibling_or_replacement": "05_1550_dx_1p5e-1_wall_normal_stanton_windows.png",
+        "pdf_sha256_matches_audit": true,
+        "asset_sha256": "fd77e0677fb998bf7de40a14d3c495ca235ca74b70ce6bbb678feba90c461342",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "05_1550_dy1_2e-3_streamwise_stanton_windows.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/stack_stanton_figures.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/stacked_stanton/figure_provenance.json",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output_1550/1550_pinf_dy1_2e-3_dx_6e-1_wall.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output_1550/1550_pinf_dy1_2e-3_dx_3e-1_wall.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output_1550/1550_pinf_dy1_2e-3_dx_1p5e-1_wall.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/Digitization/Cao_Transition to turbulence/Stanton_Figure4b.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_cao.py",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/validate_cao.py"
+        ],
+        "evidence": [
+          "Unused PDF sibling of the active stacked PNG. PDF SHA-256 matches the retained figure-provenance audit.",
+          "Raw surface snapshot paths/windows are described in the active sibling provenance."
+        ],
+        "active_sibling_or_replacement": "05_1550_dy1_2e-3_streamwise_stanton_windows.png",
+        "pdf_sha256_matches_audit": true,
+        "asset_sha256": "2ba93fa708ac18ac2110e4c82771a6c424738b7e4912fbf338aad4df61fd024a",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "05_1550_pinf_boundary_layer_profiles.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_cao_profile_fonts.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/cao_profile_sources/source_provenance.json",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/cao_profile_sources/font_update_provenance.json",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/1550_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/legacy/dy1_1e-3_dx_1p5/1550_pinf/50000"
+        ],
+        "evidence": [
+          "Unused PDF sibling generated from the same current typography plot as the active PNG. Both profiles use the legacy first-cell-height 0.001 mm, streamwise-spacing 1.5 mm cases at saved iteration 50000."
+        ],
+        "active_sibling_or_replacement": "05_1550_pinf_boundary_layer_profiles.png",
+        "asset_sha256": "4240c6cfdf71562596bc9fe411cac47e057267079e9049a8516d2265c4544d76",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "05_760_pinf_boundary_layer_profiles.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_cao_profile_fonts.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/cao_profile_sources/source_provenance.json",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/cao_profile_sources/font_update_provenance.json",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_dy1_1e-3_dx_1p5_profile_x040mm.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/legacy/dy1_1e-3_dx_1p5/760_pinf/50000"
+        ],
+        "evidence": [
+          "Unused PDF sibling generated from the same current typography plot as the active PNG. Both profiles use the legacy first-cell-height 0.001 mm, streamwise-spacing 1.5 mm cases at saved iteration 50000."
+        ],
+        "active_sibling_or_replacement": "05_760_pinf_boundary_layer_profiles.png",
+        "asset_sha256": "251a9a9cc882e8a9199163252afe0515973805ee37847833c4886aa37b2c0f28",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "05_760_pinf_wall_coefficients.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_cao_low_re_stanton.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/cao_low_re_stanton_provenance.json",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_dy1_1e-3_dx_1p5_wall.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/full_sweep_output/760_pinf_reference_stanton.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/validate_cao.py",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/legacy/dy1_1e-3_dx_1p5/760_pinf"
+        ],
+        "evidence": [
+          "Unused PDF sibling emitted by the current single-panel Stanton replot; both current exports use the same two retained source CSVs as the active PNG."
+        ],
+        "active_sibling_or_replacement": "05_760_pinf_wall_coefficients.png",
+        "asset_sha256": "807d6af5acc65f9e4e43e302b661ce6b5712e1b87ee20e325f369eb9a5da1de4",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "05_first_cell_acoustic_re.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_acoustic_re_fonts.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/acoustic_re_sources/data.csv",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/acoustic_re_sources/original_audit.json",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/acoustic_re_sources/font_update.json",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/plot_first_cell_acoustic_re.py",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/1550_dx_1p5e-1_wall_normal_first_cell_acoustic_re.json"
+        ],
+        "evidence": [
+          "Unused PDF sibling of the current notation/font replot. Script emits PNG and PDF from the same figure and checks plotted-coordinate hashes against the retained source audit. Native diagnostic CSV and all 64 raw firstCellRe.dat snapshots are retained."
+        ],
+        "active_sibling_or_replacement": "05_first_cell_acoustic_re.png",
+        "asset_sha256": "63f881b73a931ea970fd66a1d335e1514a39e5662ebe04a4af500faeb42152de",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "05_matched_mesh_error_tables.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/matched_mesh_error_tables.png",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_cao.py",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/matched_mesh_errors_long.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/matched_mesh_error_tables.md",
+          "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/mesh_sensitivity_summary.json",
+          "/home/mgnadlinger/Cao_lamZPGFP/Digitization/Cao_Transition to turbulence/Stanton_Figure4b.csv"
+        ],
+        "evidence": [
+          "Byte-identical to the retained WSL original PNG. write_matched_error_outputs() generates this figure and its long-form data/Markdown tables.",
+          "The source summary records the external Cao 2-D base-flow reference and bubble geometry; underlying CFD inputs are the retained mesh-sensitivity case surface windows."
+        ],
+        "sha256": "046340fed1fcf10f73bccf7c317d118b84261d273569124c82085030416ffa42",
+        "asset_sha256": "046340fed1fcf10f73bccf7c317d118b84261d273569124c82085030416ffa42",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "05_pressure_profiles.pdf",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/plot_pressure_profiles.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/pressure_profiles/pressure_profile_provenance.json",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/pressure_profiles/pressure_1550Pa_x040mm.csv",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/pressure_profiles/pressure_760Pa_x040mm.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/dy1_2e-3_dx1p5e-1/1550_pinf/100000/p",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/legacy/dy1_1e-3_dx_1p5/760_pinf/50000/p"
+        ],
+        "evidence": [
+          "Unused two-pressure boundary-layer pressure comparison, extracted at x=40 mm from saved native final fields, without pseudo-iteration averaging.",
+          "Both source pressure fields and both extracted CSV SHA-256 values rechecked successfully against the provenance audit.",
+          "PDF matches the recorded export checksum."
+        ],
+        "recorded_export_sha256_matches": true,
+        "asset_sha256": "b51b9aa04e5b1633883cbfc9c1a51e7a6c645cc3b01a821f988370985cbc0d31",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "05_pressure_profiles.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/plot_pressure_profiles.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/pressure_profiles/pressure_profile_provenance.json",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/pressure_profiles/pressure_1550Pa_x040mm.csv",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/tmp/compression_corner_review/pressure_profiles/pressure_760Pa_x040mm.csv",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/dy1_2e-3_dx1p5e-1/1550_pinf/100000/p",
+          "/home/mgnadlinger/Cao_lamZPGFP/Cao et al/legacy/dy1_1e-3_dx_1p5/760_pinf/50000/p"
+        ],
+        "evidence": [
+          "Unused two-pressure boundary-layer pressure comparison, extracted at x=40 mm from saved native final fields, without pseudo-iteration averaging.",
+          "Both source pressure fields and both extracted CSV SHA-256 values rechecked successfully against the provenance audit.",
+          "PNG has a different checksum from the recorded export; underlying data and matching PDF remain available."
+        ],
+        "recorded_export_sha256_matches": false,
+        "asset_sha256": "4403d5bc6272c38404a6972301a239947c9318d2b21c2c39ef175f876a2f3790",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "artwork_or_render_notes_outside_scope": [
+          "Exact subsequent PNG raster edit/crop remains unrecorded."
+        ],
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "06_Coles_skin_friction.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/home/mgnadlinger/Coles_TurbZPGFP/validation/outputs_nasa_matched_20000/fig8_cfx.png",
+          "/home/mgnadlinger/Coles_TurbZPGFP/validation/replot_nasa_matched.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/validation/compare_nasa_figures.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/validation/outputs_nasa_matched_20000/data",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/NASA Downloads",
+          "/home/mgnadlinger/Coles_TurbZPGFP/kwSST/20000/wallShearStress",
+          "/home/mgnadlinger/Coles_TurbZPGFP/SA/20000/wallShearStress"
+        ],
+        "evidence": [
+          "Byte-identical to the retained WSL original PNG, an unused raster alternative to the active PDF; same iteration-20000 skin-friction data and NASA/experimental references."
+        ],
+        "active_sibling_or_replacement": "06_Coles_skin_friction.pdf",
+        "asset_sha256": "54c133759bcb634be34f57a733a38a42f7be775f7063d57597ede898a6008c27",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "06_Coles_velocity_experiment.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_coles_profile_fonts.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/coles_profile_font_provenance.json",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/validation/compare_nasa_figures.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/validation/replot_nasa_matched.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/validation/outputs_nasa_matched_20000/data",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/NASA Downloads",
+          "/home/mgnadlinger/Coles_TurbZPGFP/kwSST/20000",
+          "/home/mgnadlinger/Coles_TurbZPGFP/SA/20000"
+        ],
+        "evidence": [
+          "Unused PNG sibling emitted by the same current typography export as the active PDF. Retained audit confirms unchanged plotted coordinate hashes; NASA/reference tables, extracted station CSVs and native iteration-20000 fields are accessible."
+        ],
+        "active_sibling_or_replacement": "06_Coles_velocity_experiment.pdf",
+        "asset_sha256": "77b7104a282ced973315d19705f6eecde8b5c3ca2f937fccacaecc108a32d61c",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      },
+      {
+        "image_filename": "06_Coles_velocity_profiles.png",
+        "status": "unused by the chapter LaTeX files",
+        "source_paths": [
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/plot_coles_profile_fonts.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Docs_and_Presentations/Thesis_tex/thesis/04_OpenFOAM_HiSA_VnV/Figures/coles_profile_font_provenance.json",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/validation/compare_nasa_figures.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/validation/replot_nasa_matched.py",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/validation/outputs_nasa_matched_20000/data",
+          "/mnt/c/Users/MichaelGnadlinger/OneDrive - Hypersonica/Hypersonica Team - Documents/02 Technical/03 Flight physics/16 Theses/2026/01 Gnadl/Files/ValData/Tunel/03 TurbZPGFP/01 Coles/NASA Downloads",
+          "/home/mgnadlinger/Coles_TurbZPGFP/kwSST/20000",
+          "/home/mgnadlinger/Coles_TurbZPGFP/SA/20000"
+        ],
+        "evidence": [
+          "Unused PNG sibling emitted by the same current typography export as the active PDF. Retained audit confirms unchanged plotted coordinate hashes; NASA/reference tables, extracted station CSVs and native iteration-20000 fields are accessible."
+        ],
+        "active_sibling_or_replacement": "06_Coles_velocity_profiles.pdf",
+        "asset_sha256": "ab70f6e658a13483a9930856438cdc900fe715d5967275a70fa788a82cdc111a",
+        "missing_listed_source_paths": [],
+        "in_data_audit_scope": true,
+        "data_traceability_status": "plotted_data_traced"
+      }
+    ]
+  },
+  "data_retention_limitations": [
+    "All plotted Hornung 8M history observations and their extraction provenance are retained, together with final raw fields. Some intermediate raw HPC pressure fields are unavailable."
+  ]
+}

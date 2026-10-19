@@ -1,0 +1,13 @@
+\section{Criteria for successful performance}
+\label{sec:evaluation:success-criteria}
+% Writing prerequisite for Chapter 7: finalize the accuracy targets and their
+% rationale, including the plotted +/-5% DNS-relative target band. Distinguish
+% an engineering acceptance target from DNS uncertainty or reporting precision.
+
+Section~\ref{sec:evaluation:benchmark-cases} identifies uncertainties and ambiguities in the DNS references used for this assessment. In comparing RANS predictions with these references, as in related assessments such as that of Xue et al.~\cite{xue2024assessment}, a quantitative accuracy target is needed. This work adopts a \(\pm5\%\) DNS-relative error band as the target for wall-resolved heat-flux predictions. This band is an engineering acceptance criterion and neither represents the uncertainty of the individual DNS references nor defines a statistical confidence interval. The reference limitations discussed above must therefore be considered when judging agreement within this band.
+\par\medskip
+
+The target is motivated by the relative simplicity of attached ZPG flat-plate boundary layers and the accuracy already achieved by analytical approaches. Hasan et al.~\cite[Figure~2]{manzoor2024estimating}, for example, report heat-transfer errors mostly within \(\pm8\%\), with a maximum of \(10.3\%\), for a dataset that includes several of the benchmarks investigated here. Wall-resolved RANS should therefore aim to improve on this level of accuracy. For wall-function calculations, \(\pm10\%\) is adopted as the minimum acceptable heat-flux accuracy: for these ZPG cases, larger errors would leave the additional computational cost of CFD without a corresponding gain in heat-flux accuracy over the analytical approach.
+\par\medskip
+
+Beyond error magnitude, engineering use also requires an assessment of how consistently a method behaves. A systematic bias is easier to account for than an error that varies strongly and non-monotonically with sampling height or mesh spacing. This distinction helps frame the three analyses that follow: wall-resolved RANS discrepancies in Section~\ref{sec:comparative:zpg:wall-resolved-baselines}, wall-function closure errors in Section~\ref{sec:comparative:zpg:cross-comparison}, and spatial-discretization errors in Section~\ref{subsec:comparative:zpg:yplus-sensitivity}. For example, the wall-resolved heat-flux discrepancy for a given case may act primarily as a bias, while the closure and spatial discretization may introduce more irregular variations as the sampling height and mesh spacing change. The following sections examine these behaviours alongside the quantitative accuracy targets.

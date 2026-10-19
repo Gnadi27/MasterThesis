@@ -1,0 +1,220 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\geometry{margin=24mm}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em}
+\setlength{\emergencystretch}{2em}
+
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}
+\newcommand{\rhoe}{\rho_e}
+\newcommand{\ue}{u_e}
+\newcommand{\taUw}{\tau_w}
+\newcommand{\theC}{\theta_{\mathrm c}}
+\newcommand{\theS}{\theta_{\mathrm S}}
+\newtheorem{proposition}{Proposition}
+
+\title{Consistency of Compressible Momentum Thickness\\
+\large A short proof concerning Schlichting's Eqs. (10.92) and (10.96)}
+\author{Technical note}
+\date{August 7, 2026}
+
+\begin{document}
+\maketitle
+
+\paragraph{Scope.}
+Schlichting's momentum-integral equation, Eq. (10.92), is accepted as given,
+including the assumptions under which it was derived. The purpose is only to
+determine which profile integral can represent the momentum thickness in that
+equation. A fixed upper limit $h$ is taken in uniform edge flow; it may equally
+be replaced by the boundary-layer edge or by infinity.
+
+\begin{proposition}
+With the standard zero-defect normalization, the momentum thickness compatible
+with Schlichting's Eq. (10.92) is
+\begin{equation}
+ \boxed{\displaystyle
+ \delta_2=\theC=
+ \int_0^h\frac{\rho u}{\rhoe\ue}
+ \left(1-\frac{u}{\ue}\right)\dd y.}
+ \label{eq:conventional}
+\end{equation}
+The expression printed as Schlichting's Eq. (10.96), if read literally, is not
+generally compatible with Eq. (10.92) unless an additional density-defect term
+is retained.
+\end{proposition}
+
+\begin{proof}
+Schlichting's Eq. (10.92) is
+\begin{equation*}
+ \delta_2'
+ +\frac{\delta_2}{\ue}\ue'
+ \left(2+\frac{\delta_1}{\delta_2}-M_e^2\right)
+ =\frac{\taUw}{\rhoe\ue^2}.
+ \tag{S10.92}
+\end{equation*}
+The edge relation
+\begin{equation}
+ \frac{\rhoe'}{\rhoe}=-M_e^2\frac{\ue'}{\ue}
+ \label{eq:edge}
+\end{equation}
+is already implicit in the $-M_e^2$ term. Multiplication of Eq. (S10.92) by
+$\rhoe\ue^2$, followed by the product rule and Eq.~\eqref{eq:edge}, gives
+\begin{equation}
+ \boxed{\displaystyle
+ \taUw=\frac{\dd}{\dd x}(\rhoe\ue^2\delta_2)
+       +\rhoe\ue\delta_1\ue'.}
+ \label{eq:Sconservative}
+\end{equation}
+
+It remains to identify the first term physically. Define
+\[
+ I_m=\int_0^h\rho u\dd y,
+ \qquad
+ I_p=\int_0^h\rho u^2\dd y.
+\]
+Integration of steady mass and streamwise momentum conservation through the
+boundary layer gives
+\begin{equation}
+ I_m'+\rhoe v_e=0,
+ \qquad
+ I_p'+\rhoe\ue v_e=-h p_e'-\taUw.
+ \label{eq:integrated}
+\end{equation}
+Using the inviscid edge relation $p_e'=-\rhoe\ue\ue'$ to eliminate $p_e'$, and
+using the first of Eqs.~\eqref{eq:integrated} to eliminate $v_e$, yields
+\begin{equation}
+ \taUw=\frac{\dd}{\dd x}(\ue I_m-I_p)
+       +\ue'(\rhoe\ue h-I_m).
+ \label{eq:raw}
+\end{equation}
+Now introduce Schlichting's displacement thickness, Eq. (10.95),
+\begin{equation}
+ \delta_1=\int_0^h
+ \left(1-\frac{\rho u}{\rhoe\ue}\right)\dd y,
+ \label{eq:delta1}
+\end{equation}
+and note that
+\begin{equation}
+ \ue I_m-I_p
+ =\int_0^h\rho u(\ue-u)\dd y\equiv J.
+ \label{eq:J}
+\end{equation}
+Equation~\eqref{eq:raw} therefore becomes the physical momentum-deficit balance
+\begin{equation}
+ \boxed{\displaystyle
+ \taUw=J'+\rhoe\ue\delta_1\ue'.}
+ \label{eq:physical}
+\end{equation}
+
+Equations~\eqref{eq:Sconservative} and \eqref{eq:physical} contain identical
+wall-stress and displacement-thickness terms. Hence
+\begin{equation}
+ \frac{\dd}{\dd x}(\rhoe\ue^2\delta_2-J)=0.
+ \label{eq:comparison}
+\end{equation}
+The standard normalization that both quantities vanish with the momentum
+deficit removes the possible $x$-independent constant. Thus
+\[
+ \rhoe\ue^2\delta_2=J
+ =\int_0^h\rho u(\ue-u)\dd y,
+\]
+which, after division by $\rhoe\ue^2$, proves Eq.~\eqref{eq:conventional}.
+
+For comparison, a literal reading of Schlichting's Eq. (10.96) defines
+\begin{equation*}
+ \theS=\int_0^h\frac{\rho u}{\rhoe\ue}
+ \left(1-\frac{\rho u}{\rhoe\ue}\right)\dd y.
+ \tag{S10.96}
+\end{equation*}
+Multiplying the two candidate definitions by $\rhoe\ue^2$ gives
+\begin{align}
+ \rhoe\ue^2\theC
+ &=\int_0^h(\rho u\ue-\rho u^2)\dd y,
+ \label{eq:correctflux}\\
+ \rhoe\ue^2\theS
+ &=\int_0^h\left(\rho u\ue-\frac{\rho^2u^2}{\rhoe}\right)\dd y.
+ \label{eq:wrongflux}
+\end{align}
+The momentum equation transports $\rho u^2$, as present in
+Eq.~\eqref{eq:correctflux}, not $\rho^2u^2/\rhoe$ as present in
+Eq.~\eqref{eq:wrongflux}. Therefore Eq. (S10.96) is not the momentum-deficit
+coefficient in Eq.~\eqref{eq:physical} for a general variable-density profile.
+\end{proof}
+
+\paragraph{Exact consequence of using Eq. (S10.96).}
+Let
+\begin{equation}
+ \Delta\theta\equiv\theS-\theC
+ =\int_0^h\frac{\rho u}{\rhoe\ue}\frac{u}{\ue}
+ \left(1-\frac{\rho}{\rhoe}\right)\dd y.
+ \label{eq:difference}
+\end{equation}
+Since $\theC=\theS-\Delta\theta$, the correct balance becomes
+\begin{equation}
+ \taUw=\frac{\dd}{\dd x}(\rhoe\ue^2\theS)
+ +\rhoe\ue\delta_1\ue'
+ -\frac{\dd}{\dd x}(\rhoe\ue^2\Delta\theta).
+ \label{eq:corrected}
+\end{equation}
+Equivalently, Eq. (10.92) written with $\theS$ requires the residual
+\begin{equation}
+ \boxed{\displaystyle
+ \mathcal R_S=\frac{1}{\rhoe\ue^2}
+ \frac{\dd}{\dd x}(\rhoe\ue^2\Delta\theta)
+ =\Delta\theta'+(2-M_e^2)\frac{\ue'}{\ue}\Delta\theta.}
+ \label{eq:residual}
+\end{equation}
+Constant density is a sufficient special case for $\Delta\theta=0$; it is not
+an assumption made in the proof.
+
+\paragraph{Assumptions used.}
+Equation (S10.92) and its original assumptions are accepted. The short
+derivation of Eq.~\eqref{eq:physical} uses the same standard ingredients:
+steady two-dimensional thin-boundary-layer conservation, a stationary
+impermeable wall, a uniform edge state, no streamwise body force, and the
+inviscid edge momentum relation. Equation~\eqref{eq:edge}, already encoded in
+Eq. (S10.92), is the additional isentropic edge relation needed for its
+Mach-number form. No constant-density, zero-pressure-gradient, or thermal-wall
+assumption is introduced.
+
+\paragraph{Cross-check with Schlichting.}
+Equation~\eqref{eq:delta1} is exactly Schlichting's Eq. (10.95), while
+Eq. (S10.92) is his Eq. (10.92). His Eqs. (10.97) and (10.98) also retain the
+expected pattern of a mass-flux weight multiplied by a deficit in the
+transported quantity. Independent standard references print
+Eq.~\eqref{eq:conventional}: White and Majdalani, Eq. (7-75), and Anderson,
+Eq. (6.137)~\cite{White2022,Anderson2006}. These checks localize the
+inconsistency to the second density factor in the printed Eq. (10.96). The
+argument proves incompatibility of the two printed equations; whether the
+cause is a typographical error is an editorial question.
+
+\begin{thebibliography}{9}
+\small
+
+\bibitem{Schlichting2017}
+H. Schlichting and K. Gersten,
+\emph{Boundary-Layer Theory}, 9th ed., Springer, 2017,
+Eqs. (10.92)--(10.98).
+
+\bibitem{White2022}
+F. M. White and J. Majdalani,
+\emph{Viscous Fluid Flow}, 4th ed., McGraw Hill, 2022,
+Sec. 7-4.2, Eq. (7-75), p. 418.
+
+\bibitem{Anderson2006}
+J. D. Anderson, Jr.,
+\emph{Hypersonic and High-Temperature Gas Dynamics}, 2nd ed., AIAA, 2006,
+Sec. 6.7.7, Eq. (6.137), p. 333.
+
+\end{thebibliography}
+
+\end{document}

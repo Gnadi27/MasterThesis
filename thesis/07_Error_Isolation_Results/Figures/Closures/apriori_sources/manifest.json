@@ -1,0 +1,263 @@
+{
+  "description": "Byte-for-byte copies of the original saved inverse-solver sweeps, used only for layout changes. Original errors, sampling points and validity filters are retained.",
+  "figures": [
+    {
+      "case": "M6Tw025",
+      "model": "Li",
+      "output": "Closures/a-priori_Li_M6Tw025",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/analyze_li_wall_function_profile_Zhang.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M6Tw025_Stat_Zhang/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "two_point",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M6Tw025_Stat_Zhang/second_cell_sweep.csv",
+          "copy": "Li/M6Tw025_Stat_Zhang/second_cell_sweep.csv",
+          "sha256": "512a2b554cbd13f9be82e144458c7212d610dfec8ab381918d3924c98dc79693",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        },
+        {
+          "role": "edge",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M6Tw025_Stat_Zhang_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "copy": "Li/M6Tw025_Stat_Zhang_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "sha256": "420ceb2dd771676aeb779eb5076aa93c83986bf7b9741621bc24d15a47543dbc",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        }
+      ],
+      "overlay_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/plot_m6tw025_flux_reference_overlay.py"
+    },
+    {
+      "case": "M6Tw025",
+      "model": "Griffin",
+      "output": "Closures/a-priori_Griffin_M6Tw025",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/analyze_griffin_wall_function_profile_Zhang.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/M6Tw025_Stat_Zhang/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "matching",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/M6Tw025_Stat_Zhang/matching_point_sweep.csv",
+          "copy": "Griffin/M6Tw025_Stat_Zhang/matching_point_sweep.csv",
+          "sha256": "42141c1b03f6d6a803ba6bed1faaa23b5322efcf75469f5d9f2701e713a4a901",
+          "height_column": "matching_y_plus",
+          "validity_column": "converged"
+        }
+      ]
+    },
+    {
+      "case": "LowHM3",
+      "model": "Li",
+      "output": "Closures/a-priori_Li_LowHM3",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/analyze_li_wall_function_profile_Duan.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/LowH_M3_Duan_Li/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "two_point",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/LowH_M3_Duan_Li/second_cell_sweep.csv",
+          "copy": "Li/LowH_M3_Duan_Li/second_cell_sweep.csv",
+          "sha256": "5cd0000f9db721075f1bef359730ccad9f68f3c14b2fb7f8d7c70b56f1c45028",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        },
+        {
+          "role": "edge",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/LowH_M3_Duan_Li_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "copy": "Li/LowH_M3_Duan_Li_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "sha256": "c89bd0990418b159dffdd5ea1c2166439b474209c417caa9fabc22f686aa6f32",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        }
+      ],
+      "overlay_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/plot_m6tw025_flux_reference_overlay.py"
+    },
+    {
+      "case": "LowHM3",
+      "model": "Griffin",
+      "output": "Closures/a-priori_Griffin_LowHM3",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/analyze_griffin_wall_function_profile_Duan_Part4.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/LowH_M3_Duan/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "matching",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/LowH_M3_Duan/matching_point_sweep.csv",
+          "copy": "Griffin/LowH_M3_Duan/matching_point_sweep.csv",
+          "sha256": "c3c10abe25f34fae196dc3f645572741b676865ac666dcca959c1bd3c66c2010",
+          "height_column": "matching_y_plus",
+          "validity_column": "converged"
+        }
+      ]
+    },
+    {
+      "case": "M2p5",
+      "model": "Li",
+      "output": "Appendix/a-priori/02_a-priori_Li_M2p5",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/analyze_li_wall_function_profile_Zhang.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M2p5_Stat_Zhang/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "two_point",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M2p5_Stat_Zhang/second_cell_sweep.csv",
+          "copy": "Li/M2p5_Stat_Zhang/second_cell_sweep.csv",
+          "sha256": "9a6220145f4c0aab08e8156c2e0d62789885c3e7f607e44432166285bae08673",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        },
+        {
+          "role": "edge",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M2p5_Stat_Zhang_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "copy": "Li/M2p5_Stat_Zhang_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "sha256": "37dba8f118f086f9f1b2d8abe8d8bd9f88bf7c905e2037874478aa4d69e1a8b5",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        }
+      ],
+      "overlay_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/plot_m6tw025_flux_reference_overlay.py"
+    },
+    {
+      "case": "M2p5",
+      "model": "Griffin",
+      "output": "Appendix/a-priori/Griffin_M2p5",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/analyze_griffin_wall_function_profile_Zhang.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/M2p5_Stat_Zhang/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "matching",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/M2p5_Stat_Zhang/matching_point_sweep.csv",
+          "copy": "Griffin/M2p5_Stat_Zhang/matching_point_sweep.csv",
+          "sha256": "ea6700cc42d1585c5536420627eb451b1270a879618f6416a6406a0f0ddab033",
+          "height_column": "matching_y_plus",
+          "validity_column": "converged"
+        }
+      ]
+    },
+    {
+      "case": "M6Tw076",
+      "model": "Li",
+      "output": "Appendix/a-priori/02_a-priori_Li_M6Tw076",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/analyze_li_wall_function_profile_Zhang.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M6Tw076_Stat_Zhang/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "two_point",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M6Tw076_Stat_Zhang/second_cell_sweep.csv",
+          "copy": "Li/M6Tw076_Stat_Zhang/second_cell_sweep.csv",
+          "sha256": "e911fd1b68b62fe5ebfd2f18b7e9dd0e8a07701a9435c5cd87143e1cde9cf183",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        },
+        {
+          "role": "edge",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M6Tw076_Stat_Zhang_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "copy": "Li/M6Tw076_Stat_Zhang_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "sha256": "35cacd37b4c49c9d509f88215c66703eba551e670f866a2bcf7c763db30c13f2",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        }
+      ],
+      "overlay_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/plot_m6tw025_flux_reference_overlay.py"
+    },
+    {
+      "case": "M6Tw076",
+      "model": "Griffin",
+      "output": "Appendix/a-priori/Griffin_M6Tw076",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/analyze_griffin_wall_function_profile_Zhang.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/M6Tw076_Stat_Zhang/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "matching",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/M6Tw076_Stat_Zhang/matching_point_sweep.csv",
+          "copy": "Griffin/M6Tw076_Stat_Zhang/matching_point_sweep.csv",
+          "sha256": "7b0313312e934d21da2f2285d4fce3922994516979b9d8472d3548168c624b9a",
+          "height_column": "matching_y_plus",
+          "validity_column": "converged"
+        }
+      ]
+    },
+    {
+      "case": "M8Tw048",
+      "model": "Li",
+      "output": "Appendix/a-priori/02_a-priori_Li_M8Tw048",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/analyze_li_wall_function_profile_Zhang.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M8Tw048_Stat_Zhang/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "two_point",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M8Tw048_Stat_Zhang/second_cell_sweep.csv",
+          "copy": "Li/M8Tw048_Stat_Zhang/second_cell_sweep.csv",
+          "sha256": "7823986b0a504fb857ac8e8eb2307ef46c37c6fc5ba648518fb45ce347b402fb",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        },
+        {
+          "role": "edge",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M8Tw048_Stat_Zhang_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "copy": "Li/M8Tw048_Stat_Zhang_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "sha256": "63035e55f569905ca560f95e25d1d28b9f03aac416496788347f689eac177e94",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        }
+      ],
+      "overlay_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/plot_m6tw025_flux_reference_overlay.py"
+    },
+    {
+      "case": "M8Tw048",
+      "model": "Griffin",
+      "output": "Appendix/a-priori/Griffin_M8Tw048",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/analyze_griffin_wall_function_profile_Zhang.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/M8Tw048_Stat_Zhang/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "matching",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/M8Tw048_Stat_Zhang/matching_point_sweep.csv",
+          "copy": "Griffin/M8Tw048_Stat_Zhang/matching_point_sweep.csv",
+          "sha256": "841d7a79cb7258b18e388a9bce5f83c0cc9b0b5125c3afa72532f5cbe7e12a9f",
+          "height_column": "matching_y_plus",
+          "validity_column": "converged"
+        }
+      ]
+    },
+    {
+      "case": "M14Tw018",
+      "model": "Li",
+      "output": "Appendix/a-priori/02_a-priori_Li_M14Tw018",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/analyze_li_wall_function_profile_Zhang.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M14Tw018_Stat_Zhang/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "two_point",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M14Tw018_Stat_Zhang/second_cell_sweep.csv",
+          "copy": "Li/M14Tw018_Stat_Zhang/second_cell_sweep.csv",
+          "sha256": "7c0002c9a255c2cd7109d0bad12664cf4a3b6e05c379850bab7168c09dbad281",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        },
+        {
+          "role": "edge",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/M14Tw018_Stat_Zhang_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "copy": "Li/M14Tw018_Stat_Zhang_boundaryLayerEdge/boundary_layer_edge_sweep.csv",
+          "sha256": "3199050c7d308a90c4eedcb0670886a47ed71f5da4e91696bd17d60bbf01f0e2",
+          "height_column": "y1_plus",
+          "validity_column": "closure_valid"
+        }
+      ],
+      "overlay_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/LiWallFunctions/tests/ReverseSolver/plot_m6tw025_flux_reference_overlay.py"
+    },
+    {
+      "case": "M14Tw018",
+      "model": "Griffin",
+      "output": "Appendix/a-priori/Griffin_M14Tw018",
+      "analysis_script": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/analyze_griffin_wall_function_profile_Zhang.py",
+      "original_image": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/M14Tw018_Stat_Zhang/wall_flux_errors_vs_yplus.png",
+      "sources": [
+        {
+          "role": "matching",
+          "original": "/home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/src/GriffinWallFunctions/tests/ReverseSolver/M14Tw018_Stat_Zhang/matching_point_sweep.csv",
+          "copy": "Griffin/M14Tw018_Stat_Zhang/matching_point_sweep.csv",
+          "sha256": "a4d1df188f43667bb45673d11f494e2819496382f6307a013562812df2508467",
+          "height_column": "matching_y_plus",
+          "validity_column": "converged"
+        }
+      ]
+    }
+  ]
+}

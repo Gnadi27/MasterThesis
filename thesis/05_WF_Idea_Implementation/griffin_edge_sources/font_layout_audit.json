@@ -1,0 +1,44 @@
+{
+  "method": "Retained raster curves with new vector typography; no numerical replot.",
+  "original_export": "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/validation/outputs_Griffin_SA/reported_edge_quantities.png",
+  "original_generator": "/home/mgnadlinger/WF_validation/LowH_M3/Griffin_SA/analyze_griffin_edge_diagnostics.py",
+  "source_sha256": "9bae26b99dc882f786a63d7d9cd3bc953415249ac23af19dfd3f177ee0fe1533",
+  "source_size_pixels": [
+    1980,
+    2160
+  ],
+  "width_mm": 170,
+  "height_mm": 200,
+  "base_font_pt": 10,
+  "font_family": "TeX Gyre Heros",
+  "pixels_changed_outside_old_legend": 0,
+  "old_legend_rectangle_xyxy": [
+    118,
+    60,
+    809,
+    216
+  ],
+  "original_panel_crops_xyxy": [
+    [
+      112,
+      53,
+      1971,
+      710
+    ],
+    [
+      112,
+      736,
+      1971,
+      1393
+    ],
+    [
+      112,
+      1419,
+      1971,
+      2076
+    ]
+  ],
+  "all_labels_inside_canvas": true,
+  "legend_clear_of_panels": true,
+  "source_reconstruction_check": "Original generator and relocated data were found. Excluding flagged diagnostics nearly reproduced the export, but exact curve equivalence was not established; the retained raster is therefore used unchanged."
+}

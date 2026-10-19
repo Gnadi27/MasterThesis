@@ -1,0 +1,80 @@
+\section{Numerical methods}
+\label{sec:numerical-framework:discretization}
+% Configuration provenance (WSL):
+% /home/mgnadlinger/Zhang_DNS_ZPGFP/kwSST_Prt0p9/M6Tw025/system/fvSchemes
+% /home/mgnadlinger/Zhang_DNS_ZPGFP/kwSST_Prt0p9/M6Tw025/system/fvSolution
+% Solver source: /home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/modules/hysa/
+% src/finiteVolume/compactSnGradScheme/compactSnGrad.{H,C}
+% src/finiteVolume/fluxSchemes/ausmDV/ausmDVFluxScheme.{H,C}
+
+The equations are discretized by a cell-centred finite-volume method.
+Fluxes across cell faces determine the discrete conservation balances.
+Table~\ref{tab:numerical-framework:schemes} summarizes the numerical setup, which
+unless stated otherwise, is the same numerical method used throughout this
+work, with the turbulence-equation entries adapted to the selected model.
+Pseudo-time Courant limits and other convergence controls are adjusted by
+case. The complete settings are supplied with the simulation setups in the
+\hyperref[chap:data-avail]{Data Availability statement}.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Numerical methods in the representative M6Tw025 configuration.}
+    \label{tab:numerical-framework:schemes}
+    \begin{tabular}{@{}p{0.29\linewidth}p{0.65\linewidth}@{}}
+        \toprule
+        Operation & Selected method \\
+        \midrule
+        Convective flux & AUSMDV2\(^+\)-based scheme;
+            dictionary selection \texttt{AUSMDV}
+            (Section~\ref{subsec:ext:AUSM}) \\
+        Face-state reconstruction & Weighted van Leer limiter
+            (\texttt{wVanLeer}) for density, velocity and temperature \\
+        Cell gradients & Limited Gauss gradients:
+            \texttt{cellLimited Gauss linear 1} \\
+        Momentum and energy diffusion & \texttt{Gauss linear compact}:
+            linear coefficient interpolation and HiSA's compact
+            face-normal gradient \\
+        Other diffusion operators & \texttt{Gauss linear corrected};
+            general face-normal gradient \texttt{corrected} \\
+        Turbulence convection & Bounded first-order upwind for
+            turbulence properties \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Convective and diffusive face operations}
+
+Convective fluxes use reconstructed states on either side of each face.
+The reconstruction and its limiting must be distinguished from the
+face-normal gradients used for viscous stress and thermal diffusion.
+\par\medskip
+
+For an orthogonal wall-normal stencil, the compact gradient reduces to the
+slope between neighbouring cell-centre values. The coefficient multiplying
+that gradient is interpolated to the face with distance weighting
+\begin{equation}
+    D_f\phi=\frac{\phi_R-\phi_L}{h},
+    \qquad
+    \Gamma_f\simeq\frac{b\Gamma_L+a\Gamma_R}{h},
+    \qquad
+    a=y_f-y_L,\quad b=y_R-y_f,\quad h=a+b.
+    \label{eq:numerical-framework:internal-face-operators}
+\end{equation}
+Here \(y_L\) and \(y_R\) are the neighbouring cell-centre positions, \(y_f\)
+is the face position, and \(h=y_R-y_L\) is the full centre separation.
+The field \(\phi\) denotes a transported quantity, such as internal energy,
+and \(\Gamma\) its effective diffusion coefficient. For a perfect gas with
+constant specific heat, the energy-diffusion term can equivalently be
+expressed using temperature and effective thermal conductivity. On non-orthogonal
+meshes, the compact scheme adds a correction using interpolated cell
+gradients, but in the scope of this work all meshes are 2D, structured, orthogonal grids.
+\par\medskip
+
+For a face midway between two centres, the secant gradient has a
+second-order truncation error. Unequal centre-to-face distances introduce
+an additional asymmetry term. Thus, neither the nominal order nor the
+wall-function sampling height alone establishes the accuracy of an
+internal-face flux. The cold-wall profile analysis in
+Section~\ref{subsec:comparative:zpg:mesh-criterion} examines these gradient
+and coefficient-interpolation operations and their implications.

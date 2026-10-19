@@ -1,0 +1,42 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{thesis-support}[2026/10/08 Thesis content support]
+
+% Content dependencies formerly supplied by tumphthesis. Page layout,
+% typography, captions, colours, and title pages are supplied by tumbook.
+\RequirePackage{mathrsfs,bm,braket}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\tr}{tr}
+\DeclareMathOperator*{\Tr}{Tr}
+
+\newcommand{\rem}[1]{\textcolor{red}{\textbf{[#1]}}}
+\newcommand{\note}[2]{{\bfseries[#1: #2]}}
+\newcommand{\todo}[1]{{\color{red}TODO: #1}}
+\newcommand{\change}[1]{{\color{blue}#1}}
+
+\RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{assumption}[definition]{Assumption}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{example}[definition]{Example}
+\newtheorem{conjecture}[definition]{Conjecture}
+
+\RequirePackage[numbers]{natbib}
+\bibliographystyle{unsrtnat}
+\RequirePackage{booktabs,multirow,longtable,diagbox}
+% Align numerical table columns at the decimal marker, preserving the
+% manuscript's explicit signs, precision and surrounding text font.
+\RequirePackage{siunitx}
+\sisetup{
+  mode=text,
+  group-digits=false,
+  retain-explicit-plus=true,
+  table-number-alignment=center
+}
+\RequirePackage{float}
+% Help long technical paragraphs fit the template's sans-serif text block.
+\RequirePackage{microtype}
+\setlength{\emergencystretch}{3em}

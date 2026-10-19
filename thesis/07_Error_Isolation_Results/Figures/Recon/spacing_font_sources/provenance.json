@@ -1,0 +1,32 @@
+{
+  "source_table": "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/spacing_limits/symmetric_finite_stencil_limits.csv",
+  "source_table_sha256": "76599c99502369472ad2aefe1de0e44bc25e17e32e2da050c5a6e3a78e836099",
+  "source_scripts": [
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/scripts/plot_requested_profiles.py",
+    "/home/mgnadlinger/Xue_et_al/flat_plate/M6Tw025/opt_mesh/scripts/plot_analysis.py"
+  ],
+  "retained_data": "M6Tw025_3pct_cubic_limits.csv",
+  "retained_data_sha256": "2007b14ff771824f6b15bfbf07e7089b59667f34187a5d392a1f15a95c054578",
+  "selection": {
+    "tolerance_percent": 3,
+    "interpolant": "cubic"
+  },
+  "points_per_component": {
+    "T": 440,
+    "U": 440,
+    "kappaEff": 440,
+    "muEff": 440
+  },
+  "xlim": [
+    0.1,
+    448.5361489941444
+  ],
+  "ylim": [
+    0.005,
+    2000
+  ],
+  "width_mm": 170.0,
+  "height_mm": 98.0,
+  "font_size_pt": 10.0,
+  "note": "Exact original finite-stencil table subset; no recalculation, smoothing, or normalization changes."
+}

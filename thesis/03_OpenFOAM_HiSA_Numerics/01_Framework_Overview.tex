@@ -1,0 +1,52 @@
+\section{OpenFOAM and HiSA}
+\label{sec:numerical-framework:openfoam-hisa}
+
+\subsection{Open Field Operation And Manipulation - OpenFOAM}
+
+\textbf{Open} \textbf{F}ield \textbf{O}peration \textbf{A}nd \textbf{M}anipulation (OpenFOAM) is an open-source\footnote{\url{https://gitlab.com/openfoam/core/openfoam}} CFD framework based on the finite volume method (FVM) and developed primarily by OpenCFD Ltd since 2004. This work uses version v2412. A relevant subsequent development is the introduction of Menter's generalized \(k\)--\(\omega\) (GEKO) turbulence model~\cite{menter2025GEKO} in OpenFOAM v2606. This model should also be considered in future turbulence-model assessments.
+\par\medskip
+
+OpenFOAM can be adapted to specific user needs through custom libraries that interact with the framework via its application programming interface (API). This allows extensions without modifying the core source code and simplifies upgrades to later versions.
+\par\medskip
+
+The FVM is the most widely used approach in CFD, adopted by commercial codes such as Ansys Fluent\footnote{\url{https://ansys.synopsys.com/products/fluids/ansys-fluent}} and research codes such as NASA's FUN3D\footnote{\url{https://fun3d.larc.nasa.gov/}} and DLR's TAU\footnote{\url{https://www.dlr.de/en/as/research-and-transfer/software-solutions/aerodynamics/software-tau}}. However, access to several solvers designed for compressible flow is restricted, including DLR's TAU, NASA's VULCAN-CFD and NASA's LAURA, the latter developed specifically for aerothermal heating.
+\par\medskip
+
+OpenFOAM has nevertheless been widely used in research, with applications and validation studies covering a broad range of flow conditions. Examples are documented in the six volumes of the OpenFOAM Journal\footnote{\url{https://journal.openfoam.com/}} published to date and in contributions to the annual OpenFOAM Workshops\footnote{\url{https://openfoamworkshop.org/}}.
+
+\subsection{High Speed Aerodynamic solver - HiSA}
+\label{subsec:numerical-framework:hisa}
+
+The \textbf{Hi}gh \textbf{S}peed \textbf{A}erodynamic (HiSA) solver~\cite{heyns2014HiSA} is an open-source\footnote{\url{https://hisa.gitlab.io/index.html}} solver developed for OpenFOAM to provide efficient and robust simulations of high-speed, compressible viscous flows. It uses a matrix-free, implicit, coupled density-based formulation. The resulting sparse, non-symmetric linear systems are solved using the generalized minimal residual (GMRES) algorithm~\cite{saad1986gmres} with lower--upper symmetric Gauss--Seidel (LU-SGS) preconditioning~\cite{yoon1988lusgs}. This work uses HiSA version 1.12.5.
+\par\medskip
+
+HiSA has been applied to numerous cases.\footnote{\url{https://hisa.gitlab.io/doc.html}} Simulations of supersonic ejector flow~\cite{macia2019ssFlowEjector} and predictions of pressure coefficients on a missile body in supersonic flow~\cite{jun2025ssMissileBody} showed acceptable agreement with experiments. The solver has also been used to develop a compressibility-corrected \(k\)--\(\omega\) turbulence model~\cite{yin2026compressibility}. Its application to separation and heat-flux prediction around a rectangular protrusion in hypersonic flow yielded mixed results~\cite{balkhi2025rectProtrusion}.
+\par\medskip
+
+HiSA natively provides the HLLC and AUSM\(^+\)-up numerical flux schemes. This limited selection is a drawback, given the developments in the AUSM family since the introduction of AUSM\(^+\)-up in 2006~\cite{edwards2019AUSMfamily}. This work therefore uses an in-house extension of HiSA that provides an AUSMDV2\(^+\)-based scheme, as described in Section~\ref{subsec:ext:AUSM}.
+\par\medskip
+
+\paragraph*{Riemann boundary condition}
+% Boundary-condition evidence:
+% HiSA User Guide, July 2021, Section 2.1, pp. 11--12.
+% Local source: /home/mgnadlinger/OpenFOAM/mgnadlinger-v2412/modules/hysa/
+% src/finiteVolume/boundaryConditions/characteristic/characteristicWall/
+% characteristicWallPressureFvPatchScalarField.C and src/modules/hisa/updateFields.H.
+% Personal communication: Oliver Oxtoby to Michael Gnadlinger, 11 August 2026,
+% supplied in the Outlook PDF; the email is paraphrased, not reproduced.
+HiSA also provides characteristic, or Riemann-type, boundary conditions for
+compressible flow. These use a linearised wave analysis to distinguish
+information entering and leaving the domain. At open boundaries, incoming
+information follows the prescribed external data, while outgoing information
+comes from the interior solution, according to the local flow direction and
+boundary-normal Mach number. The farfield formulation aims to limit
+artificial reflections and are thus preferably used for supersonic flow~\cite[Section~2.1]{HeynsOxtoby2021HiSAUserGuide}. Ordinary \texttt{zeroGradient} conditions simply extrapolate interior values.
+\par\medskip
+
+At solid walls, \texttt{characteristicWallPressure} adjusts pressure using
+the wall-normal velocity difference between the adjacent cell and the wall.
+In personal correspondence, Oxtoby~\cite{Oxtoby2026CharacteristicWallPressure}
+explained that this improves robustness when the adjacent flow has a
+supersonic wall-normal component, for example near corners, where
+zero-gradient pressure can become unstable. For this HiSA separately overwrites the
+density stored at the wall face with the value of the first off-wall cell. It was found that especially on non-wall-resolving, coarse meshes, associated with wall-function this simplification results in unphysical wall density readings. This can have implications in post-processing or with wall-function closures that rely on the density at the wall face.

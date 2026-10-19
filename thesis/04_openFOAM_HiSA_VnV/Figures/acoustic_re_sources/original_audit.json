@@ -1,0 +1,70 @@
+{
+  "original_script": "/home/mgnadlinger/Cao_lamZPGFP/validation/plot_first_cell_acoustic_re.py",
+  "script_sha256": "a16d7fd1c6bf0f17345126f1980086a2fc1b4c405eb9a3cae4e3a213bc6c6c29",
+  "matplotlib_version": "3.10.6",
+  "labels_changed": [
+    {
+      "old": "$R_{\\mathrm{cell1}}$",
+      "new": "$Re_{\\mathrm{cell1}}$"
+    }
+  ],
+  "curves": [
+    {
+      "label": "$\\Delta y_1=10^{-1}\\,\\mathrm{mm}$",
+      "points": 1117,
+      "sha256": "1cac269e166cc4735180432fd975bf8358bf260a050d6113267cc02828bed326"
+    },
+    {
+      "label": "$\\Delta y_1=10^{-2}\\,\\mathrm{mm}$",
+      "points": 1117,
+      "sha256": "5192cdd65103cd6eed63b2476acb39a5142d5c3264a652aed52283381fce2f3f"
+    },
+    {
+      "label": "$\\Delta y_1=2\\times10^{-3}\\,\\mathrm{mm}$",
+      "points": 1233,
+      "sha256": "090a478414e044ce25fd731254ac289527fd251d31ac5548f1143bf29fe2d9a0"
+    },
+    {
+      "label": "$\\Delta y_1=5\\times10^{-4}\\,\\mathrm{mm}$",
+      "points": 1233,
+      "sha256": "31a2de329dacbd6b22fcb5d4ab715a507b1f1916780a16640fbd430bd395fbf6"
+    },
+    {
+      "label": "_child4",
+      "points": 2,
+      "sha256": "d8bd4eab9a59f75ac3b0df775019ad62d3f249ad2868e75a1c83af798ebc914a"
+    }
+  ],
+  "axes": [
+    {
+      "xlim": [
+        0.0,
+        4.0
+      ],
+      "ylim": [
+        0.06646426127187934,
+        248.73835923204996
+      ],
+      "position": [
+        0.07496348712041938,
+        0.16682690922551413,
+        0.8988253602220788,
+        0.7299390909661239
+      ]
+    }
+  ],
+  "csv_byte_identical_to_original": true,
+  "output": "C:\\Users\\MichaelGnadlinger\\OneDrive - Hypersonica\\Hypersonica Team - Documents\\02 Technical\\03 Flight physics\\16 Theses\\2026\\01 Gnadl\\Docs_and_Presentations\\Thesis_tex\\thesis\\04_OpenFOAM_HiSA_VnV\\Figures\\05_first_cell_acoustic_re.png",
+  "native_export_crop_pixels": {
+    "left": 0,
+    "top": 106,
+    "right": 2274,
+    "bottom": 1171
+  },
+  "source_csv": "/home/mgnadlinger/Cao_lamZPGFP/validation/mesh_sensitivity_output_1550/1550_dx_1p5e-1_wall_normal_first_cell_acoustic_re.csv",
+  "validation": "Original calculation CSV is byte-identical. Original script and raw case data unchanged. Axes limits and plotted samples preserved; only the y-label was changed after original figure layout.",
+  "output_dimensions": [
+    2274,
+    1065
+  ]
+}
